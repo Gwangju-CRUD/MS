@@ -13,12 +13,12 @@ public class MemberController {
 	
 	private final MemberRepository memberRepository;
 	
-	@GetMapping("/member/login")
+	@GetMapping("login")
 	public String loginForm() {
 		return "member/login";
 	}
 	
-	@GetMapping("/member/join")
+	@GetMapping("join")
 	public String joinForm() {
 		return "member/join";
 	}
