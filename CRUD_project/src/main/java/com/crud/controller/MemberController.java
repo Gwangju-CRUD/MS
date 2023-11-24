@@ -14,15 +14,15 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor // final이 붙은 속성의 생성자를 자동으로 생성해줌 
 @Controller
+@RequestMapping("/member")
 
 public class MemberController {
 	
 	private final MemberService memberService;
 	
 	
-	@RequestMapping("/member")
 	@GetMapping("/signup")
-	public String joinForm(MemberForm memberForm) {
+	public String signup(MemberForm memberForm) {
 		return "member/signup_form";
 	}
 	
