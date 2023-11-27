@@ -14,15 +14,15 @@ import lombok.Data;
 public class Member {
 
 	@Id
-	@Column(unique = true)
 	private String mbId; // 아이디
 
+	@Column(nullable = false)
 	private String mbPw; // 비밀번호
-	
-	@Column(unique = true)
+
+	@Column(nullable = false)
 	private String mbName; // 이름
-	
-	@Column(unique = true)
+
+	@Column(nullable = false)
 	private String mbCompany; // 회사명
 
 	private LocalDateTime joineDate; // 회원가입한 날짜

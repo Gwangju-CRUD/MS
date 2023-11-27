@@ -1,27 +1,18 @@
 package com.crud.entity;
 
-import java.time.LocalDateTime;
 import java.util.Base64;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Builder
+@Data
 @Entity
 @Table(name = "TBL_ANALYSIS")
 public class Analysis {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deep_seq")
-	@SequenceGenerator(name = "deep_seq", sequenceName = "DEEP_SEQ")
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANALYSIS_SEQ")
+	@SequenceGenerator(name = "ANALYSIS_SEQ", sequenceName = "ANALYSIS_SEQ")
 	private Long productIdx; // 제품 번호
 
 	@Lob
@@ -35,12 +26,13 @@ public class Analysis {
 	private String predictionJdm; // 예측 결과
 
 	@Column(name = "PREDICTION_DATE")
-	private LocalDateTime predictionDate; // 예측 시간
+	private String predictionDate; // 예측 시간
 
 	@ManyToOne
     @JoinColumn(name = "mbId")
 	private Member member; // 회원 엔터티 참조
 	
+	// base64인코딩
 	public String getBase64ProductImg() {
         return Base64.getEncoder().encodeToString(this.productImg);
     }

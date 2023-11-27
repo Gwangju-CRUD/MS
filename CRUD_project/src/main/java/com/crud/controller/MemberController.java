@@ -32,7 +32,7 @@ public class MemberController {
 			return "member/signup_form";
 		}
 		if (!memberForm.getMbPw1().equals(memberForm.getMbPw2())) {
-			bindingResult.rejectValue("mb_pw2", "passwordIncorrect", "비밀번호를 확인해주세요");
+			bindingResult.rejectValue("mbPw2", "passwordIncorrect", "비밀번호를 확인해주세요");
 			return "member/signup_form";
 		}
 		try {
