@@ -9,5 +9,7 @@ import com.crud.entity.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
+	
 	Optional<Member> findBymbId(String mbId);
+	
 }

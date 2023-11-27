@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.crud.entity.Analysis;
+import com.crud.entity.Member;
 import com.crud.service.AnalysisService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,24 +31,21 @@ public class AnalysisController {
 	@GetMapping("imgPrint")
 	public String imgUploadForm(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 
-		// 이미지와 관련된 엔터티 데이터를 DB에서 가져옵니다.
 		Page<Analysis> analysisList = this.analysisService.getAllAnalysis(page);
 
-		// 모델에 데이터를 추가하여 Thymeleaf에 전달합니다.
 		model.addAttribute("analysisList", analysisList);
 
-		return "analysis/imgUpload"; // Thymeleaf 템플릿 파일 이름
+		return "analysis/imgUpload";
 	}
 
 	@GetMapping("imgUpload")
 	public String goImgUpload(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-		// 이미지와 관련된 엔터티 데이터를 DB에서 가져옵니다.
+
 		Page<Analysis> analysisList = this.analysisService.getAllAnalysis(page);
 
-		// 모델에 데이터를 추가하여 Thymeleaf에 전달합니다.
 		model.addAttribute("analysisList", analysisList);
 
-		return "analysis/imgUpload"; // Thymeleaf 템플릿 파일 이름
+		return "analysis/imgUpload";
 	}
 
 	@PostMapping("imgUpload")
@@ -53,6 +53,12 @@ public class AnalysisController {
 
 		if (!file.isEmpty()) {
 
+			// Analysis 엔터티의 FK인 mbId를 set해주는 로직
+			// Authentication = 현재 유저의 세션정보를 담고 있는 객체
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Member member = new Member();
+			member.setMbId(authentication.getName());
+			
 			// 문자열 포멧팅
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
@@ -66,10 +72,12 @@ public class AnalysisController {
 			analysis.setPredictionDate(formatDate);
 			analysis.setPredictionAccuracy(98L);
 			analysis.setPredictionJdm("정상");
+			analysis.setMember(member); // Authentication로 가져온 member 객체를 넘김
 
 			analysisService.imgSave(analysis);
 
 			return "redirect:/imgPrint"; // 이미지 업로드 페이지로 리다이렉트
+			
 		} else {
 			return "imgPrint";
 		}

@@ -8,8 +8,8 @@
 			<ul class="navbar-nav me-auto">
 			</ul>
 			<form class="d-flex">
-				<a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/member/signup}"><button class="btn btn-primary" type="button">회원가입</button></a>
-				<a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/member/login}"><button class="btn btn-primary" type="button">로그인</button></a>
+				<a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/signup}"><button class="btn btn-primary" type="button">회원가입</button></a>
+				<a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/}"><button class="btn btn-primary" type="button">로그인</button></a>
 				<a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/member/logout}"><button class="btn btn-primary" type="button">로그아웃</button></a>
 			</form>
 		</div>
