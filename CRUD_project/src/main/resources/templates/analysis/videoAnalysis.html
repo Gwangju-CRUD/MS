@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>WEB_RTC_TEST</title>
+    <style>
+      #video {
+        width: 300px;
+      }
+      #canvas {
+        display: none;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h2>영상 출력 테스트</h2>
+    <video id="video" autoplay></video>
+    <canvas id="canvas"></canvas>
+    <p>판정 결과 : <span id="result"></span></p>
+    <p>정확도 : <span id="score"></span></p>
+    <script src="/JS/webRtc.js"></script>
+    <script src="/JS/Canvas.js"></script>
+  </body>
+</html>

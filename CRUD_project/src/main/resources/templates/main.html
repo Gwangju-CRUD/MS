@@ -1,10 +1,8 @@
 <html layout:decorate="~{layout}">
-	
+
 <div layout:fragment="content">
-	<h2>메인화면</h2>
-	<button><a href="login">로그인</a></button>
-	<button><a href="join">회원가입</a></button>
-	<button><a href="imgUpload">이미지 업로드 페이지</a></button>
+	<h3>여기는 메인화면</h3>
+	<a th:href="@{/deep/main}">분석이동</a>
 </div>
 
 </html>

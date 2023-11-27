@@ -60,7 +60,7 @@ public class MemberController {
 	public String goMain() {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if (authentication != null && authentication.isAuthenticated()) {
 			String username = authentication.getName();
 			System.out.println("인증된 사용자: " + username);
@@ -71,5 +71,7 @@ public class MemberController {
 		}
 
 	}
+	
+	
 
 }

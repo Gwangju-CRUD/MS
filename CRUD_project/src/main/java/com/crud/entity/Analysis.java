@@ -20,7 +20,7 @@ public class Analysis {
 	private byte[] productImg; // 제품 이미지
 	
 	@Column(name = "PREDICTION_ACCURACY")
-	private Long predictionAccuracy; // 에측 정확도
+	private double predictionAccuracy; // 에측 정확도
 
 	@Column(name = "PREDICTION_JDM")
 	private String predictionJdm; // 예측 결과

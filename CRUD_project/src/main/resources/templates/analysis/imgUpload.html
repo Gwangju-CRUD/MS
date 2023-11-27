@@ -9,7 +9,7 @@
 <body>
 
 	<h1>이미지 업로드</h1>
-	<form th:action="@{/imgUpload}" method="post" enctype="multipart/form-data">
+	<form th:action="@{/deep/imgUpload}" method="post" enctype="multipart/form-data">
 		<input type="file" name="file" accept="image/*" required />
 		<input type="submit" value="업로드" />
 	</form>
