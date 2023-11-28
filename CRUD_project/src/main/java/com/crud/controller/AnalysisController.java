@@ -89,7 +89,7 @@ public class AnalysisController {
 
 			// FastAPI 서버에 요청
 			RestTemplate restTemplate = new RestTemplate();
-			String fastApiUrl = "http://127.0.0.1:8000/predict/";
+			String fastApiUrl = "http://218.157.38.54:8002/predict/";
 			ResponseEntity<AnalysisResult> response = restTemplate.exchange(fastApiUrl, HttpMethod.POST, entity,
 					AnalysisResult.class);
 

@@ -11,7 +11,7 @@ setInterval(function () {
 
 function sendDataToServer(base64Image) {
   $.ajax({
-    url: "http://127.0.0.1:8000/predict/",
+    url: "http://218.157.38.54:8002/predict/",
     method: "post",
     data: JSON.stringify({encoded_image_data: String(base64Image) }),
     contentType: "application/json",

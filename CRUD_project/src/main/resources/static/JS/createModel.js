@@ -47,7 +47,7 @@ setInterval(function () {
 
 function sendDataToServer(base64Image, label) {
   $.ajax({
-    url: "http://127.0.0.1:8000/upload_image/",
+    url: "http://218.157.38.54:8002/upload_image/",
     method: "post",
     data: JSON.stringify({encoded_image_data: String(base64Image), label: label}),
     contentType: "application/json",
@@ -73,7 +73,7 @@ $("#delete_images").click(function () {
 
 function deleteImagesFromServer() {
   $.ajax({
-    url: "http://127.0.0.1:8000/delete_images/",
+    url: "http://218.157.38.54:8002/delete_images/",
     method: "delete",  // DELETE 메서드 사용
     success: function (data) {
       // 서버로부터 받은 메시지를 화면에 표시
@@ -104,7 +104,7 @@ function createModelFromServer() {
   }
 
   $.ajax({
-    url: "http://127.0.0.1:8000/create_model/",
+    url: "http://218.157.38.54:8002/create_model/",
     method: "post", 
     data: JSON.stringify({ name: modelName }),  // 입력받은 모델 이름을 데이터로 전달
     contentType: 'application/json',
