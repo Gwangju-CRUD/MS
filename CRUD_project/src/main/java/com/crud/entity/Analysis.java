@@ -12,7 +12,7 @@ public class Analysis {
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANALYSIS_SEQ")
-	@SequenceGenerator(name = "ANALYSIS_SEQ", sequenceName = "ANALYSIS_SEQ")
+	@SequenceGenerator(name = "ANALYSIS_SEQ", sequenceName = "ANALYSIS_SEQ", allocationSize = 1)
 	private Long productIdx; // 제품 번호
 
 	@Lob
