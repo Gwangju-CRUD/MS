@@ -11,7 +11,6 @@ import com.crud.DuplicateIdException;
 import com.crud.form.MemberForm;
 import com.crud.service.MemberService;
 
-import groovyjarjarpicocli.CommandLine.DuplicateNameException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -52,6 +51,7 @@ public class MemberController {
 	// 가장 처음 시작하는 로그인 페이지
 	@GetMapping("/")
 	public String login() {
+		System.out.println("test");
 		return "member/login_form";
 	}
 

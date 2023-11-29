@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.crud.entity.Analysis;
 import com.crud.repository.AnalysisRepository;
 
-import lombok.RequiredArgsConstructor;
 
 @SpringBootTest
 class CrudProjectApplicationTests {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,8 +19,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -122,12 +126,53 @@ public class AnalysisController {
 		}
 
 	}
+	
+	
+	@PostMapping("/aysUpload")
+	@ResponseBody
+	public void aysUpload(@RequestBody Map<String, Object> data) {
+		
+	    // FastAPI에서 받아온 데이터를 그대로 사용
+        String result = (String) data.get("result");
+        double score = (Double) data.get("score");
+        String image = (String) data.get("image");
+        
+        // Base64 인코딩된 이미지 데이터를 디코딩하여 바이트 배열로 변환
+        byte[] imageBytes = Base64.getDecoder().decode(image);
+        
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Member member = new Member();
+		member.setMbId(authentication.getName());
+		
+		// 문자열 포멧팅
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
+		String formatDate = now.format(format);
+		
+		Analysis analysis = new Analysis();
+		
 
+		
+		
+		analysis.setProductImg(imageBytes);
+		analysis.setPredictionDate(formatDate);
+		analysis.setPredictionAccuracy((Double) score);
+		analysis.setPredictionJdm(result);
+		analysis.setMember(member);
+
+		System.out.println(analysis.toString());	
+		
+		analysisService.imgSave(analysis);
+        
+        
+	}
+	
+	
 	@GetMapping("/main")
 	public String goMain() {
 		return "analysis/deepMain";
 	}
-	
+
 	@GetMapping("/videoAnalysis")
 	private String goAnalysis() {
 
