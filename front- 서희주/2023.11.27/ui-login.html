@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Screen</title>
+
+    <link rel="import" href="footer.html">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
+    <!-- jQuery 라이브러리 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <style>
+        @font-face {
+        font-family: 'TmoneyRoundWindExtraBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        }
+
+        body {
+            /* font-family: 'Nunito', sans-serif; */
+            /* background-color: #EDF2F9; */
+            background-image: url("./images/배경2.png");
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /*
+        -------------------------
+        로그인 css
+        -------------------------
+        */
+
+        /*부모 div*/
+        .box {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        /* brand-section div 속성 */
+        .brand-section {
+            background-color: rgba(0, 0, 0, 0.7);
+            /* border: 1px solid #000000;
+            border-right: none; */
+            /* background-color: #655d5d; */
+            /* background: linear-gradient(120deg,   rgb(255, 217, 3), #0026ff); */
+            color: white;
+            width: 300px;
+            height: 600px;
+            border-radius: 0.5rem 0 0 0.5rem;
+            padding: 2rem;
+            box-sizing: border-box;
+            box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.5);
+            
+        }
+
+        /* brand-section 안에 text div 속성 */
+        .text {
+            font-size: 18px;
+            display: flex;
+            font-weight: bold;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* text div 안에 p태그 속성 */
+        .brand-section p {
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+        }
+
+        /* 
+        -- login-container css -- 
+        */
+
+        /* login-container 속성 */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 2rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            width: 500px;
+            height: 600px;
+            box-sizing: border-box;
+            box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.5);
+            /* box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.5), 1rem 0 1rem rgba(0, 0, 0, 0.5), 0 -1rem 1rem rgba(0, 0, 0, 0.5); */
+        }
+
+        /* 양식작성 form 버튼 css */
+        .form {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            border-radius: 0.3rem;
+        }
+
+        .form button {
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 13rem;
+            height: 2.3rem;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* ID 호버 색상 변경 */
+        .form-group input[type="text"]:focus,
+        .form-group input[type="text"]:hover {
+            border-color: gray;
+            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+        }
+
+        /* Password 호버 색상 변경 */
+        .form-group input[type="password"]:focus,
+        .form-group input[type="password"]:hover {
+            border-color: gray; 
+            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+        }
+
+        /*
+        -------------------------
+        가입 양식 작성 css
+        -------------------------
+        */
+
+        /* 모달 창 전체 */
+        .modal-content {
+            border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+        }
+
+        /* 모달 헤더 스타일 */
+        .modal-header {
+            text-align: center;
+            padding: 30px;
+            
+        }
+
+        /* 모달 제목 */
+        .modal-title {
+            margin: 0 auto;
+            font-size: 38px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        /*
+        -- 모달 바디 -- 
+        */
+        .modal-body {
+            padding: 20px;
+            color: #000000;
+        }
+
+        /* 요소 둥근 테두리 설정 */
+        .form-control {
+            border-radius: 5px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 라벨들 굵게 */
+        .col-form-label {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+
+        /* 
+        -- 모달 푸터 -- 
+        */
+        .modal-footer {
+            text-align: center;
+            border-top: none;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-secondary,
+        .btn-dark {
+            border-radius: 5px;
+            width: 220px;
+            margin-bottom: 30px;
+        }
+
+        /* .btn-secondary {
+            margin-right: 30px;
+        } */
+
+
+
+
+        /* 
+        -- 비밀번호 숨기기 / 표시 --
+        */
+        #toggle-password {
+            cursor: pointer;
+        }
+
+        .input-group-text {
+            cursor: pointer;
+        }
+
+
+        /*
+            // 배경 비디오
+        .video-background {
+            position: fixed; // 또는 absolute, 브라우저 화면에 고정
+            right: 0;
+            bottom: 0;
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; // 콘텐츠 뒤에 오도록 설정 
+            overflow: hidden;
+        }
+
+        #myVideo {
+            // 동영상을 배경 사이즈에 맞춤 
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            filter: blur(5px); // 표준 블러 효과
+        }
+        */
+    </style>
+</head>
+
+<body>
+
+    <!-- 로그인 -->
+    <div class="box">
+
+        <div class="brand-section">
+            <div class="text">
+                <h1>CRUD</h1><br>
+                <!-- <p>제조품질 이상탐지 플랫폼</p><br>
+                <p>99.9% 의 정확도를 자랑하고</p>
+                <p>업무에도 지장없는<br> 알림 서비스까지!</p><br> -->
+                <p>hello!</p>
+                <p>This is CRUD page!</p>
+
+
+                <!-- 여기에 더 많은 브랜드 관련 콘텐츠를 추가할 수 있어 -->
+            </div>
+
+        </div>
+
+        <div class="login-container">
+
+            <h2 class="text-center mb-5">Account Login</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="ID" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required>
+
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">기억하기</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-block"
+                    style="background-color: rgba(0, 0, 0, 0.7); color: white; margin-bottom: 50px;">로그인</button>
+                <p class="text-center">회원이 아니신가요?
+                </p>
+                <div class="form button">
+                    <button type="button" class="form" data-toggle="modal" data-target="#exampleModal">양식 작성하러 가기</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- 양식 작성 모달창 -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">CRUD</h5>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="company-name" class="col-form-label">회사명</label>
+                            <input type="text" class="form-control" id="company-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-name" class="col-form-label">이름</label>
+                            <input type="text" class="form-control" id="user-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-id" class="col-form-label">아이디</label>
+                            <input type="text" class="form-control" id="user-id">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user-password" class="col-form-label">비밀번호</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="user-password">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="toggle-password">Show</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-dark" data-target="#success">작성완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 작성완료 모달창 -->
+ 
+    <div class="modal fade" id="success" tabindex="-1" aria-labelledby="success-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="success-title">안녕하세요, 000님</h5>
+                </div>
+                <div class="modal-body">
+                    CRUD에 가입하신 것을 축하합니다!<br>
+                    관리자가 확인하기까지 몇 분 정도의 시간이 소요됩니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closebtn" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달창 JS -->
+
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('whatever');
+        var modal = $(this);
+        modal.find('.modal-title').text('CRUD');
+        modal.find('.modal-body input').val(recipient);
+    });
+
+    // 비밀번호 표시여부
+    document.getElementById('toggle-password').addEventListener('click', function () {
+        const passwordInput = document.getElementById('user-password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+
+    // 작성완료 버튼 클릭 시
+    $('.btn-dark').on('click', function () {
+        $('#exampleModal').modal('hide');
+        $('#success').modal('show');
+    });
+
+
+    // 작성완료 모달 닫힐 때 이벤트
+    $('#closebtn').on('click', function () {
+        $('#success').modal('hide');
+    });
+
+    $('#success').on('hidden.bs.modal', function () {
+        location.reload();
+    });
+    </script>
+
+
+
+
+
+
+    <!-- Include Bootstrap JS and FontAwesome -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!-- 4.6 부트스트랩 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+
+    
+    <!-- 배경 비디오 -->
+    <!-- <div class="video-background">
+            <video autoplay muted loop id="myVideo">
+                <source src="images/rrr.mp4" type="video/mp4">
+            </video>
+        </div> -->
+</body>
+
+</html>
