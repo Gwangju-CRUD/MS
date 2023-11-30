@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>모델 생성</title>
+    <style>
+      #video {
+        width: 300px;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>모델 생성</h1>
+    <video id="video" autoplay></video>
+    <canvas id="canvas" style="display: none"></canvas>
+    <button id="capture_normal">정상 제품 이미지 생성</button>
+    <button id="capture_error">불량 제품 이미지 생성</button>
+    <button id="delete_images">전송한 이미지 삭제</button>
+    <p>정상 이미지 : <span id="normal_count"></span>/ 300</p>
+    <p>불량 이미지 : <span id="error_count"></span>/ 300</p>
+    <input id="model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input> <!-- 모델 이름 입력 -->
+    <button id="create_model">모델 생성</button>
+    <p><span id="create_model_msg"></span></p>
+    <script src="/JS/createModel.js"></script>
+  </body>
+</html>

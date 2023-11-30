@@ -1,0 +1,38 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<div class="my-3 border-bottom">
+		<div>
+			<h4>회원가입</h4>
+		</div>
+	</div>
+	<form th:action="@{/signup}" th:object="${memberForm}" method="post">
+		<!-- 유효성 div -->
+		<div th:if="${#fields.hasAnyErrors()}">
+			<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
+		</div>
+		
+		<div class="mb-3">
+			<label for="mbId" class="form-label">사용자ID</label>
+			<input type="text" th:field="*{mbId}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="mbPw1" class="form-label">비밀번호</label>
+			<input type="password" th:field="*{mbPw1}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="mbPw2" class="form-label">비밀번호 확인</label>
+			<input type="password" th:field="*{mbPw2}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="mbName" class="form-label">이름</label>
+			<input type="text" th:field="*{mbName}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="mbCompany" class="form-label">회사명</label>
+			<input type="text" th:field="*{mbCompany}" class="form-control">
+		</div>
+		<button type="submit" class="btn btn-primary">회원가입</button>
+	</form>
+</div>
+
+</html>

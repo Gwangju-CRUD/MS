@@ -1,0 +1,148 @@
+<html layout:decorate="~{loginLayout}">
+<div layout:fragment="content" class="container my-3">
+	<main class="position-absolute top-50 start-50 translate-middle" style="width: 28%">
+
+
+		<form th:action="@{/login}" method="post">
+
+
+			<div class="d-flex justify-content-center text-primary" style="margin-bottom: 15px">
+				<h1 class="display-4"><strong>로그인</strong></h1>
+			</div>
+			<div class="d-flex justify-content-center mb-5">
+				<p class="">계정에 로그인하려면 세부정보를 입력하세요</p>
+			</div>
+			<div class="mx-12">
+				<div class="form-floating mb-4">
+					<input type="text" class="form-control" name="mbId" id="mbId floatingInput"
+						placeholder="name@example.com" style="height: 60px" />
+					<label for="mbId floatingInput" class="form-label align-item-center">
+						사번 혹은 아이디를 입력해주세요
+					</label>
+				</div>
+				<div class="form-floating mb-4">
+					<input type="password" name="mbPw" class="form-control" id="mbPw floatingPassword"
+						placeholder="Password" style="height: 57px" />
+					<label for="mbPw floatingPassword" class="form-label align-item-center">비밀번호를 입력해주세요</label>
+				</div>
+			</div>
+			<div th:if="${param.error}">
+				<!--아이디 또는 비밀번호가 일치하지 않을 시 메세지 출력-->
+				<div class="alert alert-danger">
+					아이디 또는 비밀번호를 확인해 주세요.
+				</div>
+			</div>
+
+
+			<button class="btn btn-primary w-100 py-2 btn-lg" type="submit" style="height: 63px">
+				로그인
+			</button>
+
+			<div class="form-check text-center mt-5">
+				<label class="form-check-label" for="flexCheckDefault">
+					계정이 없으신가요?
+				</label>
+				<!-- 회원 요청 페이지로 이동 -->
+				<span><a href="myModal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원 요청하기</a></span>
+			</div>
+
+			<p class="mt-5 mb-3 text-end">&copy; since 2023</p>
+		</form>
+
+
+	</main>
+
+	<!-- 모달 -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">
+						<strong>회원요청하기</strong>
+					</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<!-- 추후 데이터 보내기 -->
+				<div class="modal-body">
+
+					<form id="staticBackdropForm" th:action="@{/}" th:object="${memberForm}" method="post"
+						class="was-validated" novalidate>
+						<!-- 바디부분 -->
+						<div class="input-group mb-4 mt-3">
+							<div class="form-floating">
+								<input type="text" th:field="*{mbCompany}" class="form-control" id="validationCustom01"
+									placeholder="company" required />
+								<label for="floatingInputGroup1">회사명</label>
+							</div>
+						</div>
+						<div class="input-group mb-4">
+							<div class="form-floating">
+								<input type="text" th:field="*{mbName}" class="form-control" id="validationTooltip02"
+									placeholder="Username" required />
+								<label for="floatingInputGroup1">이름</label>
+							</div>
+						</div>
+						<div class="input-group mb-4">
+							<div class="form-floating">
+								<input type="text" th:field="*{mbId}" class="form-control" id="validationTooltip03"
+									placeholder="Username" required />
+								<label for="floatingInputGroup1">아이디</label>
+							</div>
+						</div>
+						<div class="input-group mb-4">
+							<div class="form-floating">
+								<input type="password" th:field="*{mbPw1}" class="form-control" id="password"
+									placeholder="비밀번호" required />
+								<label for="password">비밀번호</label>
+							</div>
+						</div>
+						<div class="input-group mb-4">
+							<div class="form-floating">
+								<input type="password" th:field="*{mbPw2}" class="form-control" id="confirmPassword"
+									placeholder="비밀번호 확인" required />
+								<label for="confirmPassword">비밀번호 확인</label>
+							</div>
+						</div>
+
+						<!-- 메시지를 표시할 div 추가 -->
+						<div id="passwordMatchMessage" class="text-danger"></div>
+
+						<div th:if="${#fields.hasAnyErrors()}">
+							<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
+							<!-- 폼 제출 시 에러가 있으면 모달을 닫지 않음 -->
+							<script>
+								// 모달 닫기 (부트스트랩 5 버전)
+								var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+
+								// 에러 메시지 표시 후 모달을 닫지 않음
+								modal.show();
+
+								// 폼 제출 시에도 모달을 닫지 않도록 이벤트를 막음
+								document.getElementById('staticBackdropForm').addEventListener('submit', function (event) {
+									event.preventDefault();
+								});
+							</script>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+								닫기
+							</button>
+							<!-- 요청 버튼을 submit 타입으로 변경 -->
+							<button type="submit" class="btn btn-primary">요청하기</button>
+						</div>
+						
+					</form>
+			</div>
+		</div>
+	</div>
+	<!-- 모달 끝 부분 -->
+
+	<!-- JavaScript 추가 -->
+	<script>
+	</script>
+
+</div>
+
+</html>

@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<p>메인화면입니다</p>
-	<a href="member/join">회원가입</a>
-	<a href="member/login">로그인</a>
-	<a href="member/loginOut">로그아웃</a>
-	<a href="member/board">게시판</a>
-</body>
+<html layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+	<h3>여기는 메인화면</h3>
+	<a th:href="@{/deep/main}">분석이동</a>
+</div>
+
 </html>

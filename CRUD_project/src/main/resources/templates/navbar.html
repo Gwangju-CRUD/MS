@@ -1,0 +1,17 @@
+<nav th:fragment="navbarFragment" class="navbar navbar-expand-sm navbar-dark bg-dark" style="height: 70px;">
+	<div class="container-fluid">
+		<a class="navbar-brand" th:href="@{/main}">crud</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mynavbar">
+			<ul class="navbar-nav me-auto">
+			</ul>
+			<form class="d-flex">
+				<a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/signup}"><button class="btn btn-primary" type="button">회원가입</button></a>
+				<a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/}"><button class="btn btn-primary" type="button">로그인</button></a>
+				<a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/member/logout}"><button class="btn btn-primary" type="button">로그아웃</button></a>
+			</form>
+		</div>
+	</div>
+</nav>

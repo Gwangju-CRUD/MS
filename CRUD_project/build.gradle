@@ -22,18 +22,26 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'// JPA
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'// Thymeleaf 타임리프
-	implementation 'org.springframework.boot:spring-boot-starter-validation'// final이 붙어있으면 자동으로 생성자 생성
-	implementation 'org.springframework.boot:spring-boot-starter-web'// 기본
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'//기본
-	implementation group: 'com.oracle.database.jdbc', name: 'ojdbc6', version: '11.2.0.4'
-	compileOnly 'org.projectlombok:lombok'// Lombok 롬복
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'// Lombok 롬복
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'// JPA
+   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'// Thymeleaf 타임리프
+   // 타임리프에서 제공하는 레이아웃을 사용할떄 필요한 라이브러리
+   implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+   // validation - 화면에서 전달받은 값을 검증(유효성 검사)할때 필요한 라이브러리
+   implementation 'org.springframework.boot:spring-boot-starter-validation'
+   implementation 'org.springframework.boot:spring-boot-starter-web'// 기본
+   implementation 'org.springframework.boot:spring-boot-starter-jdbc'//기본
+   implementation group: 'com.oracle.database.jdbc', name: 'ojdbc6', version: '11.2.0.4'
+   compileOnly 'org.projectlombok:lombok'// Lombok 롬복
+   developmentOnly 'org.springframework.boot:spring-boot-devtools'
+   annotationProcessor 'org.projectlombok:lombok'// Lombok 롬복
+   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   
+   // 스프링 시큐리티를 사용하기 위한 라이브러리
+   implementation 'org.springframework.boot:spring-boot-starter-security'
+   implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+   useJUnitPlatform()
 }
