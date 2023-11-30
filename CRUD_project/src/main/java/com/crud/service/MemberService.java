@@ -19,15 +19,6 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	// 유저 회원요청 로직
-	public void request(String mbId) {
-		if (memberRepository.findBymbId(mbId).isPresent()) {
-			throw new DuplicateIdException("이미 등록된 유저입니다.");
-		}
-	}
-	
-	
-	// 관리자 회원가입 로직
 	public Member create(String mbId, String mbPw, String mbName, String mbCompany) {
 
 		if (memberRepository.findBymbId(mbId).isPresent()) {

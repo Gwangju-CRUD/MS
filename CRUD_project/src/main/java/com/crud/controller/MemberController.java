@@ -40,6 +40,7 @@ public class MemberController {
 		if (!memberForm.getMbPw1().equals(memberForm.getMbPw2())) {
 			bindingResult.rejectValue("mbPw2", "passwordIncorrect", "비밀번호를 확인해주세요");
 			model.addAttribute("pwMsg", "비밀번호가 일치하지 않습니다.");
+			model.addAttribute(null, model);
 			return "redirect:/";
 		}
 		

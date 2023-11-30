@@ -6,11 +6,9 @@
 		</div>
 	</div>
 	<form th:action="@{/signup}" th:object="${memberForm}" method="post">
-		<!-- 유효성 div -->
 		<div th:if="${#fields.hasAnyErrors()}">
 			<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
 		</div>
-		
 		<div class="mb-3">
 			<label for="mbId" class="form-label">사용자ID</label>
 			<input type="text" th:field="*{mbId}" class="form-control">

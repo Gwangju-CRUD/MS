@@ -45,7 +45,6 @@ public class SecurityConfig {
 					.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
 			.formLogin((formLogin)-> { formLogin
 					.loginPage("/login") // 로그인시 어디로 이동해야할지 알려줌
-					.failureUrl("/?error")
 					.defaultSuccessUrl("/main")
 					.usernameParameter("mbId")
 					.passwordParameter("mbPw");

@@ -22,7 +22,6 @@ repositories {
 }
 
 dependencies {
-
    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'// JPA
    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'// Thymeleaf 타임리프
    // 타임리프에서 제공하는 레이아웃을 사용할떄 필요한 라이브러리
