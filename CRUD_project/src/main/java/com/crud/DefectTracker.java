@@ -49,7 +49,7 @@ public class DefectTracker {
 
       // Slack 웹훅 URL에 POST 요청을 보냅니다.
       ResponseEntity<String> response = restTemplate.exchange(
-            "https://hooks.slack.com/services/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", // 본인의 Slack 웹훅
+    		  "https://hooks.slack.com/services/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", // 본인의 Slack 웹훅
                                                                               // URL로 변경해주세요.
             HttpMethod.POST, request, String.class);
 

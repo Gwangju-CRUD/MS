@@ -22,12 +22,14 @@ public class DeepModel {
 	@SequenceGenerator(name = "MODEL_SEQ", sequenceName = "MODEL_SEQ")
 	private Long modelIdx; // 제품 번호
 	
-	@Column(name = "MODEL")
-	@Lob
-	private byte[] model;
+	@Column(name = "MODEL_PATH")
+	private String model;
 	
-	@Column(name = "FILE_NAME")
-	private String fileName; 
+	@Column(name = "MODEL_NAME")
+	private String modelName;
+	
+	@Column(name = "MODEL_DATE")
+	private String modelDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "mbId")

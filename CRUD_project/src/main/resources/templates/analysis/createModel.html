@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+	<meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>모델 생성</title>
     <style>
       #video {
@@ -20,8 +22,7 @@
     <p>정상 이미지 : <span id="normal_count"></span>/ 300</p>
     <p>불량 이미지 : <span id="error_count"></span>/ 300</p>
     <input id="model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input> <!-- 모델 이름 입력 -->
-    <button id="create_model">모델 생성</button>
-    <p><span id="create_model_msg"></span></p>
+    <button id="create_model">모델 생성 후 DB저장</button>
     <script src="/JS/createModel.js"></script>
   </body>
 </html>
