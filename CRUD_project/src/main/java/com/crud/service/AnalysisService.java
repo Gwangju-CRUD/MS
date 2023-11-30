@@ -40,7 +40,6 @@ public class AnalysisService {
 		 * 제품 인덱스(productIdx)를 기준으로 내림차순으로 정렬되며, 한 페이지당 10개의 분석 결과를 포함합니다. Params : page
 		 * - 가져올 분석 결과 목록의 페이지 번호 Returns : 해당 페이지의 분석 결과 목록 (Page<Analysis>)
 		 */
-
 		Pageable pageable = PageRequest.of(page, 10); // 한 페이지당 10개만 보여주겠다는 의미
 		Page<Analysis> PageList = analysisRepository.findAllByOrderByProductIdxDesc(pageable);
 		return PageList;
