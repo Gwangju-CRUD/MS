@@ -13,7 +13,6 @@ import com.crud.form.MemberForm;
 import com.crud.service.MemberService;
 
 import groovyjarjarpicocli.CommandLine.DuplicateNameException;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 

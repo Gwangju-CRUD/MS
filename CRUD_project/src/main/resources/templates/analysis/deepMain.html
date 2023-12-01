@@ -1,65 +1,90 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title>DeepMain</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   </head>
 
   <body>
     <div layout:fragment="content">
       <h1>분석메인</h1>
       <a href="/deep/create"
-        ><button class="btn" id="createModel">모델 생성</button></a
+        ><button class="btn btn-primary" id="createModel">모델 생성</button></a
       >
-      <button class="btn" id="videoAys">실시간 분석</button>
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#analysisModal"
+        data-analysis="video"
+      >
+        실시간 분석
+      </button>
 
-      <button class="btn" id="imageAys">이미지 분석</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#analysisModal"
+        data-analysis="image"
+      >
+        이미지 분석
+      </button>
 
-      <script>
-        $("#videoAys").click(function () {
-		  $(this).prop('disabled', true).text('로딩 중...');
-          videoAysFromServer();
-        });
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="analysisModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="analysisModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="analysisModalLabel">실시간 분석</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">실시간 분석을 시작하시겠습니까?</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                닫기
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="startAnalysis"
+                data-analysis=""
+              >
+                분석 시작
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        function videoAysFromServer() {
-          $.ajax({
-            url: "http://218.157.38.54:8002/apply_weights/",
-            method: "post",
-            success: function (data) {
-              console.log(data.message);
-              setTimeout(function() {
-                window.location.href = "/deep/videoAnalysis";
-              }, 200);
-            },
-            error: function (error) {
-              console.error("Error:", error);
-              $('#videoAys').prop('disabled', false).text('실시간 분석');
-            },
-          });
-        }
-
-        $("#imageAys").click(function () {
-		  $(this).prop('disabled', true).text('로딩 중...');
-          imageAysFromServer();
-        });
-
-        function imageAysFromServer() {
-          $.ajax({
-            url: "http://218.157.38.54:8002/apply_weights/",
-            method: "post",
-            success: function (data) {
-              console.log(data.message);
-              setTimeout(function() {
-                window.location.href = "/deep/imgAnalysis";
-              }, 200);
-            },
-            error: function (error) {
-              console.error("Error:", error);
-              $('#imageAys').prop('disabled', false).text('이미지 분석');
-            },
-          });
-        }
-      </script>
+      <script src="/JS/deepMain.js"></script>
     </div>
   </body>
 </html>
