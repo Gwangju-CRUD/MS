@@ -44,6 +44,7 @@
 				</label>
 				<!-- 회원 요청 페이지로 이동 -->
 				<span><a href="myModal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원 요청하기</a></span>
+
 			</div>
 
 			<p class="mt-5 mb-3 text-end">&copy; since 2023</p>
@@ -104,27 +105,6 @@
 								<label for="confirmPassword">비밀번호 확인</label>
 							</div>
 						</div>
-
-						<!-- 메시지를 표시할 div 추가 -->
-						<div id="passwordMatchMessage" class="text-danger"></div>
-
-						<div th:if="${#fields.hasAnyErrors()}">
-							<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
-							<!-- 폼 제출 시 에러가 있으면 모달을 닫지 않음 -->
-							<script>
-								// 모달 닫기 (부트스트랩 5 버전)
-								var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
-
-								// 에러 메시지 표시 후 모달을 닫지 않음
-								modal.show();
-
-								// 폼 제출 시에도 모달을 닫지 않도록 이벤트를 막음
-								document.getElementById('staticBackdropForm').addEventListener('submit', function (event) {
-									event.preventDefault();
-								});
-							</script>
-						</div>
-
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 								닫기
@@ -132,17 +112,48 @@
 							<!-- 요청 버튼을 submit 타입으로 변경 -->
 							<button type="submit" class="btn btn-primary">요청하기</button>
 						</div>
-						
+
 					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 모달 끝 부분 -->
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		document.addEventListener('DOMContentLoaded', function () {
+			var msg = /*[[${msg}]]*/ null;
 
-	<!-- JavaScript 추가 -->
-	<script>
+			console.log("Value in model (JavaScript):", msg);
+
+			if (msg !== null) {
+				console.log("Opening modal...");
+				var modal = new bootstrap.Modal(document.getElementById('msgModal'));
+				modal.show();
+			}
+		});
+    /*]]>*/
 	</script>
 
-</div>
+	<!-- 모달 -->
+	<div class="modal fade" id="msgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">알림</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p th:text="${msg}"></p>
+				</div>
+				<div class="modal-footer">
+					<div th:if="${msg == '요청이 완료되었습니다'}"><button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">닫기</button></div>
+					<div th:unless="${msg == '요청이 완료되었습니다'}"><button type="button" class="btn btn-secondary"
+							data-bs-target="#staticBackdrop" data-bs-toggle="modal" data-bs-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </html>
