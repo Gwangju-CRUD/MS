@@ -150,6 +150,11 @@ public class AnalysisController {
 	@GetMapping("/imgAnalysis")
 	private String goImgAnalysis() {
 
-		return "analysis/imgAnalysis";
+		return "analysis/single-analysis";
 	}
+	
+	
+
+	
+	
 }
