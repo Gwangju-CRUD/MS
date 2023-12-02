@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.crud.entity.Analysis;
+import com.crud.entity.DeepModel;
 import com.crud.entity.Member;
+import com.crud.repository.DeepModelRepository;
 import com.crud.service.AnalysisService;
 
 @RequestMapping("/deep")
@@ -27,6 +31,9 @@ public class AnalysisUploadController {
 
 	@Autowired
 	private AnalysisService analysisService;
+	
+    @Autowired
+    private DeepModelRepository deepModelRepository;
 	
 	@PostMapping("/aysUpload")
 	@ResponseBody
@@ -104,4 +111,19 @@ public class AnalysisUploadController {
 
 	}
 	
+	@PostMapping("/getModel")
+	@ResponseBody
+	public List<DeepModel> getModel() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+	    // 사용자의 ID를 가져옵니다.
+	    String userId = authentication.getName();
+	    System.out.println(authentication.getName());
+	    
+	    // 사용자 ID모델 정보를 조회합니다.
+        List<DeepModel> models = deepModelRepository.findByMember_MbId(userId);
+		
+		return models;
+	}
 }
