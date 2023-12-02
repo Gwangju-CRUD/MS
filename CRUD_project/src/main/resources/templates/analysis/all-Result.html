@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <title>회원관리</title>
+    <title>분석결과</title>
 
-        <!-- Custom fonts for this template -->
-        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link
-                href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <!-- 폰트랑..아이콘? -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- CSS -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -74,7 +74,7 @@
 
             <!-- 마이페이지 메뉴 -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="Mypage.html">
+                <a class="nav-link" href="Mypage.html">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>마이페이지</span>
                 </a>
@@ -200,21 +200,21 @@
                             </div>
                         </li>
 
-                        <div clledby="userDropdown">
-                                <a class=lass="topbar-divider d-none d-sm-block"></div>
+                        <div class="topbar-divider d-none d-sm-block"></div>
 
-                            <!-- Nav 아이템 - 프로필 -->
+                        <!-- Nav 아이템 - 프로필 -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                     src="img/undraw_profile.svg">
+                                    src="img/undraw_profile.svg">
                             </a>
 
                             <!-- 프로필 누르면 정보 출력 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labe"dropdown-item" href="#">
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     내 프로필
                                 </a>
@@ -235,165 +235,89 @@
                 <!-- 주 페이지 콘텐츠 -->
                 <div class="container-fluid">
 
-                    
+                    <!-- 페이지 말머리 -->
+                    <h1 class="h3 mb-2 text-gray-800">전체 분석 결과</h1>
+                    <p class="mb-4">전체 분석 결과를 보여주며, 누르면 상세보기도 가능</p>
 
-                        <div class="content" style="margin-top: 38px;">
-                            <div class="animated fadeIn">
-                                <div class="row">
-                                    <div class="col-lg-10 " >
-            
-                                        <div class="card" style="box-shadow: 9px 9px 15px rgba(171, 171, 171, 0.5);">
-                                            <div class="card-header" >
-                                                <strong class="card-title">알람</strong>
-                                            </div>
-                                            <div class="card-body">
-            
-                                                <div class="alert alert-info" role="alert">
-                                                    2023.11.23 | 남선산업 | dm k | 양불판정 완료
-                                                </div>
-            
-            
-                                                <div class="alert alert-warning" role="alert">
-                                                    2023.11.22 | 효웅산업 | qkqwnj54 | 불량 $ 개 >> <a href="#"
-                                                        class="alert-link">확인바람</a>.
-                                                </div>
-                                                <div class="alert alert-warning" role="alert">
-                                                    2023.11.22 | 효웅산업 | qkqwnj54 | 불량 $ 개 >> <a href="#"
-                                                        class="alert-link">확인바람</a>.
-                                                </div>
-                                                <div class="alert alert-warning" role="alert">
-                                                    2023.11.22 | 효웅산업 | qkqwnj54 | 불량 $ 개 >> <a href="#"
-                                                        class="alert-link">확인바람</a>.
-                                                </div>
-                                                <div class="alert alert-warning" role="alert">
-                                                    2023.11.22 | 효웅산업 | qkqwnj54 | 불량 $ 개 >> <a href="#"
-                                                        class="alert-link">확인바람</a>.
-                                                </div>
-                                            </div>
-                                        </div>
-            
-            
-                                    </div>
-            
-            
-            
-                                </div>
-            
-            
-                                <div class="row "  >
-                                    <div class="col-lg-4 "  >
-                                        <div class="card" style="box-shadow: 9px 9px 15px rgba(171, 171, 171, 0.5);">
-                                            <div class="card-header">
-                                                <strong class="card-title">금일 불량품 그래프</strong>
-                                            </div>
-                                            <div class="card-body" >
-                                                <a><img src="images/char4.png" width="500"></a>
-                                            </div>
-                                            <div class="card-body" >
-                                                <a><img src="images/char2.png" width="700"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-            
-            
-                                    <div class="col-lg-6 " >
-                                        <div class="card" style="box-shadow: 9px 9px 15px rgba(171, 171, 171, 0.5);">
-                                            <div class="card-header">
-                                                <strong class="card-title">주간 불량품 그래프</strong>
-                                            </div>
-                                            <div class="card-body" width="">
-                                                <a><img src="images/char.png"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            
-            
-            
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <div class="card" style="box-shadow: 9px 9px 15px rgba(171, 171, 171, 0.5);">
-                                            <div class="card-header">
-                                                <strong class="card-title">주간 양불판정 분석결과</strong>
-                                            </div>
-                                            <div class="card-body">
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Total</th>
-                                                            <th scope="col">Normal</th>
-                                                            <th scope="col">Defective</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">Sun</th>
-                                                            <td>62</td>
-                                                            <td>62</td>
-                                                            <td>0</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Mon</th>
-                                                            <td>157</td>
-                                                            <td>155</td>
-                                                            <td>2</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Tue</th>
-                                                            <td>2043</td>
-                                                            <td>2026</td>
-                                                            <td>27</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Wed</th>
-                                                            <td>452</td>
-                                                            <td>452</td>
-                                                            <td>0</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Thu</th>
-                                                            <td>877</td>
-                                                            <td>877</td>
-                                                            <td>0</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Fri</th>
-                                                            <td>1045</td>
-                                                            <td>1044</td>
-                                                            <td>1</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Sat</th>
-                                                            <td>246</td>
-                                                            <td>246</td>
-                                                            <td>0</td>
-                                                        </tr>
-            
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-                                </div>
-            
-            
-            
-            
-                            </div>
-                        </div><!-- .animated -->
-                    </div><!-- .content -->
+                    <!-- 분석결과 -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
+
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="allresult">분석결과</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 전체회원 -->
+                        <div class="card-body" id="allresultTable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">판정일</th>
+                                        <th scope="col">회사명</th>
+                                        <th scope="col">회원ID</th>
+                                        <th scope="col">제품분석정확도</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allresultBody">
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">1</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">A회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">96%</th>
+                                    </tr>
+
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">2</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">B회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">95%</th>
+                                    </tr>
+
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">3</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">C회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">93%</th>
+                                    </tr>
+
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">4</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">D회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">98%</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                              <!-- 하단 pagination -->
+                              <nav id="allMembersPagination" aria-label="Page navigation example">
+                                <ul class="pagination">
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                    </div>
+                </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -419,6 +343,7 @@
         
     </div>
     <!-- 이 페이지 wrapper 끝! -->
+
 
 
 
