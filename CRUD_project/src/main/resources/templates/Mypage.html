@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>마이페이지</title>
+
+    <!-- 폰트랑..아이콘? -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Owl Carousel CSS - 슬라이드 호환 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <!-- CSS -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+    <style>
+        /* 
+        ---------------------
+        프로필 정보 css
+        ---------------------
+         */
+       #profilediv {display: flex;
+        margin: 60px;
+        /* background-color: orange; */
+        justify-content: center;
+        }
+
+        .profile-img {
+            /* background-color: gray; */
+            width: 48%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 300px;
+        }
+
+        .profile-img img {
+            max-width: 100%;
+            height: auto;
+            max-height: 250px;
+        }
+
+        .profile-text {
+            /* background-color: blue; */
+            width: 48%;
+            padding-left: 80px;
+            padding-top: 30px;
+        }
+
+        .btn-small {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+
+        /* 
+        ---------------------
+        프로필 변경 모달 css
+        ---------------------
+         */
+
+         #root {
+            width: 100%;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .contents {
+            display: flex;
+            flex-direction: row;
+            margin-top: 30px;
+        }
+        .contents .upload-box {
+            width: 100%;
+            margin-right: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contents .upload-box .drag-file {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 3px dashed #dbdbdb;
+        }
+        .contents .upload-box .drag-file.highlight {
+            border: 3px dashed red;
+        }
+        .contents .upload-box .drag-file .image {
+            width: 40px;
+        }
+        .contents .upload-box .drag-file .message {
+            margin-bottom: 0;
+        }
+        .contents .upload-box .drag-file .preview {
+            display: none;
+            position: absolute;
+            left: 0;
+            height: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .contents .upload-box .file-label {
+            margin-top: 30px;
+            background-color: #5b975b;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 65%;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .contents .upload-box .file {
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+        .contents {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+        }
+        .contents .upload-box {
+            width: 100%;
+            box-sizing: border-box;
+            margin-right: 0;
+        }
+        .contents .upload-box .drag-file {
+            height: 150px;
+        }
+        .contents .files {
+            width: 100%;
+            box-sizing: border-box;
+            margin-right: 0;
+            overflow: initial;
+        }
+        }
+    </style>
+
+
+</head>
+
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- echarts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+<!-- Owl Carousel JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+<body id="page-top">
+
+    <!-- 마이페이지 wrapper-->
+    <div id="wrapper">
+
+        <!-- 배너 -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- 브랜드 회사명(로고)-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">CRUD <sup>5</sup></div>
+            </a>
+
+            <!-- 구별 선 -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- 메인-->
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>관리홈</span></a>
+            </li>
+
+            <!-- 구별 선 -->
+            <hr class="sidebar-divider">
+
+            <!-- 분석메뉴 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>분석</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="single-analysis.html">단건분석</a>
+                        <a class="collapse-item" href="cards.html">실시간분석</a>
+                        <a class="collapse-item" href="all-Result.html">분석결과</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 마이페이지 메뉴 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="Mypage.html" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>마이페이지</span>
+                </a>
+            </li>
+
+
+
+            <!-- 회원관리 메뉴 -->
+            <li class="nav-item active">
+                <a class="nav-link" href="MemberManagement.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>전체회원관리</span></a>
+            </li>
+
+
+
+            <!-- 바 숨기기 / 열기 -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                <!-- <button class="rounded-circle border-0" id="sidebarToggle"></button> -->
+            </div>
+
+        </ul>
+        <!-- 사이드바 끝!!! -->
+
+
+
+        <!-- 콘텐츠 Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- 상단바 -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
+
+
+                    <!-- 상단 Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav 아이텐 - 알림 -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- 알림 갯수 - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+
+                            <!-- 알림 누르면! -->
+
+                            <!-- 제목 -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    알림
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">2023.11.27</div>
+                                        <span class="font-weight-bold">금일 분석 결과 안내</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">2023.11.27</div>
+                                        00회사 주식 급락..
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">2023.11.26</div>
+                                        행복한 주말 보내세요!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">.</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav 아이템 - 프로필 -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+
+                            <!-- 프로필 누르면 정보 출력 -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    내 프로필
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    로그아웃
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- 상단바 끝!!! -->
+
+                <!--
+            ------------------------
+            주 페이지 콘텐츠
+            -----------------------
+            -->
+                <div class="container-fluid">
+
+
+                      <div class="card">
+                        <h5 class="card-header">나의 프로필</h5>
+                        <div class="card-body">
+
+                          <div class="feed-box">
+                                <section class="card">
+                                    <div class="card-body" id="profilediv">
+                                        <!-- 프로필 이미지 -->
+                                        <div class="profile-img">
+                                            <!-- 이미지 누르면 프로필 변경 할 수 있게 해야함.. -->
+                                            <img  id="profileImg" src="img/undraw_profile.svg" alt="프로필사진">
+                                        </div>
+                                
+                                        <!-- 프로필 정보 입력 -->
+                                        <div class="profile-text">
+                                            <h1>서희주
+                                            <hr>
+                                            <h3>00회사</h3>
+                                            <hr>
+                                            <h5>ID | HEEJU</h5>
+                                            <h5>가입일 | 2023년12월01일</h5>
+                                                
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+
+                        </div>
+                      </div>
+
+                    <br><br>
+                    
+
+                     <!-- 나의 분석기록 -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="allresult">나의 분석 기록</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 분석 기록 -->
+                        <div class="card-body" id="allresultTable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">판정일</th>
+                                        <th scope="col">회사명</th>
+                                        <th scope="col">회원ID</th>
+                                        <th scope="col">제품분석정확도</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allresultBody">
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">1</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">A회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">96%</th>
+                                    </tr>
+
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">2</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">B회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">95%</th>
+                                    </tr>
+
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">3</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">C회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">93%</th>
+                                    </tr>
+
+                                    <tr onclick="window.location.href='Result-Detail.html';">
+                                        <th scope="col">4</th>
+                                        <th scope="col">2023년11월29일11시30분</th>
+                                        <th scope="col">D회사</th>
+                                        <th scope="col">DOZZI</th>
+                                        <th scope="col">98%</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                              <!-- 하단 pagination -->
+                              <nav id="allMembersPagination" aria-label="Page navigation example">
+                                <ul class="pagination">
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                    </div>   
+
+
+
+
+                </div>
+                <!-- container-fluid 끝 (중심메뉴)-->
+
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- Main Content 끝 -->
+
+
+
+    </div>
+    <!-- Content Wrapper 끝 -->
+    <!-- 푸터 -->
+    <footer class="sticky-footer" style="background-color: #F8F9FC;">
+        <hr>
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>CRUD &copy; 2023.11.28<br><br>
+                    진영준 | 장채린 | 서희주 | 한창헌 | 김동민</span>
+            </div>
+        </div>
+    </footer>
+    <!-- 푸터 끝 -->
+
+    </div>
+    <!-- 이 페이지 wrapper 끝! -->
+
+
+<!--
+-----------------------
+프로필 변경 모달
+-----------------------
+-->
+<script>
+
+    document.getElementById('profileImg').addEventListener('click', function() {
+        $('#profileModal').modal('show');
+    });
+
+</script>
+
+
+<!-- 
+-----------------------
+프로필 변경 모달
+파일 드래그 앤 드롭
+업로드, 미리보기
+-----------------------
+-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function DropFile(dropAreaId, fileListId) {
+            let dropArea = document.getElementById(dropAreaId);
+            let fileList = document.getElementById(fileListId);
+
+            // 함수 설명
+
+            // < preventDefaults >
+            // 이벤트의 추가 전파를 막는다.
+            // 자신을 둘러싸고 있는 태그에 이벤트가 적용되면
+            // 자기까지는 오게하지 말아줘! 라는의미
+
+            // < stopPropagation >
+            // 브라우저가 해당 이벤트에 대해
+            // 수행하는 기본적인 작업을 막음
+            // 예) 파일을 내려놓을 경우 파일의 내용을
+            // 새 탬에서 보여주는 크롬 브라우저의 동작을 막음
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            // < highlight >
+            // 파일을 드래그 해서 상자 안으로 가져갔을 때
+            // 표시를 해주기 위한 이벤트
+            // 파일이 상자 안으로 들어가면 highlight 함수를
+            // 파일이 상자 밖으로 벗어나면 unhighlight 함수를 사용
+            function highlight(e) {
+                preventDefaults(e);
+                dropArea.classList.add("highlight");
+            }
+
+            function unhighlight(e) {
+                preventDefaults(e);
+                dropArea.classList.remove("highlight");
+            }
+
+            // < handleDrop >
+            // 파일 업로드
+            // 상자안에 파일을 드래그해서
+            // 내려놓았을 때 drop 이벤트가 발생
+            // 그 이벤트 객체에서 files 라는 파일 배열을 가져올 수 있음
+            // 이 배열은 선택한 여러개의 파일 데이터를 가지고있음
+            function handleDrop(e) {
+                unhighlight(e);
+                let dt = e.dataTransfer;
+                let files = dt.files;
+
+                handleFiles(files);
+
+                const fileList = document.getElementById(fileListId);
+                if (fileList) {
+                    fileList.scrollTo({ top: fileList.scrollHeight });
+                }
+            }
+
+            function handleFiles(files) {
+                console.log("handleFiles 함수가 실행되었습니다.", files);
+                files = [...files];
+                files.forEach(previewFile);
+            }
+
+            function previewFile(file) {
+                console.log(file);
+                renderFile(file);
+            }
+
+            // < renderFile >
+            // 이미지 미리보기
+            // 파일이 선택이 되면 파일의 데이터를 가지고
+            // 이미지를 만들어 주는 함수(renderFile)를 사용
+            // 업로드 칸을 이미지로 변경
+            function renderFile(file) {
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    let img = dropArea.getElementsByClassName("preview")[0];
+                    img.src = reader.result;
+                    img.style.display = "block";
+                };
+            }
+
+            function resetFileUpload() {
+                let img = dropArea.getElementsByClassName("preview")[0];
+                img.src = ""; // 초기화
+                img.alt = "";
+            }
+
+            dropArea.addEventListener("dragenter", highlight, false);
+            dropArea.addEventListener("dragover", highlight, false);
+            dropArea.addEventListener("dragleave", unhighlight, false);
+            dropArea.addEventListener("drop", handleDrop, false);
+
+            // 모달이 닫힐 때 초기화
+            $('#profileModal').on('hidden.bs.modal', function () {
+                resetFileUpload();
+            });
+
+            return {
+                handleFiles
+            };
+        }
+
+
+        const dropFile = new DropFile("drop-file", "files");
+            
+        
+    });
+</script>
+
+    <!-- 프로필사진 변경 모달  -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="profileModalLabel">File Upload</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+            
+            <div id="root">
+                
+                
+                <div class="contents">
+                  <div class="upload-box">
+                    <div id="drop-file" class="drag-file">
+                      <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image" >
+                      <p class="message">Drag files to upload</p>
+                      <img src="" alt="미리보기 이미지" class="preview">
+                    </div>
+                    <label class="file-label" for="chooseFile">Choose File</label>
+                    <input class="file" id="chooseFile" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif, image/PNG">
+                  </div>
+                </div>
+              </div>
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+            <a class="btn btn-primary" href="Mypage.html">변경</a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+    <!-- 로그아웃 모달-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                    <a class="btn btn-primary" href="login.html">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 길어지면 아래에 위로올리기버튼-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>
