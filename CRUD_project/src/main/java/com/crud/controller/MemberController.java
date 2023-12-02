@@ -1,5 +1,6 @@
 package com.crud.controller;
 
+import groovy.lang.GString;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,11 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
+
+	@GetMapping("myPage")
+	public String myPage(){
+		return "Mypage";
+	}
 
 	// 관리자만 보이도록 추후 설정할 것
 	@GetMapping("/signup")
