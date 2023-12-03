@@ -16,13 +16,18 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <!-- jQuery -->
+    <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
             integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <!-- Bootstrap 4.6 자체 js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
             crossorigin="anonymous"></script>
+    <!-- 아파치 E차트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+    <!-- 아파치 E차트 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
     <base href="/"/>
 </head>
 
@@ -38,19 +43,14 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- 브랜드 회사명(로고)-->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">CRUD <sup>5</sup></div>
-        </a>
+        <h2 class="mb-3 mt-3 ml-3"><a class="display-6" href="main"> Pure Select </a><h2>
 
         <!-- 구별 선 -->
         <hr class="sidebar-divider my-0">
 
         <!-- 메인-->
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="main">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>관리홈</span></a>
         </li>
@@ -67,16 +67,16 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="single-analysis.html">단건분석</a>
+                    <a class="collapse-item" href="singleAnalysis">단건분석</a>
                     <a class="collapse-item" href="cards.html">실시간분석</a>
-                    <a class="collapse-item" href="all-Result.html">분석결과</a>
+                    <a class="collapse-item" href="allResult">분석결과</a>
                 </div>
             </div>
         </li>
 
         <!-- 마이페이지 메뉴 -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Mypage.html" data-toggle="collapse" data-target="#collapseUtilities"
+            <a class="nav-link collapsed" href="myPage"
                aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>마이페이지</span>
@@ -86,7 +86,7 @@
 
         <!-- 회원관리 메뉴 -->
         <li class="nav-item active">
-            <a class="nav-link" href="MemberManagement.html">
+            <a class="nav-link collapsed" href="memberManagement">
                 <i class="fas fa-fw fa-table"></i>
                 <span>전체회원관리</span></a>
         </li>

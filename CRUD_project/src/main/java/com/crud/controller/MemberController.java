@@ -24,10 +24,7 @@ public class MemberController {
 
 	private final MemberService memberService;
 
-	@GetMapping("myPage")
-	public String myPage(){
-		return "Mypage";
-	}
+
 
 	// 관리자만 보이도록 추후 설정할 것
 	@GetMapping("/signup")
@@ -35,11 +32,6 @@ public class MemberController {
 		return "member/signup_form";
 	}
 
-	@GetMapping("/memberManagement")	
-	public String memberManagement() {
-		return "member/memberManagement";
-	}
-	
 	@PostMapping("/signup")
 	public String signup(@Valid MemberForm memberForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -113,4 +105,25 @@ public class MemberController {
 
 	}
 
+	// ------- 네비바 컨트롤러 -------
+
+	@GetMapping("myPage")
+	public String myPage(){
+		return "myPage";
+	}
+
+	@GetMapping("/memberManagement")
+	public String memberManagement() {
+		return "member/memberManagement";
+	}
+
+	@GetMapping("allResult")
+	public String allResult(){
+		return "analysis/allResult";
+	}
+
+	@GetMapping("singleAnalysis")
+	public String singleAnalysis(){
+		return "analysis/singleAnalysis";
+	}
 }
