@@ -1,6 +1,12 @@
 package com.crud.controller;
 
 import groovy.lang.GString;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -8,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.crud.DuplicateIdException;
+import com.crud.entity.Member;
+import com.crud.entity.RequestMember;
 import com.crud.form.MemberForm;
 import com.crud.service.MemberService;
 
@@ -23,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
-
+	
 
 
 	// 관리자만 보이도록 추후 설정할 것
@@ -69,6 +78,27 @@ public class MemberController {
 
 		if (memberService.request(memberForm.getMbId()) == true) {
 			model.addAttribute("msg", "요청이 완료되었습니다");
+			
+			// 1. memberService에 요청 메소드 만들기
+			RequestMember requestMember =  new RequestMember();
+			
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
+			String formatDate = now.format(format);
+			
+			requestMember.setMbId(memberForm.getMbId());
+			requestMember.setMbPw(memberForm.getMbPw1());
+			requestMember.setMbName(memberForm.getMbName());
+			requestMember.setMbCompany(memberForm.getMbCompany());
+			requestMember.setJoineDate(formatDate);
+			
+			
+			memberService.requestMember(requestMember);
+			
+			
+			// 3. DB에 회원의 값 저장하기
+			
+			
 			return "member/login_form";
 		} else {
 			model.addAttribute("msg", "동일한 아이디가 있습니다");
@@ -112,10 +142,21 @@ public class MemberController {
 	}
 
 	@GetMapping("/memberManagement")
-	public String memberManagement(Model model) {
+	public String memberManagement(Model model, @RequestParam(value = "page", defaultValue = "0")int page) {
+		// 전체 회원 조회
+		Page<Member> memberList = this.memberService.getAllMember(page);
 		model.addAttribute("memberForm", new MemberForm());
+		model.addAttribute("memberList",memberList);
+		
+		// 요청 회원 조회
+		Page<RequestMember> requestMemberList = this.memberService.getRequestMember(page);
+		model.addAttribute("requestMemberList",requestMemberList);
+		
 		return "member/memberManagement";
 	}
+	
+	
+	
 
 	@GetMapping("allResult")
 	public String allResult(){
@@ -126,4 +167,7 @@ public class MemberController {
 	public String singleAnalysis(){
 		return "analysis/singleAnalysis";
 	}
+	
+		
+		
 }
