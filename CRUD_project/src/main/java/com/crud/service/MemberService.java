@@ -9,7 +9,6 @@ import com.crud.DuplicateIdException;
 import com.crud.entity.Member;
 import com.crud.repository.MemberRepository;
 
-import groovyjarjarpicocli.CommandLine.DuplicateNameException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,8 +26,8 @@ public class MemberService {
 			return true;
 		}
 	}
-	
-	
+
+
 	// 관리자 회원가입 로직
 	public Member create(String mbId, String mbPw, String mbName, String mbCompany) {
 
@@ -41,8 +40,9 @@ public class MemberService {
 		member.setMbName(mbName);
 		member.setMbCompany(mbCompany);
 		member.setJoineDate(LocalDateTime.now());
-		member.setProfileImg("몰라");
+		member.setProfileImg("local");
 		this.memberRepository.save(member);
+
 		return member;
 	}
 }
