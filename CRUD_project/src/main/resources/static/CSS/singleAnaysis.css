@@ -1,0 +1,126 @@
+/* 결과 상세 카드 차트 css */
+.card-container-chart {
+    display: flex;
+    justify-content: space-between;
+    margin-right: -10px;
+    /* 외부 여백 보정 */
+}
+
+.chartcard {
+    width: 48%;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+}
+
+/* 결과상세 불량사진 호버 */
+.owl-carousel .owl-item img {
+    transition: transform 0.3s;
+}
+
+.owl-carousel .owl-item:hover img {
+    transform: scale(1.2);
+}
+
+/* 분석로그 컨테이너 설정 */
+
+
+
+/* 이미지와 텍스트 컨테이너를 감싸고 있는 최상위 컨테이너 */
+.good-model-table {
+    width: 70vw;
+    height: 11vw;
+    /* background-color: gray; */
+}
+
+.card-red {
+    width: 67vw;
+    height: 8vw;
+    /* background-color: red; */
+}
+
+/* 이미지 컨테이너 */
+.fixed-card {
+    width: 15vw;
+    /* 예를 들어 뷰포트의 15%로 설정 */
+    height: 8vw;
+    /* 가로 크기와 동일하게 설정해서 정사각형을 유지 */
+    /* background-color: green; */
+}
+
+/* 이미지 자체 */
+.img-container img {
+    width: 15vw;
+    /* 이미지가 컨테이너에 맞게 조정되도록 설정 */
+    height: 8vw;
+    /* 이미지의 종횡비를 유지 */
+}
+
+/* 텍스트 컨테이너 */
+.text-card {
+    width: 65vw;
+    /* 뷰포트의 65%로 설정 */
+    height: 15vw;
+    /* 이미지 컨테이너와 동일한 높이로 설정 */
+    padding: 1vmin;
+    /* 텍스트 영역 주변에 패딩 적용 */
+}
+
+@media (max-width: 868px) {
+
+    .good-model-table {
+        height: 120px;
+        /* background-color: gray; */
+    }
+
+    .card-red {
+        width: auto;
+        height: 84px;
+    }
+
+    .fixed-card {
+        width: 54px;
+        height: 84px;
+        /* background-color: green; */
+    }
+
+    .img-container img {
+        width: 54px;
+        height: 84px;
+    }
+}
+
+
+.col-12 {
+    flex:none;
+}
+
+
+@media (min-width: 1px) and (max-width: 1391px) {
+    .card-text {
+        display: none;
+    }
+
+    .card-title {
+        display: none;
+    }
+
+}
+
+@media (min-width: 1391px) {
+    .card-text-sub {
+        display: none;
+    }
+
+}
+
+/* 정상과 불량 개수가 많아져도 내부 스크롤 멈추게 하기 */
+#goodmodeltable {
+    overflow: hidden; 
+}
+
+#badmodeltable {
+    overflow: hidden;
+}
