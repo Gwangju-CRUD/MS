@@ -25,7 +25,7 @@ $(document).ready(function () {
     items: 6,
     loop: true,
     autoplay: true,
-    autoplayTimeout: 3000,
+    autoplayTimeout: 2000,
     autoplayHoverPause: true,
     margin: 50,
   });
@@ -56,7 +56,7 @@ $(".owl-carousel").owlCarousel({
   items: 6, // 슬라이드 표시할 항목 수
   loop: true, // 무한루프
   autoplay: true, // 자동 재생
-  autoplayTimeout: 1000, // 시간간격(1초로해놈)
+  autoplayTimeout: 3000, // 시간간격(1초로해놈)
   autoplayHoverPause: true, // 마우스 호버 시 재생 정지
   margin: 50,
 });
