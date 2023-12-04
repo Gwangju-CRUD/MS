@@ -32,29 +32,27 @@ public class MemberController {
 		return "member/signup_form";
 	}
 
-	@PostMapping("/signup")
-	public String signup(@Valid MemberForm memberForm, BindingResult bindingResult) {
+	@PostMapping("/memberManagement")
+	public String signup(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("msg", "모든 입력창을 입력해주세요.");
 			return "member/memberManagement";
 		}
 		if (!memberForm.getMbPw1().equals(memberForm.getMbPw2())) {
-			bindingResult.rejectValue("mbPw2", "passwordIncorrect", "비밀번호를 확인해주세요");
+			model.addAttribute("msg", "비밀번호를 확인해주세요.");
 			return "member/memberManagement";
 		}
 		try {
 			this.memberService.create(memberForm.getMbId(), memberForm.getMbPw1(), memberForm.getMbName(),
 					memberForm.getMbCompany());
 		} catch (DuplicateIdException e) {
-			bindingResult.reject("signupfail", "이미 등록된 아이디입니다.");
-			return "member/memberManagement";
-		} catch (DuplicateNameException e) {
-			bindingResult.reject("signupfail", "이미 등록된 이름입니다.");
+			model.addAttribute("msg", "이미 등록된 아이디입니다.");
 			return "member/memberManagement";
 		}
-		return "redirect:/memberManagement";
+		return "member/memberManagement";
 	}
 
-	// 관리자 회원가입 시큐리티
+	// 유저 요청 회원가입 시큐리티
 	@PostMapping("/")
 	public String signupRequest(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
 
@@ -69,14 +67,14 @@ public class MemberController {
 			return "member/login_form";
 		}
 
-		if(memberService.request(memberForm.getMbId()) == true) {
+		if (memberService.request(memberForm.getMbId()) == true) {
 			model.addAttribute("msg", "요청이 완료되었습니다");
 			return "member/login_form";
-		}else {
+		} else {
 			model.addAttribute("msg", "동일한 아이디가 있습니다");
 			return "member/login_form";
 		}
-		
+
 	}
 
 	// ------- 관리자 페이지에서 db로 저장을 하는 컨트롤러 및 서비스 로직 구성
@@ -87,6 +85,7 @@ public class MemberController {
 		model.addAttribute("memberForm", new MemberForm());
 		return "member/login_form";
 	}
+
 
 	// 로그인이 아무 이상없이 성공하면 main으로 이동함
 	@GetMapping("/main")
@@ -113,7 +112,8 @@ public class MemberController {
 	}
 
 	@GetMapping("/memberManagement")
-	public String memberManagement() {
+	public String memberManagement(Model model) {
+		model.addAttribute("memberForm", new MemberForm());
 		return "member/memberManagement";
 	}
 
