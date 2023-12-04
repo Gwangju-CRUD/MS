@@ -25,7 +25,7 @@ $(document).ready(function () {
     items: 6,
     loop: true,
     autoplay: true,
-    autoplayTimeout: 1000,
+    autoplayTimeout: 3000,
     autoplayHoverPause: true,
     margin: 50,
   });
