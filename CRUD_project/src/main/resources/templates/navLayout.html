@@ -1,312 +1,349 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:fragment="mainHeader">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>회원관리</title>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:fragment="mainHeader">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>회원관리</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+            integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+            crossorigin="anonymous">
 
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
+        <link
+            href="vendor/fontawesome-free/css/all.min.css"
+            rel="stylesheet"
+            type="text/css">
+        <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <!-- 제이쿼리 -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="vendor/jquery/jquery.js"></script>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4.6 자체 js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- 폰트어썸 -->
+        <script src="https://kit.fontawesome.com/c37cdf4059.js" crossorigin="anonymous"></script>
+        <!-- 제이쿼리 -->
+        <script
+            src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+            crossorigin="anonymous"></script>
+        <!-- Bootstrap 4.6 자체 js -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
             crossorigin="anonymous"></script>
-    <!-- 아파치 E차트 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
-    <!-- 아파치 E차트 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <!-- 아파치 E차트 -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+        <!-- 아파치 E차트 JS -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-    <base href="/"/>
-</head>
+        <base href="/"/>
+    </head>
 
-<body id="page-top" class="d-flex flex-column min-vh-100">
-<div id="wrapper">
-    <!--
+    <!-- 제이쿼리 -->
+    <script
+        src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous"></script>
 
-     !!!!!!!!!!!!!!
-     사이드 네비 시작
-     !!!!!!!!!!!!!!
+    <body id="page-top" class="d-flex flex-column min-vh-100">
+        <div id="wrapper">
+            <!-- !!!!!!!!!!!!!! 사이드 네비 시작 !!!!!!!!!!!!!! -->
+            <ul
+                class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+                id="accordionSidebar">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main">
+                    <div class="sidebar-brand-icon">
+                        <i class="fa-solid fa-industry"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-2">PURE SELECT</div>
+                </a>
+                <!-- 구별 선 -->
+                <hr class="sidebar-divider my-0">
 
-     -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                <!-- 메인-->
+                <li class="nav-item mt-2 mb-2">
+                    <a class="nav-link" href="main">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>관리홈</span></a>
+                </li>
 
-        <!-- 브랜드 회사명(로고)-->
-        <h2 class="mb-3 mt-3 ml-3">
-            <a class="display-6" href="main" style=""> Pure Select </a>
-        <h2>
+                <!-- 구별 선 -->
+                <hr class="sidebar-divider">
 
-        <!-- 구별 선 -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- 메인-->
-        <li class="nav-item">
-            <a class="nav-link" href="main">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>관리홈</span></a>
-        </li>
-
-        <!-- 구별 선 -->
-        <hr class="sidebar-divider">
-
-        <!-- 분석메뉴 -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>분석</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="singleAnalysis">단건분석</a>
-                    <a class="collapse-item" href="cards.html">실시간분석</a>
-                    <a class="collapse-item" href="allResult">분석결과</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- 마이페이지 메뉴 -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="myPage"
-               aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>마이페이지</span>
-            </a>
-        </li>
-
-
-        <!-- 회원관리 메뉴 -->
-        <li class="nav-item active">
-            <a class="nav-link collapsed" href="memberManagement">
-                <i class="fas fa-fw fa-table"></i>
-                <span>전체회원관리</span></a>
-        </li>
-
-
-        <!-- 바 숨기기 / 열기 -->
-        <div class="text-center">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-    </ul>
-
-    <!--
-
-     !!!!!!!!!!!!
-     사이드 네비 끝
-     !!!!!!!!!!!!
-
-     -->
-
-    <!--
-
-     !!!!!!!!!!!!!!
-     최상단 네비 시작
-     !!!!!!!!!!!!!!
-
-     -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
-        <div id="content">
-
-            <!-- 상단바 -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
-
-
-                <!-- 상단 Navbar -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                             aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
-                                           aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                <!-- 분석메뉴 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        href="#"
+                        data-toggle="collapse"
+                        data-target="#collapseTwo"
+                        aria-expanded="true"
+                        aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>분석</span>
+                    </a>
+                    <div
+                        id="collapseTwo"
+                        class="collapse"
+                        aria-labelledby="headingTwo"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="singleAnalysis">단건분석</a>
+                            <a class="collapse-item" href="cards.html">실시간분석</a>
+                            <a class="collapse-item" href="allResult">분석결과</a>
                         </div>
-                    </li>
+                    </div>
+                </li>
 
-                    <!-- Nav 아이텐 - 알림 -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- 알림 갯수 - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
-                        </a>
+                <!-- 마이페이지 메뉴 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        href="myPage"
+                        aria-expanded="true"
+                        aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>마이페이지</span>
+                    </a>
+                </li>
 
-                        <!-- 알림 누르면! -->
+                <!-- 회원관리 메뉴 -->
+                <li class="nav-item active">
+                    <a class="nav-link collapsed" href="memberManagement">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>전체회원관리</span></a>
+                </li>
 
-                        <!-- 제목 -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                알림
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">2023.11.27</div>
-                                    <span class="font-weight-bold">금일 분석 결과 안내</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">2023.11.27</div>
-                                    00회사 주식 급락..
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">2023.11.26</div>
-                                    행복한 주말 보내세요!
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">.</a>
-                        </div>
-                    </li>
 
-                    <div class="topbar-divider d-none d-sm-block"></div>
 
-                    <!-- Nav 아이템 - 프로필 -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                        </a>
-
-                        <!-- 프로필 누르면 정보 출력 -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                내 프로필
-                            </a>
-
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                로그아웃
-                            </a>
-                        </div>
-                    </li>
-
-                </ul>
-
-            </nav>
-            <!-- 상단바 끝!!! -->
-            <script src="js/sb-admin-2.min.js"></script>
-
-            <!--주 페이지 콘텐츠-->
-            <div layout:fragment="content">
-                공통 레이아웃
-            </div>
-
-        </div>
-
-        <!--
-
-         !!!!!!!!
-         푸터 시작
-         !!!!!!!!
-
-         -->
-        <footer class="footer" style="background-color: #F8F9FC;">
-            <hr class="mt-0">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                <span>CRUD &copy; 2023.11.28<br><br>
-                    진영준 | 장채린 | 서희주 | 한창헌 | 김동민</span><br><br>
-                </div>
-            </div>
-        </footer>
-        <!--
-
-         !!!!!!
-          푸터 끝
-         !!!!!!
-
-        -->
-    </div>
-
-    <!-- 로그아웃 모달-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                <!-- 바 숨기기 / 열기 -->
+                <div class="text-center mt-5">
+                    <button class="rounded-circle border-0" id="sidebarToggle">
                     </button>
                 </div>
-                <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="/member/logout">로그아웃</a>
+
+            </ul>
+
+            <!-- !!!!!!!!!!!! 사이드 네비 끝 !!!!!!!!!!!! -->
+
+            <!-- !!!!!!!!!!!!!! 최상단 네비 시작 !!!!!!!!!!!!!! -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <!-- 상단바 -->
+                    <nav
+                        class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <form class="form-inline">
+                            <button
+                                id="sidebarToggleTop"
+                                class="btn btn-link d-md-none rounded-circle mr-3">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                        </form>
+
+                        <!-- 상단 Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="searchDropdown"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div
+                                    class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                    aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input
+                                                type="text"
+                                                class="form-control bg-light border-0 small"
+                                                placeholder="Search for..."
+                                                aria-label="Search"
+                                                aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+
+                            <!-- Nav 아이텐 - 알림 -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="alertsDropdown"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <!-- 알림 갯수 - Alerts -->
+                                    <span class="badge badge-danger badge-counter">3+</span>
+                                </a>
+
+                                <!-- 알림 누르면! -->
+
+                                <!-- 제목 -->
+                                <div
+                                    class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">
+                                        알림
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-file-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">2023.11.27</div>
+                                            <span class="font-weight-bold">금일 분석 결과 안내</span>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-success">
+                                                <i class="fas fa-donate text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">2023.11.27</div>
+                                            00회사 주식 급락..
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-warning">
+                                                <i class="fas fa-exclamation-triangle text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">2023.11.26</div>
+                                            행복한 주말 보내세요!
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">.</a>
+                                </div>
+                            </li>
+
+                            <div class="topbar-divider d-none d-sm-block"></div>
+
+                            <!-- Nav 아이템 - 프로필 -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="userDropdown"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                </a>
+
+                                <!-- 프로필 누르면 정보 출력 -->
+                                <div
+                                    class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        내 프로필
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a
+                                        class="dropdown-item"
+                                        href="#"
+                                        data-toggle="modal"
+                                        data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        로그아웃
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+                    <!-- 상단바 끝!!! -->
+                    <script src="js/sb-admin-2.min.js"></script>
+
+                    <!--주 페이지 콘텐츠-->
+                    <div layout:fragment="content">
+                        공통 레이아웃
+                    </div>
+
+                </div>
+
+                <!-- !!!!!!!! 푸터 시작 !!!!!!!! -->
+                <footer class="footer" style="background-color: #F8F9FC;">
+                    <hr class="mt-0">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <div>CRUD &copy;</div>
+                            <div class="mt-1 mb-1">Since. 2023.11</div>
+                    </div>
+                </footer>
+                <!-- !!!!!! 푸터 끝 !!!!!! -->
+            </div>
+
+            <!-- 로그아웃 모달-->
+            <div
+                class="modal fade"
+                id="logoutModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                            <a class="btn btn-primary" href="/member/logout">로그아웃</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!--
+            <!-- !!!!!!!!!!!! 최상단 네비 끝 !!!!!!!!!!!! -->
 
-     !!!!!!!!!!!!
-     최상단 네비 끝
-     !!!!!!!!!!!!
-
-     -->
 
 </div>
 
-</body>
+
+    </body>
 </html>
