@@ -49,11 +49,6 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-    <!-- 꺾은선 그래프 -->
-    <script
-        type="text/javascript"
-        src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-
     <body id="page-top">
 
         <!-- 마이페이지 wrapper-->
@@ -305,114 +300,6 @@
 
                     <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
                     <div class="container-fluid">
-                        <!-- 불량사진 슬라이드 -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">불량사진 총 6장</h5>
-                            </div>
-                            <div class="card-body">
-
-                                <!-- 슬라이드쇼로 불량 사진 보여주기 -->
-                                <div class="owl-carousel owl-theme owl-loaded">
-                                    <div class="owl-stage-outer">
-                                        <div class="owl-stage">
-                                            <!-- 예) 6장의 사진가지고 함 -->
-                                            <div class="owl-item"><img
-                                                src="./img/p1.png"
-                                                width="100px"
-                                                height="300px;"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">1</div>
-                                            <div class="owl-item"><img
-                                                src="./img/p2.png"
-                                                width="100px"
-                                                height="300px;"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">2</div>
-                                            <div class="owl-item"><img
-                                                src="./img/p3.png"
-                                                width="100px"
-                                                height="300px;"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">3</div>
-                                            <div class="owl-item"><img
-                                                src="./img/p1.png"
-                                                width="100px"
-                                                height="300px;"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">4</div>
-                                            <div class="owl-item"><img
-                                                src="./img/p2.png"
-                                                width="100px"
-                                                height="300px;"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">5</div>
-                                            <div class="owl-item"><img
-                                                src="./img/p3.png"
-                                                width="100px"
-                                                height="300px;"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">6</div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- 사진을 눌렀을 때 나타날 모달 -->
-                        <div
-                            class="modal fade"
-                            id="imageModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="imageModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="imageModalLabel">이미지 상세보기</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img id="modalImage" src="" class="img-fluid" alt="모달 이미지">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 로그아웃 모달-->
-                        <div
-                            class="modal fade"
-                            id="logoutModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                                        <a class="btn btn-primary" href="login.html">로그아웃</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 길어지면 아래에 위로올리기버튼-->
-                        <a class="scroll-to-top rounded" href="#page-top">
-                            <i class="fas fa-angle-up"></i>
-                        </a>
 
                         <div class="card shadow mb-4">
                             <!-- Use the card class for shadow effect -->
@@ -432,6 +319,151 @@
                                             <!--양불 꺽은선 그래프 -->
                                             <div id="container" style="height: 400%"></div>
 
+                                            <script
+                                                type="text/javascript"
+                                                src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+                                            <script type="text/javascript">
+                                                var dom = document.getElementById('container');
+                                                var myChart = echarts.init(dom, null, {
+                                                    renderer: 'canvas',
+                                                    useDirtyRect: false
+                                                });
+                                                var app = {};
+
+                                                var option;
+
+                                                option = {
+                                                    title: {
+                                                        text: '-1'
+                                                    },
+                                                    tooltip: {
+                                                        trigger: 'axis'
+                                                    },
+                                                    legend: {},
+                                                    toolbox: {
+                                                        show: true,
+                                                        feature: {
+                                                            dataZoom: {
+                                                                yAxisIndex: 'none'
+                                                            },
+                                                            dataView: {
+                                                                readOnly: false
+                                                            },
+                                                            magicType: {
+                                                                type: ['line', 'bar']
+                                                            },
+                                                            restore: {},
+                                                            saveAsImage: {}
+                                                        }
+                                                    },
+                                                    xAxis: {
+                                                        type: 'category',
+                                                        boundaryGap: false,
+                                                        data: [
+                                                            '0000',
+                                                            '0001',
+                                                            '0002',
+                                                            '0003',
+                                                            '0004',
+                                                            '0005',
+                                                            '0006',
+                                                            '0007'
+                                                        ]
+                                                    },
+                                                    yAxis: {
+                                                        type: 'value',
+                                                        axisLabel: {
+                                                            formatter: '{value} 상태'
+                                                        }
+                                                    },
+                                                    series: [
+                                                        {
+                                                            name: '정상',
+                                                            type: 'line',
+                                                            data: [
+                                                                1,
+                                                                1,
+                                                                -1,
+                                                                1,
+                                                                1,
+                                                                -1,
+                                                                1
+                                                            ],
+                                                            markPoint: {
+                                                                data: [
+                                                                    {
+                                                                        type: 'max',
+                                                                        name: 'Max'
+                                                                    }, {
+                                                                        type: 'min',
+                                                                        name: 'Min'
+                                                                    }
+                                                                ]
+                                                            },
+                                                            markLine: {
+                                                                data: [
+                                                                    {
+                                                                        type: 'average',
+                                                                        name: 'Avg'
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }, {
+                                                            name: '불량',
+                                                            type: 'line',
+                                                            data: [
+                                                                -1,
+                                                                -1,
+                                                                1,
+                                                                -1,
+                                                                -1,
+                                                                1,
+                                                                -1
+                                                            ],
+                                                            markPoint: {
+                                                                data: [
+                                                                    {
+                                                                        name: '周最低',
+                                                                        value: -2,
+                                                                        xAxis: 1,
+                                                                        yAxis: -1.5
+                                                                    }
+                                                                ]
+                                                            },
+                                                            markLine: {
+                                                                data: [
+                                                                    {
+                                                                        type: 'average',
+                                                                        name: 'Avg'
+                                                                    },
+                                                                    [
+                                                                        {
+                                                                            symbol: 'none',
+                                                                            x: '90%',
+                                                                            yAxis: 'max'
+                                                                        }, {
+                                                                            symbol: 'circle',
+                                                                            label: {
+                                                                                position: 'start',
+                                                                                formatter: 'Max'
+                                                                            },
+                                                                            type: 'max',
+                                                                            name: '最高点'
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                };
+
+                                                if (option && typeof option === 'object') {
+                                                    myChart.setOption(option);
+                                                }
+
+                                                window.addEventListener('resize', myChart.resize);
+                                            </script>
                                         </div>
                                     </div>
 
@@ -486,8 +518,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -516,8 +547,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -546,8 +576,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -576,8 +605,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -606,8 +634,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -641,8 +668,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -671,8 +697,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -701,8 +726,7 @@
                                                     <h5 class="card-title" style="font-size: 1vw;">판정</h5>
                                                     <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
                                                     </p>
-                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분
-                                                    </p>
+                                                    <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
                                                 </div>
                                             </div>
                                         </div>
