@@ -19,7 +19,7 @@ public class OriginImage {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORI_IMAGE_SEQ")
 	@SequenceGenerator(name = "ORI_IMAGE_SEQ", sequenceName = "ORI_IMAGE_SEQ", allocationSize = 1)
-	private Long oriImageIdx; // 제품 번호
+	private int oriImageIdx; // 제품 번호
 	
 	
 	@Lob

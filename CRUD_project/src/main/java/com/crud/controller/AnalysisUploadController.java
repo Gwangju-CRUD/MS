@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +25,9 @@ import org.springframework.web.client.RestTemplate;
 import com.crud.entity.Analysis;
 import com.crud.entity.DeepModel;
 import com.crud.entity.Member;
+import com.crud.entity.OriginImage;
 import com.crud.repository.DeepModelRepository;
+import com.crud.repository.OriginImageRepository;
 import com.crud.service.AnalysisService;
 import com.crud.service.ImageService;
 
@@ -40,6 +43,9 @@ public class AnalysisUploadController {
 
 	@Autowired
 	private ImageService imageService;
+
+	@Autowired
+	private OriginImageRepository originImageRepository;
 	
 	@PostMapping("/aysUpload")
 	@ResponseBody
@@ -146,6 +152,28 @@ public class AnalysisUploadController {
 		}
 	}
 
+
+	@GetMapping("/getOriginImages")
+	@ResponseBody
+	public ResponseEntity<?> getOriginImages(@RequestParam int index) {
+		try {
+			// 이미지 인덱스를 기반으로 데이터베이스에서 이미지를 가져옵니다.
+			// 이 부분은 실제 데이터베이스 환경에 맞게 수정해야 합니다.
+			OriginImage image = originImageRepository.findById(index).orElse(null);
+
+			// 이미지 데이터를 Base64로 인코딩합니다.
+			String encodedImage = Base64.getEncoder().encodeToString(image.getOriImage());
+
+			// 인코딩된 이미지 데이터를 문자열로 변환합니다.
+			String imageDataString = new String(encodedImage);
+
+			// 이미지 데이터를 응답합니다.
+			return new ResponseEntity<>(imageDataString, HttpStatus.OK);
+		} catch (Exception e) {
+			// 에러 처리
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 
 }
