@@ -1,5 +1,6 @@
 package com.crud.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,7 @@ import com.crud.entity.DeepModel;
 import com.crud.entity.Member;
 import com.crud.repository.DeepModelRepository;
 import com.crud.service.AnalysisService;
+import com.crud.service.ImageService;
 
 @RequestMapping("/deep")
 @RestController
@@ -34,6 +37,9 @@ public class AnalysisUploadController {
 	
     @Autowired
     private DeepModelRepository deepModelRepository;
+
+	@Autowired
+	private ImageService imageService;
 	
 	@PostMapping("/aysUpload")
 	@ResponseBody
@@ -126,4 +132,20 @@ public class AnalysisUploadController {
 		
 		return models;
 	}
+
+		
+	@PostMapping("/uploadImages")
+	@ResponseBody
+	public ResponseEntity<Void> uploadImages() {
+		try {
+			String folderPath = "C:/Users/smhrd/Desktop/실전문서/data/aysfile";  // 이미지 폴더 경로 지정
+			imageService.saveAllImagesInFolder(folderPath);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (IOException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+
+
 }
