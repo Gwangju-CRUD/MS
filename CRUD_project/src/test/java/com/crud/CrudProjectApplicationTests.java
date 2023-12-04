@@ -19,13 +19,13 @@ class CrudProjectApplicationTests {
 	@Test
 	public void db데이터_테스트() {
 		
-		for(int i=1; i<10; i++) {
+		for(int i=1; i<3; i++) {
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
 			String formatDate = now.format(format);
 			
 			AlarmLog alarmLog = new AlarmLog();
-			alarmLog.setMsg("불량");
+			alarmLog.setMsg("제품 불량 5개 확인요망");
 			alarmLog.setAlarmDate(formatDate);
 
 			alarmLogRepository.save(alarmLog);
