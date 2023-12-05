@@ -1,37 +1,21 @@
 package com.crud.controller;
 
-import groovy.lang.GString;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-import org.springframework.data.domain.Page;
 import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.crud.DuplicateIdException;
-import com.crud.entity.Member;
-import com.crud.entity.RequestMember;
-import com.crud.form.MemberForm;
-import com.crud.repository.MemberRepository;
-import com.crud.repository.RequestMemberRepository;
-import com.crud.service.MemberService;
-import groovyjarjarpicocli.CommandLine.DuplicateNameException;
-import jakarta.transaction.Transactional;
 import com.crud.entity.AlarmLog;
 import com.crud.form.MemberForm;
 import com.crud.service.AlarmService;
 import com.crud.service.MemberService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -41,9 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
-	private final MemberRepository memberRepository;
-	private final RequestMemberRepository requestMemberRepository;
-	private final PasswordEncoder passwordEncoder;
+
 	private final AlarmService alarmService;
 
 	// 관리자만 보이도록 추후 설정할 것
@@ -89,25 +71,6 @@ public class MemberController {
 
 		if (memberService.request(memberForm.getMbId()) == true) {
 			model.addAttribute("msg", "요청이 완료되었습니다");
-			
-			// 1. memberService에 요청 메소드 만들기
-			RequestMember requestMember =  new RequestMember();
-			
-			LocalDateTime now = LocalDateTime.now();
-			
-			requestMember.setMbId(memberForm.getMbId());
-			requestMember.setMbPw(memberForm.getMbPw1());
-			requestMember.setMbName(memberForm.getMbName());
-			requestMember.setMbCompany(memberForm.getMbCompany());
-			requestMember.setJoineDate(now);
-			
-			
-			memberService.requestMember(requestMember);
-			
-			
-			// 3. DB에 회원의 값 저장하기
-			
-			
 			return "member/login_form";
 		} else {
 			model.addAttribute("msg", "동일한 아이디가 있습니다");
@@ -135,8 +98,9 @@ public class MemberController {
 		if (authentication != null && authentication.isAuthenticated()) {
 			String username = authentication.getName();
 			System.out.println("인증된 사용자: " + username);
-
 			List<AlarmLog> alarmList = alarmService.alarmList();
+			Long memberCount = memberService.memberCount();
+			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
 			return "main";
 		} else {
@@ -154,62 +118,10 @@ public class MemberController {
 	}
 
 	@GetMapping("/memberManagement")
-	public String memberManagement(Model model, @RequestParam(value = "page", defaultValue = "0")int page) {
-		// 전체 회원 조회
-		Page<Member> memberList = this.memberService.getAllMember(page);
+	public String memberManagement(Model model) {
 		model.addAttribute("memberForm", new MemberForm());
-		model.addAttribute("memberList",memberList);
-		
-		// 요청 회원 조회
-		Page<RequestMember> requestMemberList = this.memberService.getRequestMember(page);
-		model.addAttribute("requestMemberList",requestMemberList);
-		
 		return "member/memberManagement";
 	}
-	
-		
-		// 회원 추가 및 요청회원 삭제 
-		@PostMapping("/members/approve/{mbId}")
-		public String approveMember(@PathVariable String mbId) {
-			Optional<RequestMember> requestMember = requestMemberRepository.findById(mbId);
-			
-			if(requestMember.isPresent()) {
-		        Member member = new Member();
-		        
-		     // RequestMember의 정보를 Member로 복사
-		        member.setMbId(requestMember.get().getMbId());
-		        member.setMbPw(passwordEncoder.encode(requestMember.get().getMbPw()));
-		        member.setMbCompany(requestMember.get().getMbCompany());
-		        member.setMbName(requestMember.get().getMbName());
-		        member.setJoineDate(requestMember.get().getJoineDate());
-		        
-		        // Member 저장
-		        memberRepository.save(member);
-
-		        // RequestMember 삭제
-		        requestMemberRepository.deleteById(mbId);
-			}
-			return "redirect:/memberManagement";  // 처리 후 리다이렉트할 경로			
-		}
-		
-	
-	
-		//요청 회원 삭제
-		@PostMapping("/members/delete/{mbId}")
-		public String deleteMember(@PathVariable String mbId) {
-		    requestMemberRepository.deleteById(mbId);
-		    return "redirect:/memberManagement";  // 삭제 후 리다이렉트할 경로
-		}
-	
-	
-	
-	
-	
-	
-	
-	 
-	
-	
 
 	@GetMapping("allResult")
 	public String allResult(){
@@ -220,7 +132,4 @@ public class MemberController {
 	public String singleAnalysis(){
 		return "analysis/singleAnalysis";
 	}
-	
-		
-		
 }

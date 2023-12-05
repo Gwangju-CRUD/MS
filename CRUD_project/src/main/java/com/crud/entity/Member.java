@@ -12,9 +12,7 @@ import lombok.Data;
 @Entity
 @Table(name = "TBL_MEMBER")
 public class Member {
-	
-	
-	
+
 	@Id
 	private String mbId; // 아이디
 
@@ -33,5 +31,4 @@ public class Member {
 	private String profileImg; // 프로필 이미지
 
 	
-
 }
