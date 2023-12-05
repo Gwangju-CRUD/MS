@@ -42,6 +42,11 @@ $(document).ready(function () {
           .trigger("refresh.owl.carousel");
 
         images.push(data);
+
+        if (index < images.length + 1) {
+          // 아무래도 이 부분을 확인해야 할 것 같습니다. 몇 개의 이미지를 불러올 것인지에 따라 조건을 수정해야 할 수 있습니다.
+          fetchImage(index + 1);
+        }
       },
     });
   }
