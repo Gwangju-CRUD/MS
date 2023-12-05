@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
     <head>
 
@@ -8,6 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        <meta th:name="_csrf" th:content="${_csrf.token}" />
+        <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
 
         <title>회원관리</title>
 
@@ -65,8 +67,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/deep/imgAnalysis">단건분석</a>
-                        <a class="collapse-item" href="/deep/realtimeAnalysis">실시간분석</a>
+                        <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="image">단건분석</a>
+                        <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="video">실시간분석</a>
                         <a class="collapse-item" href="all-Result.html">분석결과</a>
                     </div>
                 </div>
@@ -438,6 +440,53 @@ aria-hidden="true">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
             <a class="btn btn-primary" href="login.html">로그아웃</a>
         </div>
+    </div>
+</div>
+</div>
+
+<!-- 모델 선택 모달 -->
+<!-- Modal -->
+<div
+class="modal fade"
+id="analysisModal"
+tabindex="-1"
+role="dialog"
+aria-labelledby="analysisModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="analysisModalLabel">실시간 분석</h5>
+        <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        >
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>실시간 분석을 시작하시겠습니까?</p>
+    </div>
+    <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        >
+        닫기
+        </button>
+        <button
+        type="button"
+        class="btn btn-primary"
+        id="startAnalysis"
+        data-analysis=""
+        >
+        분석 시작
+        </button>
+    </div>
     </div>
 </div>
 </div>

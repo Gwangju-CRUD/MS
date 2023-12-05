@@ -1,3 +1,19 @@
+// 전역 범위에 함수를 정의합니다.
+function sendImageToFastAPI(imageData) {
+  $.ajax({
+    url: "http://218.157.38.54:8002/predict/",
+    type: "POST",
+    data: JSON.stringify({ encoded_image_data: imageData }),
+    contentType: "application/json",
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (jqXHR, textStatus, errorMessage) {
+      console.log(errorMessage); // Optional
+    },
+  });
+}
+
 $(document).ready(function () {
   // Tab 초기 설정
   $(".goodmodeltable").hide();
@@ -20,7 +36,7 @@ $(document).ready(function () {
   var images = [];
   var currentIndex = 1;
 
-  function fetchImage() {
+  function fetchImage(callback) {
     $.ajax({
       url: "/deep/getOriginImages",
       type: "GET",
@@ -43,12 +59,10 @@ $(document).ready(function () {
           .trigger("refresh.owl.carousel");
 
         images.push(data);
-        // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
-        if (images.length > 7) {
-          images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
-          $(".owl-carousel")
-            .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
-            .trigger("refresh.owl.carousel");
+
+        // 콜백 함수를 호출합니다.
+        if (callback) {
+          callback(data);
         }
       },
     });
@@ -69,11 +83,21 @@ $(document).ready(function () {
     onTranslated: function () {
       console.log("Slide has been translated");
       fetchImage();
+      // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
+      if (images.length > 7) {
+        images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
+        $(".owl-carousel")
+          .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
+          .trigger("refresh.owl.carousel");
+        sendImageToFastAPI(images[0]);
+      }
     }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
   });
 
-  // 초기 이미지 데이터 요청 (첫 8개)
-  fetchImage();
+  // 초기 이미지 데이터 요청 (첫 7개)
+  fetchImage(function (data) {
+    sendImageToFastAPI(data);
+  });
   fetchImage();
   fetchImage();
   fetchImage();
