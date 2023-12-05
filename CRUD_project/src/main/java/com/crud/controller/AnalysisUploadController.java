@@ -31,9 +31,14 @@ import com.crud.repository.OriginImageRepository;
 import com.crud.service.AnalysisService;
 import com.crud.service.ImageService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RequestMapping("/deep")
 @RestController
 public class AnalysisUploadController {
+
+	private static final Logger log = LoggerFactory.getLogger(AnalysisUploadController.class);
 
 	@Autowired
 	private AnalysisService analysisService;
@@ -158,19 +163,32 @@ public class AnalysisUploadController {
 	public ResponseEntity<?> getOriginImages(@RequestParam int index) {
 		try {
 			// 이미지 인덱스를 기반으로 데이터베이스에서 이미지를 가져옵니다.
-			// 이 부분은 실제 데이터베이스 환경에 맞게 수정해야 합니다.
 			OriginImage image = originImageRepository.findById(index).orElse(null);
-
+	
+			if (image == null) {
+				// 이미지가 null인 경우 로그를 출력하고, BAD_REQUEST 응답을 반환합니다.
+				log.error("Image not found with index: " + index);
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+	
 			// 이미지 데이터를 Base64로 인코딩합니다.
-			String encodedImage = Base64.getEncoder().encodeToString(image.getOriImage());
-
+			byte[] oriImage = image.getOriImage();
+			if (oriImage == null) {
+				// 이미지 데이터가 null인 경우 로그를 출력하고, BAD_REQUEST 응답을 반환합니다.
+				log.error("Image data is null for index: " + index);
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+	
+			String encodedImage = Base64.getEncoder().encodeToString(oriImage);
+	
 			// 인코딩된 이미지 데이터를 문자열로 변환합니다.
 			String imageDataString = new String(encodedImage);
-
+	
 			// 이미지 데이터를 응답합니다.
 			return new ResponseEntity<>(imageDataString, HttpStatus.OK);
 		} catch (Exception e) {
 			// 에러 처리
+			log.error("Error occurred while processing image with index: " + index, e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

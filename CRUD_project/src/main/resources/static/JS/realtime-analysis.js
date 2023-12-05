@@ -61,7 +61,10 @@ $(document).ready(function () {
       // 현재 활성화된 아이템의 인덱스를 가져옴
       var currentIndex = this._current;
       // 만약 현재 아이템이 배열의 마지막 아이템이라면
-      if (currentIndex === images.length - 1) {
+      if (
+        currentIndex === images.length - 1 &&
+        event.item.index === currentIndex
+      ) {
         // 다음 이미지 데이터를 요청
         fetchImage(images.length);
       }
@@ -69,8 +72,8 @@ $(document).ready(function () {
   });
 
   // 초기 이미지 데이터 요청 (첫 2개)
-  fetchImage(0);
   fetchImage(1);
+  fetchImage(2);
 });
 
 // 이미지 클릭 -> 모달이미지
