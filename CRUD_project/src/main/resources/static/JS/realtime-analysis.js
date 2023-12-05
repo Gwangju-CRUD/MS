@@ -57,6 +57,7 @@ $(document).ready(function () {
     autoplay: true,
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
+    rtl: true,
     margin: 50,
     onTranslated: function () {
       console.log("Slide has been translated");
