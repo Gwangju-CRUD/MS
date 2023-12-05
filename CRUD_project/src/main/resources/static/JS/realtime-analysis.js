@@ -44,11 +44,6 @@ $(document).ready(function () {
 
         images.push(data);
         currentIndex++;
-
-        // 이미지가 더 이상 없을 때 슬라이드를 정지합니다.
-        if ($(".owl-carousel").find(".owl-item").length - 1 === currentIndex) {
-          $(".owl-carousel").trigger("stop.owl.autoplay");
-        }
       },
     });
   }
