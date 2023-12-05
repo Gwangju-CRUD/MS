@@ -10,7 +10,11 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        <meta th:name="_csrf" th:content="${_csrf.token}"/>
+        <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
         <title>회원관리</title>
+
+
 
         <link
             rel="stylesheet"
@@ -19,20 +23,33 @@
             crossorigin="anonymous">
 
         <link
-            href="vendor/fontawesome-free/css/all.min.css"
+            href="/vendor/fontawesome-free/css/all.min.css"
             rel="stylesheet"
             type="text/css">
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-        <link href="css/sb-admin-2.min.css" rel="stylesheet">
-        <!-- 폰트어썸 -->
-        <script src="https://kit.fontawesome.com/c37cdf4059.js" crossorigin="anonymous"></script>
+        <link href="/CSS/sb-admin-2.min.css" rel="stylesheet">
+
+
+        
+
+
+        <style src="/CSS/realtime-analys.css"></style>
+
+        
+
         <!-- 제이쿼리 -->
         <script
-            src="https://code.jquery.com/jquery-3.6.4.min.js"
-            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-            crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+
+
+        <!-- 폰트어썸 -->
+        <script src="https://kit.fontawesome.com/c37cdf4059.js" crossorigin="anonymous"></script>
+
         <!-- Bootstrap 4.6 자체 js -->
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
@@ -45,14 +62,34 @@
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+
+        <!-- DataTables -->
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+        <script src="/JS/realtime-analysis.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="/js/demo/datatables-demo.js"></script>
+
+        
+        <!-- Owl Carousel JS -->
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+        <!-- Owl Carousel CSS - 슬라이드 호환 -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+        
         <base href="/"/>
     </head>
 
-    <!-- 제이쿼리 -->
-    <script
-        src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-        crossorigin="anonymous"></script>
+
 
     <body id="page-top" class="d-flex flex-column min-vh-100">
         <div id="wrapper">
@@ -60,7 +97,9 @@
             <ul
                 class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
                 id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main">
+                <a
+                    class="sidebar-brand d-flex align-items-center justify-content-center"
+                    href="main">
                     <div class="sidebar-brand-icon">
                         <i class="fa-solid fa-industry"></i>
                     </div>
@@ -97,8 +136,8 @@
                         aria-labelledby="headingTwo"
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="singleAnalysis">단건분석</a>
-                            <a class="collapse-item" href="cards.html">실시간분석</a>
+                            <a class="collapse-item" href="/singleAnalysis">단건분석</a>
+                            <a class="collapse-item" href="/deep/realtimeAnalysis">실시간분석</a>
                             <a class="collapse-item" href="allResult">분석결과</a>
                         </div>
                     </div>
@@ -123,12 +162,9 @@
                         <span>전체회원관리</span></a>
                 </li>
 
-
-
                 <!-- 바 숨기기 / 열기 -->
                 <div class="text-center mt-5">
-                    <button class="rounded-circle border-0" id="sidebarToggle">
-                    </button>
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
 
             </ul>
@@ -309,37 +345,75 @@
                         <div class="copyright text-center my-auto">
                             <div>CRUD &copy;</div>
                             <div class="mt-1 mb-1">Since. 2023.11</div>
+                        </div>
+                    </footer>
+                    <!-- !!!!!! 푸터 끝 !!!!!! -->
+                </div>
+
+                <!-- 로그아웃 모달-->
+                <div
+                    class="modal fade"
+                    id="logoutModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                                <a class="btn btn-primary" href="/member/logout">로그아웃</a>
+                            </div>
+                        </div>
                     </div>
-                </footer>
-                <!-- !!!!!! 푸터 끝 !!!!!! -->
+                </div>
+                <!-- !!!!!!!!!!!! 최상단 네비 끝 !!!!!!!!!!!! -->
             </div>
 
-            <!-- 로그아웃 모달-->
+            <!-- 모델 선택 모달 -->
+            <!-- Modal -->
             <div
                 class="modal fade"
-                id="logoutModal"
+                id="analysisModal"
                 tabindex="-1"
                 role="dialog"
-                aria-labelledby="exampleModalLabel"
+                aria-labelledby="analysisModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
+                            <h5 class="modal-title" id="analysisModalLabel">실시간 분석</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
+                        <div class="modal-body">
+                            <p>실시간 분석을 시작하시겠습니까?</p>
+                        </div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                            <a class="btn btn-primary" href="/member/logout">로그아웃</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                닫기
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="startAnalysis"
+                                data-analysis="">
+                                분석 시작
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- !!!!!!!!!!!! 최상단 네비 끝 !!!!!!!!!!!! -->
-        </div>
 
-    </body>
-</html>
+
+
+        </body>
+    </html>
