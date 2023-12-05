@@ -18,13 +18,14 @@ $(document).ready(function () {
   });
 
   var images = [];
+  var currentIndex = 1;
 
-  function fetchImage(index) {
+  function fetchImage() {
     $.ajax({
       url: "/deep/getOriginImages",
       type: "GET",
       data: {
-        index: index,
+        index: currentIndex,
       },
       success: function (data) {
         var imageUrl = "data:imgae/png;base64," + data;
@@ -42,6 +43,7 @@ $(document).ready(function () {
           .trigger("refresh.owl.carousel");
 
         images.push(data);
+        currentIndex++;
       },
     });
   }
@@ -57,18 +59,16 @@ $(document).ready(function () {
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
     margin: 50,
-    onTranslated: function (event) {
+    onTranslated: function () {
       // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
-      var currentIndex = this._current;
-      if (currentIndex === images.length - 1) {
-        fetchImage(images.length + 1);
+      if ($(".owl-carousel").find(".owl-item").length - 1 === currentIndex) {
+        fetchImage();
       }
     },
   });
 
   // 초기 이미지 데이터 요청 (첫 1개)
-  fetchImage(1);
-  fetchImage(2);
+  fetchImage();
 });
 
 // 이미지 클릭 -> 모달이미지
