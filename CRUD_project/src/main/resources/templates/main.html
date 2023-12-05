@@ -4,196 +4,113 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{navLayout}">
+
+  
+
     <body>
         <div layout:fragment="content">
             <!--본문 내용만 적으면 됨-->
             <!-- 주 페이지 콘텐츠 -->
-            <div class="container-fluid">
+            <div class="container-fluid ml-4 mt-4 mb-4 mr-4 p-4">
 
                 <div class="content">
                     <div class="animated fadeIn">
                         <div class="row">
-                            <div class="col-lg-4">
+
+                            <div class="col-lg-6 mr-3">
                                 <!-- 알람 each문 시작 -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong class="card-title">알람</strong>
-                                    </div>
-                                    <div class="card-body" style="height: 465px;">
+                                <div class="card shadow-sm">
+                                    
+                                    <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">알림 및 공지사항</div>
+                                    <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
+                                    <div class="card-body container pt-1" style="height: 415px;">
                                         <!-- Thymeleaf의 조건문 사용 -->
-                                        <div th:if="${#lists.isEmpty(alarmList)}" class="d-flex justify-content-center align-items-center h-100">
-                                            <h6>현재는 알람이 없습니다.</h6>
+                                        <div th:if="${#lists.isEmpty(alarmList)}" class="h-100 row">
+                                            <div class="d-flex justify-content-center col align-self-center">현재는 알람이 없습니다.</div>
                                         </div>
-                                        <div th:each="alarm : ${alarmList}" class="alert alert-danger row d-flex bd-highlight" role="alert">
-                                            <div class="p-2 align-items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-                                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                        <div
+                                            th:each="alarm : ${alarmList}"
+                                            class="alert alert-danger row p-1 align-items-center shadow-sm"
+                                            role="alert">
+
+                                            <div class="ml-3 align-middle">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="30"
+                                                    height="30"
+                                                    fill="currentColor"
+                                                    class="bi bi-exclamation-triangle-fill"
+                                                    viewbox="0 0 16 16">
+                                                    <path
+                                                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                                                 </svg>
                                             </div>
-                                            <div class="p-2 flex-grow-1 align-self-center font-weight-bold" th:text="${alarm.msg}"></div>
-                                            <div class="align-self-end" th:text="${alarm.alarmDate}"></div>
+                                            <div class="p-3 col font-weight-bold align-middle ml-3" th:text="${alarm.msg}"></div>
+                                            <div class="col align-self-end text-right" th:text="${alarm.alarmDate}"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- 알람 each문 끝 -->
                             </div>
-<!-- 레이아웃 수정용 -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <meta th:name="_csrf" th:content="${_csrf.token}" />
-        <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
 
-                        <div class="row ">
-                            <div class="col-lg-4 ">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong class="card-title">금일 불량품 그래프</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <a><img src="images/char4.png" width="500"></a>
-                                    </div>
-                                    <div class="card-body">
-                                        <a><img src="images/char2.png" width="700"></a>
+                            <div class="col-lg-5 ml-5 mt-0 pr-0">
+                                <!-- Pending Requests Card Example -->
+                                <!-- 노랑카드 -->
+                                <div class="mb-5" style="height:130px">
+                                    <div class="card border-left-warning shadow-sm h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-md font-weight-bold text-warning text-uppercase mb-1">
+                                                        누적 사용자 수</div>
+                                                    <div class="h3 mb-0 font-weight-bold text-gray-800" th:text="${memberCount}"></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-6 ">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong class="card-title">주간 불량품 그래프</strong>
+                                <div class="mb-5" style="height:130px">
+                                    <div class="card border-left-info shadow-sm h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-md font-weight-bold text-info text-uppercase mb-1">
+                                                        누적 실시간 분석 건수</div>
+                                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body" width="">
-                                        <a><img src="images/char.png"></a>
+                                </div>
+                                <div class="mb-4" style="height:130px">
+                                    <div class="card border-left-success shadow-sm h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-md font-weight-bold text-success text-uppercase mb-1">
+                                                        단건 분석 건수</div>
+                                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong class="card-title">주간 양불판정 분석결과</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Total</th>
-                                                    <th scope="col">Normal</th>
-                                                    <th scope="col">Defective</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">Sun</th>
-                                                    <td>62</td>
-                                                    <td>62</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Mon</th>
-                                                    <td>157</td>
-                                                    <td>155</td>
-                                                    <td>2</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Tue</th>
-                                                    <td>2043</td>
-                                                    <td>2026</td>
-                                                    <td>27</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Wed</th>
-                                                    <td>452</td>
-                                                    <td>452</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Thu</th>
-                                                    <td>877</td>
-                                                    <td>877</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Fri</th>
-                                                    <td>1045</td>
-                                                    <td>1044</td>
-                                                    <td>1</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Sat</th>
-                                                    <td>246</td>
-                                                    <td>246</td>
-                                                    <td>0</td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-<!-- 레이아웃 수정 필요 -->
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<body id="page-top">
-
-    <!-- 마이페이지 wrapper-->
-    <div id="wrapper">
-
-        <!-- 배너 -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- 브랜드 회사명(로고)-->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">CRUD <sup>5</sup></div>
-            </a>
-
-            <!-- 구별 선 -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- 메인-->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>관리홈</span></a>
-            </li>
-
-            <!-- 구별 선 -->
-            <hr class="sidebar-divider">
-
-            <!-- 분석메뉴 -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>분석</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="image">단건분석</a>
-                        <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="video">실시간분석</a>
-                        <a class="collapse-item" href="all-Result.html">분석결과</a>
+                        <!-- .animated -->
                     </div>
+                    <!-- .content -->
                 </div>
-
-                <!-- 여기까지 -->
-                <!-- .animated -->
             </div>
-            <!-- .content -->
-
         </div>
     </body>
 
