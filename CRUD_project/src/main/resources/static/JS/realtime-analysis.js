@@ -44,6 +44,11 @@ $(document).ready(function () {
 
         images.push(data);
         currentIndex++;
+
+        // 슬라이드에 보여질 항목의 수를 증가시킵니다.
+        $(".owl-carousel").trigger("replace.owl.carousel", {
+          items: images.length,
+        });
       },
     });
   }
@@ -53,7 +58,7 @@ $(document).ready(function () {
 
   // Owl Carousel 초기화
   $(".owl-carousel").owlCarousel({
-    items: 6,
+    items: 1,
     loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
     autoplay: true,
     autoplayTimeout: 2000,
