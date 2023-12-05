@@ -25,7 +25,7 @@ $(document).ready(function () {
       url: "/deep/getOriginImages",
       type: "GET",
       data: {
-        index: currentIndex,
+        index: currentIndex++,
       },
       success: function (data) {
         var imageUrl = "data:imgae/png;base64," + data;
@@ -43,7 +43,6 @@ $(document).ready(function () {
           .trigger("refresh.owl.carousel");
 
         images.push(data);
-        currentIndex++;
       },
     });
   }
@@ -59,12 +58,7 @@ $(document).ready(function () {
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
     margin: 50,
-    onTranslated: function () {
-      // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
-      if ($(".owl-carousel").find(".owl-item").length - 1 === currentIndex) {
-        fetchImage();
-      }
-    },
+    onTranslated: fetchImage, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
   });
 
   // 초기 이미지 데이터 요청 (첫 1개)
