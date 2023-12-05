@@ -71,6 +71,8 @@ $(document).ready(function () {
   fetchImage();
   fetchImage();
   fetchImage();
+  fetchImage();
+  fetchImage();
 });
 
 // 이미지 클릭 -> 모달이미지
