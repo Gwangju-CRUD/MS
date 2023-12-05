@@ -45,4 +45,9 @@ public class MemberService {
 
 		return member;
 	}
+
+	// 모든 회원의 수를 count하는 service
+	public Long memberCount(){
+		return memberRepository.countBy();
+	}
 }

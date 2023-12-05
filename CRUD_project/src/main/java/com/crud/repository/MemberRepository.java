@@ -12,4 +12,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 	
 	Optional<Member> findBymbId(String mbId);
 	
+	Long countBy();
+
 }

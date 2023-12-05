@@ -4,6 +4,9 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{navLayout}">
+
+  
+
     <body>
         <div layout:fragment="content">
             <!--본문 내용만 적으면 됨-->
@@ -14,16 +17,16 @@
                     <div class="animated fadeIn">
                         <div class="row">
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mr-3">
                                 <!-- 알람 each문 시작 -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong class="card-title">알람</strong>
-                                    </div>
-                                    <div class="card-body container" style="height: 435px;">
+                                <div class="card shadow-sm">
+                                    
+                                    <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">알림 및 공지사항</div>
+                                    <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
+                                    <div class="card-body container pt-1" style="height: 415px;">
                                         <!-- Thymeleaf의 조건문 사용 -->
-                                        <div th:if="${#lists.isEmpty(alarmList)}" class="h-100 container">
-                                            <h6>현재는 알람이 없습니다.</h6>
+                                        <div th:if="${#lists.isEmpty(alarmList)}" class="h-100 row">
+                                            <div class="d-flex justify-content-center col align-self-center">현재는 알람이 없습니다.</div>
                                         </div>
                                         <div
                                             th:each="alarm : ${alarmList}"
@@ -49,17 +52,33 @@
                                 </div>
                                 <!-- 알람 each문 끝 -->
                             </div>
-                            <div class="col-lg-5 ml-5 mt-4">
+                            <div class="col-lg-5 ml-5 mt-0 pr-0">
                                 <!-- Pending Requests Card Example -->
                                 <!-- 노랑카드 -->
-                                <div class="mb-4" style="height:130px">
-                                    <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="mb-5" style="height:130px">
+                                    <div class="card border-left-warning shadow-sm h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Pending Requests</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                    <div class="text-md font-weight-bold text-warning text-uppercase mb-1">
+                                                        누적 사용자 수</div>
+                                                    <div class="h3 mb-0 font-weight-bold text-gray-800" th:text="${memberCount}"></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-5" style="height:130px">
+                                    <div class="card border-left-info shadow-sm h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-md font-weight-bold text-info text-uppercase mb-1">
+                                                        누적 실시간 분석 건수</div>
+                                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -69,29 +88,13 @@
                                     </div>
                                 </div>
                                 <div class="mb-4" style="height:130px">
-                                    <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card border-left-success shadow-sm h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Pending Requests</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="" style="height:130px">
-                                    <div class="card border-left-warning shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Pending Requests</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                    <div class="text-md font-weight-bold text-success text-uppercase mb-1">
+                                                        단건 분석 건수</div>
+                                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -101,108 +104,13 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row ">
-                                <div class="col-lg-4 ">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <strong class="card-title">금일 불량품 그래프</strong>
-                                        </div>
-                                        <div class="card-body">
-                                            <a><img src="images/char4.png" width="500"></a>
-                                        </div>
-                                        <div class="card-body">
-                                            <a><img src="images/char2.png" width="700"></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 ">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <strong class="card-title">주간 불량품 그래프</strong>
-                                        </div>
-                                        <div class="card-body" width="">
-                                            <a><img src="images/char.png"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <strong class="card-title">주간 양불판정 분석결과</strong>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Total</th>
-                                                        <th scope="col">Normal</th>
-                                                        <th scope="col">Defective</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">Sun</th>
-                                                        <td>62</td>
-                                                        <td>62</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Mon</th>
-                                                        <td>157</td>
-                                                        <td>155</td>
-                                                        <td>2</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Tue</th>
-                                                        <td>2043</td>
-                                                        <td>2026</td>
-                                                        <td>27</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Wed</th>
-                                                        <td>452</td>
-                                                        <td>452</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Thu</th>
-                                                        <td>877</td>
-                                                        <td>877</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Fri</th>
-                                                        <td>1045</td>
-                                                        <td>1044</td>
-                                                        <td>1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Sat</th>
-                                                        <td>246</td>
-                                                        <td>246</td>
-                                                        <td>0</td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </div>
+                        <!-- .animated -->
                     </div>
-                    <!-- .animated -->
-                </div>
-                <!-- .content -->
+                    <!-- .content -->
 
+                </div>
             </div>
-        </body>
-    </html>
+        </div>
+    </body>
+</html>
