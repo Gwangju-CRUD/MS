@@ -44,7 +44,7 @@ $(document).ready(function () {
 
         images.push(data);
         // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
-        if (images.length > 6) {
+        if (images.length > 7) {
           images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
           $(".owl-carousel")
             .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
@@ -73,7 +73,6 @@ $(document).ready(function () {
   });
 
   // 초기 이미지 데이터 요청 (첫 8개)
-  fetchImage();
   fetchImage();
   fetchImage();
   fetchImage();
