@@ -59,7 +59,7 @@ $(document).ready(function () {
   // Owl Carousel 초기화
   $(".owl-carousel").owlCarousel({
     items: 6,
-    loop: true, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
+    loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
     autoplay: true,
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
@@ -94,15 +94,6 @@ $(document).ready(function () {
     // 모달 바디 이미지 src 출력
     $("#modalImageSrc").text("이미지 경로: " + imgSrc);
   });
-});
-
-$(".owl-carousel").owlCarousel({
-  items: 6, // 슬라이드 표시할 항목 수
-  loop: true, // 무한루프
-  autoplay: true, // 자동 재생
-  autoplayTimeout: 2000, // 시간간격(1초로해놈)
-  autoplayHoverPause: true, // 마우스 호버 시 재생 정지
-  margin: 50,
 });
 
 // 꺾은선 그래프 코드
