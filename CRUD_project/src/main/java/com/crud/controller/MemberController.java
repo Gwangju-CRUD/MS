@@ -1,12 +1,11 @@
 package com.crud.controller;
 
 import groovy.lang.GString;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import org.springframework.data.domain.Page;
+import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,9 +26,12 @@ import com.crud.form.MemberForm;
 import com.crud.repository.MemberRepository;
 import com.crud.repository.RequestMemberRepository;
 import com.crud.service.MemberService;
-
 import groovyjarjarpicocli.CommandLine.DuplicateNameException;
 import jakarta.transaction.Transactional;
+import com.crud.entity.AlarmLog;
+import com.crud.form.MemberForm;
+import com.crud.service.AlarmService;
+import com.crud.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +44,8 @@ public class MemberController {
 	private final MemberRepository memberRepository;
 	private final RequestMemberRepository requestMemberRepository;
 	private final PasswordEncoder passwordEncoder;
-	
+	private final AlarmService alarmService;
+
 	// 관리자만 보이도록 추후 설정할 것
 	@GetMapping("/signup")
 	public String signup(MemberForm memberForm) {
@@ -125,13 +128,16 @@ public class MemberController {
 
 	// 로그인이 아무 이상없이 성공하면 main으로 이동함
 	@GetMapping("/main")
-	public String goMain() {
+	public String goMain(Model model) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication != null && authentication.isAuthenticated()) {
 			String username = authentication.getName();
 			System.out.println("인증된 사용자: " + username);
+
+			List<AlarmLog> alarmList = alarmService.alarmList();
+			model.addAttribute("alarmList", alarmList);
 			return "main";
 		} else {
 			System.out.println("사용자가 인증되지 않았습니다");
