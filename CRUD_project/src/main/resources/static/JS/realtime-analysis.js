@@ -44,6 +44,11 @@ $(document).ready(function () {
 
         images.push(data);
         currentIndex++;
+
+        // 이미지가 더 이상 없을 때 슬라이드를 정지합니다.
+        if ($(".owl-carousel").find(".owl-item").length - 1 === currentIndex) {
+          $(".owl-carousel").trigger("stop.owl.autoplay");
+        }
       },
     });
   }
@@ -54,7 +59,7 @@ $(document).ready(function () {
   // Owl Carousel 초기화
   $(".owl-carousel").owlCarousel({
     items: 6,
-    loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
+    loop: true, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
     autoplay: true,
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
