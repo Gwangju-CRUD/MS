@@ -8,7 +8,6 @@ public enum MemberRole {
 	
 	ADMIN("ROLE_ADMIN"),
 	USER("ROLE_USER");
-	
 	MemberRole(String value) {
 		this.value = value;
 	}
@@ -16,3 +15,4 @@ public enum MemberRole {
 	private String value;
 	
 }
+
