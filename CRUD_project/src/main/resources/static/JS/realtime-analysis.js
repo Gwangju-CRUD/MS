@@ -58,7 +58,10 @@ $(document).ready(function () {
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
     margin: 50,
-    onTranslated: fetchImage, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
+    onTranslated: function () {
+      console.log("Slide has been translated");
+      fetchImage();
+    }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
   });
 
   // 초기 이미지 데이터 요청 (첫 1개)
