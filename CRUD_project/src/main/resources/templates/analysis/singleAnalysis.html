@@ -1,510 +1,463 @@
 <!DOCTYPE html>
-<html
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{navLayout}">
-    <head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{navLayout}">
 
-        <link
-            href="src\main\resources\static\CSS\singleAnalysis.css"
-            rel="stylesheet"
-            type="singleAnalysis.css">
+<head>
 
-        <style>
+	<link href="src\main\resources\static\CSS\singleAnalysis.css" rel="stylesheet" type="singleAnalysis.css">
 
- /* ------------------------
+	<style>
+		/* ------------------------
     파일링크 css
     ------------------------*/
 
-            input[type=file]::file-selector-button {
-                width: 150px;
-                height: 50px;
-                background: rgb(255, 255, 255);
-                border: 1px solid #dc3545;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 20px;
-                color: #dc3545;
+		input[type=file]::file-selector-button {
+			width: 150px;
+			height: 50px;
+			background: rgb(255, 255, 255);
+			border: 1px solid #dc3545;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 20px;
+			color: #dc3545;
 
-            }
+		}
 
-            input[type=file]:hover::file-selector-button {
-                background-color: #dc3545;
-                color: #fff;
-            }
+		input[type=file]:hover::file-selector-button {
+			background-color: #dc3545;
+			color: #fff;
+		}
 
-            /* 숫자 css */
+		/* 숫자 css */
 
-            .goodcount,
-            .badcount {
-                width: 150px;
-                height: 50px;
-                margin-left: 85px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 3rem;
-                font-weight: bold;
-                border-radius: 1rem;
-                color: #000;
-            }
+		.goodcount,
+		.badcount {
+			width: 150px;
+			height: 50px;
+			margin-left: 85px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 3rem;
+			font-weight: bold;
+			border-radius: 1rem;
+			color: #000;
+		}
 
-            
-            @media (max-width: 1500px) {
-                .goodcount,
-                .badcount {
-                    width: 100%;
-                    margin-left: 0;
-                    font-size: 2rem;
-                }
-            }
 
-            /*
+		@media (max-width: 1500px) {
+
+			.goodcount,
+			.badcount {
+				width: 100%;
+				margin-left: 0;
+				font-size: 2rem;
+			}
+		}
+
+		/*
     ------------------------
     결과 상세 카드 차트 css
     ------------------------*/
-            .card-container-chart {
-                display: flex;
-                justify-content: space-between;
-                margin-right: -10px;
-            }
+		.card-container-chart {
+			display: flex;
+			justify-content: space-between;
+			margin-right: -10px;
+		}
 
-            .chartcard {
-                width: 48%;
-                margin-bottom: 20px;
-                margin-right: 10px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                background-color: white;
-            }
+		.chartcard {
+			width: 48%;
+			margin-bottom: 20px;
+			margin-right: 10px;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			background-color: white;
+		}
 
-            /* 결과상세 불량사진 호버 */
-            .owl-carousel .owl-item img {
-                transition: transform 0.3s;
-            }
+		/* 결과상세 불량사진 호버 */
+		.owl-carousel .owl-item img {
+			transition: transform 0.3s;
+		}
 
-            .owl-carousel .owl-item:hover img {
-                transform: scale(1.2);
-            }
+		.owl-carousel .owl-item:hover img {
+			transform: scale(1.2);
+		}
 
-            /*
+		/*
     ------------------------
     분석로그 컨테이너 설정
     ------------------------
     */
 
-            /* 상위 컨테이너 */
-            .good-model-table {
-                width: 70vw;
-                height: 11vw;
+		/* 상위 컨테이너 */
+		.good-model-table {
+			width: 70vw;
+			height: 11vw;
 
-            }
+		}
 
-            .card-red {
-                width: 67vw;
-                height: 8vw;
-                /* background-color: red; */
-            }
+		.card-red {
+			width: 67vw;
+			height: 8vw;
+			/* background-color: red; */
+		}
 
-            /* 이미지 컨테이너 */
-            .fixed-card {
-                width: 15vw;
-                height: 8vw;
+		/* 이미지 컨테이너 */
+		.fixed-card {
+			width: 15vw;
+			height: 8vw;
 
-            }
+		}
 
-            /* 이미지 자체 */
-            .img-container img {
-                width: 15vw;
-                height: 8vw;
-            }
+		/* 이미지 자체 */
+		.img-container img {
+			width: 15vw;
+			height: 8vw;
+		}
 
-            /* 텍스트 컨테이너 */
-            .text-card {
-                width: 65vw;
-                height: 15vw;
-                padding: 1vmin;
-            }
+		/* 텍스트 컨테이너 */
+		.text-card {
+			width: 65vw;
+			height: 15vw;
+			padding: 1vmin;
+		}
 
-            @media (max-width: 868px) {
+		@media (max-width: 868px) {
 
-                .good-model-table {
-                    height: 120px;
+			.good-model-table {
+				height: 120px;
 
-                }
+			}
 
-                .card-red {
-                    width: auto;
-                    height: 84px;
-                }
+			.card-red {
+				width: auto;
+				height: 84px;
+			}
 
-                .fixed-card {
-                    width: 54px;
-                    height: 84px;
+			.fixed-card {
+				width: 54px;
+				height: 84px;
 
-                }
+			}
 
-                .img-container img {
-                    width: 54px;
-                    height: 84px;
-                }
-            }
+			.img-container img {
+				width: 54px;
+				height: 84px;
+			}
+		}
 
-            .col-12 {
-                flex: none;
-            }
+		.col-12 {
+			flex: none;
+		}
 
-            @media (min-width: 1px) and (max-width: 1391px) {
-                .card-text {
-                    display: none;
-                }
+		@media (min-width: 1px) and (max-width: 1391px) {
+			.card-text {
+				display: none;
+			}
 
-                .card-title {
-                    display: none;
-                }
+			.card-title {
+				display: none;
+			}
 
-            }
+		}
 
-            @media (min-width: 1391px) {
-                .card-text-sub {
-                    display: none;
-                }
+		@media (min-width: 1391px) {
+			.card-text-sub {
+				display: none;
+			}
 
-            }
+		}
 
-            /* 정상과 불량 개수가 많아져도 내부 스크롤 멈추게 하기 */
-            #goodmodeltable {
-                overflow: hidden;
-            }
+		/* 정상과 불량 개수가 많아져도 내부 스크롤 멈추게 하기 */
+		#goodmodeltable {
+			overflow: hidden;
+		}
 
-            #badmodeltable {
-                overflow: hidden;
-            }
-        </style>
-    </head>
+		#badmodeltable {
+			overflow: hidden;
+		}
+	</style>
+</head>
 
-    <body id="page-top">
+<body id="page-top">
 
-        <!-- ------------------------ 주 페이지 시작 ----------------------- -->
-        <div layout:fragment="content">
-            <div class="container-fluid">
-                <!-- 분석 양불판정 그래프 -->
-                <div class="card-container-chart">
+	<!-- ------------------------ 주 페이지 시작 ----------------------- -->
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<!-- 분석 양불판정 그래프 -->
+			<div class="card-container-chart">
 
-                    <!-- 1) 이미지 업로드 2) 분석중 퍼센트 표시 3) 정상/불량수 수치 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="row mb-3 mt-4">
-                            <!-- 1) 이미지 업로드 -->
-                            <div class="col-md-12 mb-4">
-                                <div class="card border-left-danger shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters">
-                                            <div class="col mr-2">
-                                                <div class="text-s font-weight-bold text-danger text-uppercase mb-1">
-                                                    파일 업로드
-                                                </div>
-                                                <form id="uploadForm" enctype="multipart/form-data"></form>
-                                                <div class="d-flex justify-content-between">
+				<!-- 1) 이미지 업로드 2) 분석중 퍼센트 표시 3) 정상/불량수 수치 -->
+				<div class="col-md-6 mb-4">
+					<div class="row mb-3 mt-4">
+						<!-- 1) 이미지 업로드 -->
+						<div class="col-md-12 mb-4">
+							<div class="card border-left-danger shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters">
+										<div class="col mr-2">
+											<div class="text-s font-weight-bold text-danger text-uppercase mb-1">
+												파일 업로드
+											</div>
+											<form th:action="@{/deep/imgUpload}" method="post" id="uploadForm"
+												enctype="multipart/form-data">
+												<div class="d-flex justify-content-between">
 
-                                                    <input type="file" id="fileInput" name="files[]" multiple="multiple">
-                                                    <button
-                                                        class="btn btn-danger btn-lg  ml-3"
-                                                        type="button"
-                                                        onclick="uploadFiles()">분석하기</button>
+													<input type="file" id="fileInput" name="file" accept="image/*"
+														required />
+													<input type="submit" value="분석하기" />
 
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                        <!-- 2) 분석중 퍼센트 표시 -->
-                        <div class="col-md-12 mb-4 mt-1">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-s font-weight-bold text-primary text-uppercase mb-1">
-                                                분석중
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">85%
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <!-- 막대바 -->
-                                                    <div class="progress">
-                                                        <div
-                                                            class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                                            style="width: 85%"
-                                                            role="progressbar"
-                                                            aria-valuenow="50"
-                                                            aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						<!-- 2) 분석중 퍼센트 표시 -->
+						<div class="col-md-12 mb-4 mt-1">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-s font-weight-bold text-primary text-uppercase mb-1">
+												분석중
+											</div>
+											<div class="row no-gutters align-items-center">
+												<div class="col-auto">
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">85%
+													</div>
+												</div>
+												<div class="col">
+													<!-- 막대바 -->
+													<div class="progress">
+														<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+															style="width: 85%" role="progressbar" aria-valuenow="50"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                        <!-- 3) 정상/불량수 수치 -->
+						<!-- 3) 정상/불량수 수치 -->
 
-                        <div class="container-fluid">
-                            <div class="row mt-1 d-flex justify-content-between">
-                                <!-- 정상 수 -->
-                                <div class="col-md-6 p-0 pr-3" >
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-s font-weight-bold text-success text-uppercase mb-1">
-                                                        정상
-                                                    </div>
-                                                    <div class="goodcount">0</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        
-                                <!-- 불량 수 -->
-                                <div class="col-md-6 p-0 pl-3">
-                                    <div class="card border-left-warning shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-s font-weight-bold text-warning text-uppercase mb-1">
-                                                        불량
-                                                    </div>
-                                                    <div class="badcount">0</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+						<div class="container-fluid">
+							<div class="row mt-1 d-flex justify-content-between">
+								<!-- 정상 수 -->
+								<div class="col-md-6 p-0 pr-3">
+									<div class="card border-left-success shadow h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div
+														class="text-s font-weight-bold text-success text-uppercase mb-1">
+														정상
+													</div>
+													<div class="goodcount">0</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 
-                <div class="chartcard">
-                    
-                    <div class="card-body" style="overflow: hidden;">
-                        <h5 class="card-title"></h5>
-                        <!-- 원형차트 -->
-                        <div
-                            id="pieChart"
-                            style="min-height: 400px; max-width: 100%; max-height: 100%;"
-                            class="echart"></div>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const pieChart = echarts.init(document.querySelector("#pieChart"));
-                                pieChart.setOption({
-                                    title: {
-                                        text: '금일 양불판정 차트',
-                                        left: 'center'
-                                    },
-                                    tooltip: {
-                                        trigger: 'item'
-                                    },
-                                    legend: {
-                                        orient: 'vertical',
-                                        left: 'left'
-                                    },
-                                    series: [
-                                        {
-                                            name: '개수',
-                                            type: 'pie',
-                                            radius: '70%',
-                                            data: [
-                                                {
-                                                    value: 1300,
-                                                    name: '정상',
-                                                    itemStyle: {
-                                                        color: '#2BAE66'
-                                                    }
-                                                }, {
-                                                    value: 700,
-                                                    name: '불량',
-                                                    itemStyle: {
-                                                        color: '#fbd14b'
-                                                    }
-                                                }
-                                            ],
-                                            emphasis: {
-                                                itemStyle: {
-                                                    shadowBlur: 10,
-                                                    shadowOffsetX: 0,
-                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                                }
-                                            }
-                                        }
-                                    ]
-                                });
+								<!-- 불량 수 -->
+								<div class="col-md-6 p-0 pl-3">
+									<div class="card border-left-warning shadow h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div
+														class="text-s font-weight-bold text-warning text-uppercase mb-1">
+														불량
+													</div>
+													<div class="badcount">0</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                                // 차트 크기 조절
-                                window.addEventListener("resize", () => {
-                                    pieChart.resize();
-                                });
-                            });
-                        </script>
-                    </div>
-                </div>
+				<div class="chartcard">
 
-            </div>
-            <!-- card-container-chart 끝 -->
+					<div class="card-body" style="overflow: hidden;">
+						<h5 class="card-title"></h5>
+						<!-- 원형차트 -->
+						<div id="pieChart" style="min-height: 400px; max-width: 100%; max-height: 100%;" class="echart">
+						</div>
+						<script>
+							document.addEventListener("DOMContentLoaded", () => {
+								const pieChart = echarts.init(document.querySelector("#pieChart"));
+								pieChart.setOption({
+									title: {
+										text: '금일 양불판정 차트',
+										left: 'center'
+									},
+									tooltip: {
+										trigger: 'item'
+									},
+									legend: {
+										orient: 'vertical',
+										left: 'left'
+									},
+									series: [
+										{
+											name: '개수',
+											type: 'pie',
+											radius: '70%',
+											data: [
+												{
+													value: 1300,
+													name: '정상',
+													itemStyle: {
+														color: '#2BAE66'
+													}
+												}, {
+													value: 700,
+													name: '불량',
+													itemStyle: {
+														color: '#fbd14b'
+													}
+												}
+											],
+											emphasis: {
+												itemStyle: {
+													shadowBlur: 10,
+													shadowOffsetX: 0,
+													shadowColor: 'rgba(0, 0, 0, 0.5)'
+												}
+											}
+										}
+									]
+								});
 
-            <!-- 페이지 말머리 -->
-            <br><br>
-            <h1 class="h3 mb-2 text-gray-800">분석로그</h1>
-            <p class="mb-4">정상과 불량 분석 로그 출력</p>
+								// 차트 크기 조절
+								window.addEventListener("resize", () => {
+									pieChart.resize();
+								});
+							});
+						</script>
+					</div>
+				</div>
 
-            <!-- 회원 카드 -->
-            <div class="card shadow mb-4 container-fixed">
-                <div class="card-header py-3">
-                    <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
-                    <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="goodmodeltab">정상</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="badmodeltab">불량</a>
-                        </li>
-                    </ul>
-                </div>
+			</div>
+			<!-- card-container-chart 끝 -->
 
-                <!-- 정상 -->
-                <div class="goodmodeltable">
-                    
-                    <!-- 
+			<!-- 페이지 말머리 -->
+			<br><br>
+			<h1 class="h3 mb-2 text-gray-800">분석로그</h1>
+			<p class="mb-4">정상과 불량 분석 로그 출력</p>
+
+			<!-- 회원 카드 -->
+			<div class="card shadow mb-4 container-fixed">
+				<div class="card-header py-3">
+					<!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" id="goodmodeltab">정상</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="badmodeltab">불량</a>
+						</li>
+					</ul>
+				</div>
+
+				<!-- 정상 -->
+				<div class="goodmodeltable">
+
+					<!-- 
                         분석로그 div 
                         이 div로  불량 로그 출력함  -->
-                    <div class="card-body good-model-table">
-                        no1.
-                        <div class="card mb-3 card-red">
-                            <div class="row no-gutters">
-                                <!-- 사진 div -->
-                                <div class="col-sm-1 col-md-1 col-12 fixed-card">
-                                    <div class="img-container">
-                                        <img
-                                            src="./img/p1.png"
-                                            class="img-thumbnail"
-                                            data-toggle="modal"
-                                            data-target="#imageModal">
-                                    </div>
-                                </div>
-                                <!-- 글 div -->
-                                <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">98% / 11월 30일 12시 34분</p>
-                                <div class="col-md-6 col-12 text-card">
-                                    <div class="card-body text-lefts">
-                                        <h5 class="card-title" style="font-size: 1vw;">판정</h5>
-                                        <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
-                                        </p>
-                                        <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<div class="card-body good-model-table">
+						 <!-- for each문 사용해서 모든 Analysis데이터 출력 -->
+   <table>      
+   <tr th:each="analysis : ${analysisList}">
+      <td><img class="img" th:src="'data:image/png;base64,' + ${analysis.base64ProductImg}" alt="Image" width="100" height="100"/></td>
+      <td th:text="${analysis.predictionDate}"></td>
+      <td th:text="${analysis.predictionAccuracy} + '%'"></td>
+      <td th:text="${analysis.predictionJdm}"></td><br>
+   </tr>
+   </table>
+					</div>
 
 
 
-                </div>
+				</div>
 
-                <!-- 불량 -->
-                <div class="badmodeltable">
+				<!-- 불량 -->
+				<div class="badmodeltable">
 
-                   <!-- 
+					<!-- 
                         분석로그 div 
                         이 div로 불량 로그 출력함  -->
-                    <div class="card-body good-model-table">
-                        no1.
-                        <div class="card mb-3 card-red">
-                            <div class="row no-gutters">
-                                <!-- 사진 div -->
-                                <div class="col-sm-1 col-md-1 col-12 fixed-card">
-                                    <div class="img-container">
-                                        <img
-                                            src="./img/p1.png"
-                                            class="img-thumbnail"
-                                            data-toggle="modal"
-                                            data-target="#imageModal">
-                                    </div>
-                                </div>
-                                <!-- 글 div -->
-                                <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">98% / 11월 30일 12시 34분</p>
-                                <div class="col-md-6 col-12 text-card">
-                                    <div class="card-body text-lefts">
-                                        <h5 class="card-title" style="font-size: 1vw;">판정</h5>
-                                        <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
-                                        </p>
-                                        <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<div class="card-body good-model-table">
+											 <!-- for each문 사용해서 모든 Analysis데이터 출력 -->
+   <table>      
+   <tr th:each="analysis : ${analysisList}">
+      <td><img class="img" th:src="'data:image/png;base64,' + ${analysis.base64ProductImg}" alt="Image" width="100" height="100"/></td>
+      <td th:text="${analysis.predictionDate}"></td>
+      <td th:text="${analysis.predictionAccuracy} + '%'"></td>
+      <td th:text="${analysis.predictionJdm}"></td><br>
+   </tr>
+   </table>
+					</div>
 
-                    
 
-                </div>
-            </div>
 
-            <!-- 하단 pagination -->
-            <nav id="Pagination" aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                    </li>
+				</div>
+			</div>
 
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <!-- 회원카드 div 끝 -->
+			<!-- 하단 pagination -->
+			<nav id="Pagination" aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">1</a>
+					</li>
 
-        <!-- 사진을 눌렀을 때 나타날 모달 -->
-        <div
-            class="modal fade"
-            id="imageModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="imageModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="imageModalLabel">이미지 상세보기</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body d-flex justify-content-center">
-                        <img id="modalImage" src="" class="img-fluid" alt="모달 이미지">
-                    </div>
-                </div>
-            </div>
-        </div>
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<!-- 회원카드 div 끝 -->
 
-        <script src="\JS\singleAnalysis.js"></script>
-    </div>
-    <!-- ------------------------ 주 페이지 끝 ----------------------- -->
+		<!-- 사진을 눌렀을 때 나타날 모달 -->
+		<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="imageModalLabel">이미지 상세보기</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body d-flex justify-content-center">
+						<img id="modalImage" src="" class="img-fluid" alt="모달 이미지">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="\JS\singleAnalysis.js"></script>
+	</div>
+	<!-- ------------------------ 주 페이지 끝 ----------------------- -->
 
 </body>
 
