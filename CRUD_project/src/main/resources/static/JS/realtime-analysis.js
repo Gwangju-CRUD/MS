@@ -67,6 +67,10 @@ $(document).ready(function () {
   // 초기 이미지 데이터 요청 (첫 2개)
   fetchImage();
   fetchImage();
+  fetchImage();
+  fetchImage();
+  fetchImage();
+  fetchImage();
 });
 
 // 이미지 클릭 -> 모달이미지
