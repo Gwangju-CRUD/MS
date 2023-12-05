@@ -42,11 +42,6 @@ $(document).ready(function () {
           .trigger("refresh.owl.carousel");
 
         images.push(data);
-
-        if (index < images.length + 1) {
-          // 아무래도 이 부분을 확인해야 할 것 같습니다. 몇 개의 이미지를 불러올 것인지에 따라 조건을 수정해야 할 수 있습니다.
-          fetchImage(index + 1);
-        }
       },
     });
   }
@@ -62,23 +57,17 @@ $(document).ready(function () {
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
     margin: 50,
-    onChanged: function (event) {
-      // 현재 활성화된 아이템의 인덱스를 가져옴
+    onTranslated: function (event) {
+      // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
       var currentIndex = this._current;
-      // 만약 현재 아이템이 배열의 마지막 아이템이라면
-      if (
-        currentIndex === images.length - 1 &&
-        event.item.index === currentIndex
-      ) {
-        // 다음 이미지 데이터를 요청
-        fetchImage(images.length);
+      if (currentIndex === images.length - 1) {
+        fetchImage(images.length + 1);
       }
     },
   });
 
-  // 초기 이미지 데이터 요청 (첫 2개)
+  // 초기 이미지 데이터 요청 (첫 1개)
   fetchImage(1);
-  fetchImage(2);
 });
 
 // 이미지 클릭 -> 모달이미지
