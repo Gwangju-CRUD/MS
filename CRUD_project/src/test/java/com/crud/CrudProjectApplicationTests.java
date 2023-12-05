@@ -5,7 +5,10 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import com.crud.entity.Analysis;
+import com.crud.entity.Member;
+import com.crud.repository.AnalysisRepository;
+import com.crud.repository.MemberRepository;
 import com.crud.entity.AlarmLog;
 import com.crud.entity.Member;
 import com.crud.repository.AlarmLogRepository;

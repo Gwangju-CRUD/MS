@@ -118,3 +118,20 @@ function createModelFromServer() {
     },
   });
 }
+
+// 컨트롤러에 이미지 업로드 요청
+$("#upload_images").click(function () {
+  $.ajax({
+    url: "/deep/uploadImages",
+    type: "POST",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (data) {
+      alert("이미지 업로드 성공");
+    },
+    error: function (request, error) {
+      alert("이미지 업로드 실패: " + error);
+    },
+  });
+});
