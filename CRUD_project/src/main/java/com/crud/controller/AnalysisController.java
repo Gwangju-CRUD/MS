@@ -131,10 +131,10 @@ public class AnalysisController {
 		return "analysis/deepMain";
 	}
 
-	@GetMapping("/videoAnalysis")
-	private String goAnalysis() {
+	@GetMapping("/realtimeAnalysis")
+	private String goRealtimeAnalysis() {
 
-		return "analysis/videoAnalysis";
+		return "analysis/realtime-analysis";
 	}
 
 	@GetMapping("/create")
@@ -146,6 +146,11 @@ public class AnalysisController {
 	@GetMapping("/imgAnalysis")
 	private String goImgAnalysis() {
 
-		return "analysis/imgAnalysis";
+		return "analysis/single-analysis";
 	}
+	
+
+
+	
+	
 }

@@ -37,8 +37,14 @@
                                 </div>
                                 <!-- 알람 each문 끝 -->
                             </div>
-
-                        </div>
+<!-- 레이아웃 수정용 -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta th:name="_csrf" th:content="${_csrf.token}" />
+        <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
 
                         <div class="row ">
                             <div class="col-lg-4 ">
@@ -135,12 +141,160 @@
 
                         </div>
 
+<!-- 레이아웃 수정 필요 -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<body id="page-top">
+
+    <!-- 마이페이지 wrapper-->
+    <div id="wrapper">
+
+        <!-- 배너 -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- 브랜드 회사명(로고)-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">CRUD <sup>5</sup></div>
+            </a>
+
+            <!-- 구별 선 -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- 메인-->
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>관리홈</span></a>
+            </li>
+
+            <!-- 구별 선 -->
+            <hr class="sidebar-divider">
+
+            <!-- 분석메뉴 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>분석</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="image">단건분석</a>
+                        <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="video">실시간분석</a>
+                        <a class="collapse-item" href="all-Result.html">분석결과</a>
                     </div>
                 </div>
+
+                <!-- 여기까지 -->
                 <!-- .animated -->
             </div>
             <!-- .content -->
 
         </div>
     </body>
+
+        
+    </div>
+    <!-- 이 페이지 wrapper 끝! -->
+
+
+
+<!-- 로그아웃 모달-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+            <a class="btn btn-primary" href="login.html">로그아웃</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 모델 선택 모달 -->
+<!-- Modal -->
+<div
+class="modal fade"
+id="analysisModal"
+tabindex="-1"
+role="dialog"
+aria-labelledby="analysisModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="analysisModalLabel">실시간 분석</h5>
+        <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        >
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>실시간 분석을 시작하시겠습니까?</p>
+    </div>
+    <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        >
+        닫기
+        </button>
+        <button
+        type="button"
+        class="btn btn-primary"
+        id="startAnalysis"
+        data-analysis=""
+        >
+        분석 시작
+        </button>
+    </div>
+    </div>
+</div>
+</div>
+
+<!-- 길어지면 아래에 위로올리기버튼-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+    
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
 </html>
