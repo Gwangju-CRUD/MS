@@ -1,236 +1,250 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{navLayout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{navLayout}">
+
 <body id="page-top">
-<div layout:fragment="content">
-    <!-- 주 페이지 콘텐츠 -->
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        document.addEventListener('DOMContentLoaded', function () {
-          var msg = /*[[${msg}]]*/ null;
+	<div layout:fragment="content">
+		<!-- 주 페이지 콘텐츠 -->
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			document.addEventListener('DOMContentLoaded', function () {
+				var msg = /*[[${msg}]]*/ null;
 
-          console.log("Value in model (JavaScript):", msg);
+				console.log("Value in model (JavaScript):", msg);
 
-          if (msg !== null) {
-            console.log("Opening modal...");
-            var modal = new bootstrap.Modal(document.getElementById('joinModal'));
-            modal.show();
-          }
-        });
+				if (msg !== null) {
+					console.log("Opening modal...");
+					var modal = new bootstrap.Modal(document.getElementById('joinModal'));
+					modal.show();
+				}
+			});
         /*]]>*/
-    </script>
+		</script>
 
-    <!-- 주 페이지 콘텐츠 -->
-    <div class="container-fluid">
+		<!-- 주 페이지 콘텐츠 -->
+		<div class="container-fluid">
 
-        <!-- 페이지 말머리 -->
-        <h1 class="h3 mb-2 text-gray-800">전체 회원 관리</h1>
-        <p class="mb-4">관리자만 볼 수 있으며, 회원 수락과 삭제 등 모든 회원들을 총괄한다</p>
+			<!-- 페이지 말머리 -->
+			<h1 class="h3 mb-2 text-gray-800">전체 회원 관리</h1>
+			<p class="mb-4">관리자만 볼 수 있으며, 회원 수락과 삭제 등 모든 회원들을 총괄한다</p>
 
-        <!-- 회원 카드 -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
+			<!-- 회원 카드 -->
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
 
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="allMembersTab">전체회원</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pendingMembersTab">회원요청</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="addMemberTab">회원추가</a>
-                    </li>
-                </ul>
-            </div>
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" id="allMembersTab">전체회원</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="pendingMembersTab">회원요청</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="addMemberTab">회원추가</a>
+						</li>
+					</ul>
+				</div>
 
-            <!-- 전체회원 -->
-            <div class="card-body" id="allMembersTable">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">사진</th>
-                        <th scope="col">회사명</th>
-                        <th scope="col">회원이름</th>
-                        <th scope="col">회원ID</th>
-                        <th scope="col">회원가입일</th>
-                        <!-- <th scope="col">회원 최종 접속일</th>
+				<!-- 전체회원 -->
+				<div class="card-body" id="allMembersTable">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">사진</th>
+								<th scope="col">회사명</th>
+								<th scope="col">회원이름</th>
+								<th scope="col">회원ID</th>
+								<th scope="col">회원가입일</th>
+								<!-- <th scope="col">회원 최종 접속일</th>
                         <th scope="col">회원삭제여부</th> -->
-                    </tr>
-                    </thead>
-                    <tbody id="allMembersBody">
-						<tr th:each="member, stat : ${memberList}">
-							<td th:text="|${stat.count}|"></td>
-							<td><img th:src="${member.profileImg}" alt="Profile Image"></td>
-							<td th:text="${member.mbCompany}"></td>
-							<td th:text="${member.mbName}"></td>
-							<td th:text="${member.mbId}"></td>
-							<td th:text="${#temporals.format(member.joineDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-						</tr>
-					</tbody>
-                </table>
-						
-	<!-- 페이징처리 시작 -->
-    <div th:if="${memberList != null and not memberList.empty}"><!--paging.isEmpty:페이지존재여부(게시물있으면 false,없으면 true)-->
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!memberList.hasPrevious} ? 'disabled'">
-            <!-- !paging.hasPrevious - disabled : 이전페이지가 없으면 비활성화-->
+							</tr>
+						</thead>
+						<tbody id="allMembersBody">
+							<tr th:each="member, stat : ${memberList}">
+								<td th:text="|${stat.count}|"></td>
+								<td><img th:src="${member.profileImg}" alt="Profile Image"></td>
+								<td th:text="${member.mbCompany}"></td>
+								<td th:text="${member.mbName}"></td>
+								<td th:text="${member.mbId}"></td>
+								<td th:text="${#temporals.format(member.joineDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+							</tr>
+						</tbody>
+					</table>
 
-                <a class="page-link" th:href="@{|?page=${memberList.number-1}|}">
-                <!--이전페이지 링크-->
-                    <span>이전</span>
-                </a>
-            </li>
+					<!-- 페이징처리 시작 -->
+					<div th:if="${memberList != null and not memberList.empty}">
+						<!--paging.isEmpty:페이지존재여부(게시물있으면 false,없으면 true)-->
+						<ul class="pagination justify-content-center">
+							<li class="page-item" th:classappend="${!memberList.hasPrevious} ? 'disabled'">
+								<!-- !paging.hasPrevious - disabled : 이전페이지가 없으면 비활성화-->
 
-
-            <!--th:each :페이지 리스트 루프--> <!--#numbers.sequence(시작, 끝)-->
-            <li th:each="page: ${#numbers.sequence(1, memberList.totalPages)}"
-
-            th:if="${page >= memberList.number-5 and page <= memberList.number+5}"
-            th:classappend="${page - 1 == memberList.number} ? 'active'"
-            class="page-item">
-         <!-- 1페이지 칸 순서에 맞게 적용 -->
-
-            <!--page == paging.number : 현재페이지와 같으면 active 적용-->
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page-1}|}"></a>
-            </li>
+								<a class="page-link" th:href="@{|/memberManagement?page=${memberList.number-1}|}">
+									<!--이전페이지 링크-->
+									<span>이전</span>
+								</a>
+							</li>
 
 
-            <li class="page-item" th:classappend="${!memberList.hasNext} ? 'disabled'">
-            <!-- !paging.hasNext - disabled : 다음페이지 없으면 비활성화-->
+							<!--th:each :페이지 리스트 루프--> <!--#numbers.sequence(시작, 끝)-->
+							<li th:each="page: ${#numbers.sequence(1, memberList.totalPages)}"
+								th:if="${page >= memberList.number-5 and page <= memberList.number+5}"
+								th:classappend="${page - 1 == memberList.number} ? 'active'" class="page-item">
+								<!-- 1페이지 칸 순서에 맞게 적용 -->
 
-                <a class="page-link" th:href="@{|?page=${memberList.number+1}|}">
-                <!--다음페이지 링크-->
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- 페이징처리 끝 -->
-						
-						
-							
-							
-						
-						
-            </div>
-
-            <!-- 회원요청 -->
-            <div class="card-body" id="pendingMembersTable" style="display: none;">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">회사명</th>
-                        <th scope="col">회원이름</th>
-                        <th scope="col">회원ID</th>
-                        <th scope="col">수락여부</th>
-                    </tr>
-                    </thead>
-                    <tbody th:each="list, stat : ${requestMemberList}" id="pendingMembersBody">
-						
-                    
-                    <tr>
-                        <td th:text="|${stat.count}|"></td>
-                        <td th:text="${list.mbCompany}"></td>
-                        <td th:text="${list.mbName}"></td>
-                        <td th:text="${list.mbId}"></td>
-                        <td>
-                            <button class='btn btn-success'>O</button>
-                            <button class='btn btn-danger'>X</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 추가 내용 (회원추가) -->
-            <div class="card-body" id="addMemberForm" style="display: none;">
-                <!-- 회원 추가 폼 등의 내용을 추가 -->
-                <form th:action="@{/memberManagement}" th:object="${memberForm}" method="post">
-                    <div>
-                        <h1 th:text="${msg}"></h1>
-                        <div class="form-group w-50">
-                            <label for="mbCompany" class="col-form-label">회사명</label>
-                            <input type="text" th:field="*{mbCompany}" class="form-control" id="company-name">
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="mbName" class="col-form-label">이름</label>
-                            <input type="text" th:field="*{mbName}" class="form-control" id="user-name" name="username"
-                                   autocomplete="username">
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="mbId" class="col-form-label">아이디</label>
-                            <input type="text" th:field="*{mbId}" class="form-control" id="user-id"
-                                   th:attr="autocomplete=${'username'}">
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="mbPw1" class="col-form-label">비밀번호</label>
-                            <div class="input-group">
-                                <input type="password" th:field="*{mbPw1}" class="form-control" id="user-password1"
-                                       autocomplete="new-password">
-                            </div>
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="mbPw2" class="col-form-label">비밀번호 확인</label>
-                            <div class="input-group">
-                                <input type="password" th:field="*{mbPw2}" class="form-control" id="user-password2"
-                                       autocomplete="new-password">
-                            </div>
-                            <div class="d-flex flex-row-reverse mt-4">
-                                <button type="submit" class="btn btn-primary" id="addMemberBtn" data-toggle="modal"
-                                        data-target="#exampleModal">회원 추가하기</button>
-                            </div>
-                        </div>
-                </form>
-            </div>
+								<!--page == paging.number : 현재페이지와 같으면 active 적용-->
+								<a th:text="${page}" class="page-link"
+									th:href="@{|/memberManagement?page=${page-1}|}"></a>
+							</li>
 
 
-            <!-- Modal -->
-            <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="joinModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p th:text="${msg}"></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+							<li class="page-item" th:classappend="${!memberList.hasNext} ? 'disabled'">
+								<!-- !paging.hasNext - disabled : 다음페이지 없으면 비활성화-->
 
-            <!-- 하단 pagination -->
-            <nav id="allMembersPagination" aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+								<a class="page-link" th:href="@{|/memberManagement?page=${memberList.number+1}|}">
+									<!--다음페이지 링크-->
+									<span>다음</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!-- 페이징처리 끝 -->
 
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <!-- 이 페이지 wrapper 끝! -->
 
-    <!--
+
+
+
+				</div>
+				<!-- 회원요청 -->
+				<div class="card-body" id="pendingMembersTable" style="display: none;">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">회사명</th>
+								<th scope="col">회원이름</th>
+								<th scope="col">회원ID</th>
+								<th scope="col">수락여부</th>
+							</tr>
+						</thead>
+						<tbody th:each="list, stat : ${requestMemberList}" id="pendingMembersBody">
+
+
+							<tr>
+								<td th:text="|${stat.count}|"></td>
+								<td th:text="${list.mbCompany}"></td>
+								<td th:text="${list.mbName}"></td>
+								<td th:text="${list.mbId}"></td>
+								<td>
+
+									<div class="btn-group mr-1" role="group" aria-label="Basic example">
+										<form th:action="@{'/members/approve/' + ${list.mbId}}" method="post">
+											<button type="submit" class='btn btn-success'>O</button>
+										</form>
+									</div>
+									<div class="btn-group ml-1" role="group" aria-label="Basic example">
+										<form th:action="@{'/members/delete/' + ${list.mbId}}" method="post">
+											<button type="submit" class='btn btn-danger'>X</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+
+
+
+
+				<!-- 추가 내용 (회원추가) -->
+				<div class="card-body" id="addMemberForm" style="display: none;">
+					<!-- 회원 추가 폼 등의 내용을 추가 -->
+					<form th:action="@{/memberManagement}" th:object="${memberForm}" method="post">
+						<div>
+							<h1 th:text="${msg}"></h1>
+							<div class="form-group w-50">
+								<label for="mbCompany" class="col-form-label">회사명</label>
+								<input type="text" th:field="*{mbCompany}" class="form-control" id="company-name">
+							</div>
+							<div class="form-group w-50">
+								<label for="mbName" class="col-form-label">이름</label>
+								<input type="text" th:field="*{mbName}" class="form-control" id="user-name"
+									name="username" autocomplete="username">
+							</div>
+							<div class="form-group w-50">
+								<label for="mbId" class="col-form-label">아이디</label>
+								<input type="text" th:field="*{mbId}" class="form-control" id="user-id"
+									th:attr="autocomplete=${'username'}">
+							</div>
+							<div class="form-group w-50">
+								<label for="mbPw1" class="col-form-label">비밀번호</label>
+								<div class="input-group">
+									<input type="password" th:field="*{mbPw1}" class="form-control" id="user-password1"
+										autocomplete="new-password">
+								</div>
+							</div>
+							<div class="form-group w-50">
+								<label for="mbPw2" class="col-form-label">비밀번호 확인</label>
+								<div class="input-group">
+									<input type="password" th:field="*{mbPw2}" class="form-control" id="user-password2"
+										autocomplete="new-password">
+								</div>
+								<div class="d-flex flex-row-reverse mt-4">
+									<button type="submit" class="btn btn-primary" id="addMemberBtn" data-toggle="modal"
+										data-target="#exampleModal">회원 추가하기</button>
+								</div>
+							</div>
+					</form>
+				</div>
+
+
+
+				<!-- Modal -->
+				<div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="joinModalLabel">Modal title</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p th:text="${msg}"></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 하단 pagination -->
+				<nav id="allMembersPagination" aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- 이 페이지 wrapper 끝! -->
+
+		<!--
   ------------------------------------
   전체, 요청, 추가 버튼 누르면
   active로 활성화,
@@ -238,144 +252,144 @@
   추가시 비밀번호 hide/show
   ------------------------------------
   -->
-    <script>
-        $(document).ready(function () {
+		<script>
+			$(document).ready(function () {
 
 
-          // 전체회원
-          $("#allMembersTab").click(function () {
+				// 전체회원
+				$("#allMembersTab").click(function () {
 
-            // div
-            $("#allMembersTable").show();
-            $("#pendingMembersTable").hide();
-            $("#addMemberForm").hide();
-            $("#allMembersPagination").show();
+					// div
+					$("#allMembersTable").show();
+					$("#pendingMembersTable").hide();
+					$("#addMemberForm").hide();
+					$("#allMembersPagination").show();
 
-            // active
-            $(this).addClass("active");
-            $("#pendingMembersTab").removeClass("active");
-            $("#addMemberTab").removeClass("active");
-          });
-
-
-          // 회원요청
-          $("#pendingMembersTab").click(function () {
-            // div
-            $("#allMembersTable").hide();
-            $("#pendingMembersTable").show();
-            $("#addMemberForm").hide();
-            $("#allMembersPagination").hide();
-
-            // active
-            $(this).addClass("active");
-            $("#allMembersTab").removeClass("active");
-            $("#addMemberTab").removeClass("active");
-          });
+					// active
+					$(this).addClass("active");
+					$("#pendingMembersTab").removeClass("active");
+					$("#addMemberTab").removeClass("active");
+				});
 
 
-          // 회원추가
-          $("#addMemberTab").click(function () {
-            // div
-            $("#allMembersTable").hide();
-            $("#pendingMembersTable").hide();
-            $("#addMemberForm").show();
-            $("#allMembersPagination").hide();
+				// 회원요청
+				$("#pendingMembersTab").click(function () {
+					// div
+					$("#allMembersTable").hide();
+					$("#pendingMembersTable").show();
+					$("#addMemberForm").hide();
+					$("#allMembersPagination").hide();
 
-            // active
-            $(this).addClass("active");
-            $("#allMembersTab").removeClass("active");
-            $("#pendingMembersTab").removeClass("active");
-          });
+					// active
+					$(this).addClass("active");
+					$("#allMembersTab").removeClass("active");
+					$("#addMemberTab").removeClass("active");
+				});
+
+
+				// 회원추가
+				$("#addMemberTab").click(function () {
+					// div
+					$("#allMembersTable").hide();
+					$("#pendingMembersTable").hide();
+					$("#addMemberForm").show();
+					$("#allMembersPagination").hide();
+
+					// active
+					$(this).addClass("active");
+					$("#allMembersTab").removeClass("active");
+					$("#pendingMembersTab").removeClass("active");
+				});
 
 
 
-        });
-    </script>
+			});
+		</script>
 
-    <!-- 요청 수락 모달-->
-    <div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="okModalLabel">요청을 수락하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">수락하려면 아래의 '수락'을 선택하십시오.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" id="confirmok">수락</a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- 요청 수락 모달-->
+		<div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="okModalLabel">요청을 수락하시겠습니까?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">수락하려면 아래의 '수락'을 선택하십시오.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+						<a class="btn btn-primary" id="confirmok">수락</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- 요청 거부 모달-->
-    <div class="modal fade" id="noModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="noModalLabel">요청을 거부하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">거부하려면 아래의 '거부'를 선택하십시오.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" id="confirmno">거부</a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- 요청 거부 모달-->
+		<div class="modal fade" id="noModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="noModalLabel">요청을 거부하시겠습니까?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">거부하려면 아래의 '거부'를 선택하십시오.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+						<a class="btn btn-primary" id="confirmno">거부</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- 회원 추가 완료 모달 -->
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- 회원 추가 완료 모달 -->
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						...
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- 삭제 모달-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">회원을 삭제하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">삭제하려면 아래의 '삭제'를 선택하십시오.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="tables.html">삭제</a>
-                </div>
+		<!-- 삭제 모달-->
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="deleteModalLabel">회원을 삭제하시겠습니까?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">삭제하려면 아래의 '삭제'를 선택하십시오.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+						<a class="btn btn-primary" href="tables.html">삭제</a>
+					</div>
 
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
 
-    <!-- 길어지면 아래에 위로올리기버튼-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+		<!-- 길어지면 아래에 위로올리기버튼-->
+		<a class="scroll-to-top rounded" href="#page-top">
+			<i class="fas fa-angle-up"></i>
+		</a>
 
 </body>
 

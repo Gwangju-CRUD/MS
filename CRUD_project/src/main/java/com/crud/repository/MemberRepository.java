@@ -13,7 +13,7 @@ import com.crud.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, String> {
 	
 	Optional<Member> findBymbId(String mbId);
-	Page<Member> findAll(Pageable pageable);
+	Page<Member>findAll(Pageable pageable);
 }
 	
 

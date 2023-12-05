@@ -1,6 +1,8 @@
 package com.crud.entity;
 
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,9 +25,8 @@ public class RequestMember {
 
 	@Column(nullable = false)
 	private String mbCompany; // 회사명
-	
 	@Column(nullable = false)
-	private String joineDate; // 회원가입한 날짜
+	private LocalDateTime joineDate; // 회원가입한 날짜
 	
 
 }

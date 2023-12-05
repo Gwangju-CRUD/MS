@@ -9,10 +9,14 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,9 +24,12 @@ import com.crud.DuplicateIdException;
 import com.crud.entity.Member;
 import com.crud.entity.RequestMember;
 import com.crud.form.MemberForm;
+import com.crud.repository.MemberRepository;
+import com.crud.repository.RequestMemberRepository;
 import com.crud.service.MemberService;
 
 import groovyjarjarpicocli.CommandLine.DuplicateNameException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -32,9 +39,10 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
+	private final MemberRepository memberRepository;
+	private final RequestMemberRepository requestMemberRepository;
+	private final PasswordEncoder passwordEncoder;
 	
-
-
 	// 관리자만 보이도록 추후 설정할 것
 	@GetMapping("/signup")
 	public String signup(MemberForm memberForm) {
@@ -83,14 +91,12 @@ public class MemberController {
 			RequestMember requestMember =  new RequestMember();
 			
 			LocalDateTime now = LocalDateTime.now();
-			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
-			String formatDate = now.format(format);
 			
 			requestMember.setMbId(memberForm.getMbId());
 			requestMember.setMbPw(memberForm.getMbPw1());
 			requestMember.setMbName(memberForm.getMbName());
 			requestMember.setMbCompany(memberForm.getMbCompany());
-			requestMember.setJoineDate(formatDate);
+			requestMember.setJoineDate(now);
 			
 			
 			memberService.requestMember(requestMember);
@@ -155,6 +161,47 @@ public class MemberController {
 		return "member/memberManagement";
 	}
 	
+		
+		// 회원 추가 및 요청회원 삭제 
+		@PostMapping("/members/approve/{mbId}")
+		public String approveMember(@PathVariable String mbId) {
+			Optional<RequestMember> requestMember = requestMemberRepository.findById(mbId);
+			
+			if(requestMember.isPresent()) {
+		        Member member = new Member();
+		        
+		     // RequestMember의 정보를 Member로 복사
+		        member.setMbId(requestMember.get().getMbId());
+		        member.setMbPw(passwordEncoder.encode(requestMember.get().getMbPw()));
+		        member.setMbCompany(requestMember.get().getMbCompany());
+		        member.setMbName(requestMember.get().getMbName());
+		        member.setJoineDate(requestMember.get().getJoineDate());
+		        
+		        // Member 저장
+		        memberRepository.save(member);
+
+		        // RequestMember 삭제
+		        requestMemberRepository.deleteById(mbId);
+			}
+			return "redirect:/memberManagement";  // 처리 후 리다이렉트할 경로			
+		}
+		
+	
+	
+		//요청 회원 삭제
+		@PostMapping("/members/delete/{mbId}")
+		public String deleteMember(@PathVariable String mbId) {
+		    requestMemberRepository.deleteById(mbId);
+		    return "redirect:/memberManagement";  // 삭제 후 리다이렉트할 경로
+		}
+	
+	
+	
+	
+	
+	
+	
+	 
 	
 	
 
