@@ -1,4 +1,67 @@
 
+
+
+// --------------------------
+// 원형 차트
+// ---------------------------
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const pieChart = echarts.init(document.querySelector("#pieChart"));
+        pieChart.setOption({
+            title: {
+                text: '금일 양불판정 차트',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+            series: [
+                {
+                    name: '개수',
+                    type: 'pie',
+                    radius: '70%',
+                    data: [
+                        {
+                            value: 1300,
+                            name: '정상',
+                            itemStyle: {
+                                color: '#2BAE66'
+                            }
+                        }, {
+                            value: 700,
+                            name: '불량',
+                            itemStyle: {
+                                color: '#fbd14b'
+                            }
+                        }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+
+        // 차트 크기 조절
+        window.addEventListener("resize", () => {
+            pieChart.resize();
+        });
+    });
+                        
+
+
+
+
+
+
 // --------------------------
 // 분석로그
 // div 보이기 / 숨기기 설정
@@ -91,3 +154,6 @@
         counter($badCounter, max);
         }, delayTime);
     }
+
+    
+
