@@ -1,0 +1,23 @@
+#video {
+  width: 300px;
+}
+
+#video,
+#capture_normal,
+#normal_count,
+#capture_error,
+#error_count,
+#normal_count_place,
+#error_count_place,
+#delete_images,
+#imgae_model_name,
+#model_name,
+#create_model,
+#folder_path_normal,
+#folder_path_error,
+#folder_image_create,
+#upload_images,
+h1,
+h3 {
+  margin-left: 30px;
+}
