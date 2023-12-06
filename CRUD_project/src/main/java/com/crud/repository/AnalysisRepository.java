@@ -12,5 +12,7 @@ import com.crud.entity.Analysis;
 public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 	
 	Page<Analysis> findAllByOrderByProductIdxDesc(Pageable pageable); // OrderBy 하는 로직
+
+	Long countByPredictionClassfication(String predictionClassfication);
 	
 }
