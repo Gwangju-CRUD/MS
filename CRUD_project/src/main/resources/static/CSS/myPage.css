@@ -1,4 +1,4 @@
- /* 
+        /* 
         ---------------------
         프로필 정보 css
         ---------------------
@@ -6,12 +6,13 @@
          #profilediv {
             display: flex;
             margin: 60px;
-            /* background-color: orange; */
+           
             justify-content: center;
         }
 
+        /* 프로필 이미지 div 비율*/
         .profile-img {
-            /* background-color: gray; */
+            
             width: 48%;
             display: flex;
             justify-content: center;
@@ -19,14 +20,19 @@
             max-width: 300px;
         }
 
+        /* 프로필 이미지 1:1비율 원으로 */
         .profile-img img {
-            max-width: 100%;
-            height: auto;
-            max-height: 250px;
+            width: 230px;
+            height: 230px; 
+            object-fit: cover; 
+            border-radius: 50%;
+            border-radius: 50%;
+            cursor: pointer;
         }
 
+        /* 프로필 TEXT div 비율*/
         .profile-text {
-            /* background-color: blue; */
+            
             width: 48%;
             padding-left: 80px;
             padding-top: 30px;
