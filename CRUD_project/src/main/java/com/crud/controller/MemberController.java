@@ -98,8 +98,9 @@ public class MemberController {
 		if (authentication != null && authentication.isAuthenticated()) {
 			String username = authentication.getName();
 			System.out.println("인증된 사용자: " + username);
-
 			List<AlarmLog> alarmList = alarmService.alarmList();
+			Long memberCount = memberService.memberCount();
+			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
 			return "main";
 		} else {
