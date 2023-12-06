@@ -1,749 +1,395 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>회원관리</title>
-
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-</head>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{navLayout}">
 
 <body id="page-top">
-
-    <!-- 마이페이지 wrapper-->
-    <div id="wrapper">
-
-        <!-- 배너 -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- 브랜드 회사명(로고)-->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">CRUD <sup>5</sup></div>
-            </a>
-
-            <!-- 구별 선 -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- 메인-->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>관리홈</span></a>
-            </li>
-
-            <!-- 구별 선 -->
-            <hr class="sidebar-divider">
-
-            <!-- 분석메뉴 -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>분석</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="single-analysis.html">단건분석</a>
-                        <a class="collapse-item" href="cards.html">실시간분석</a>
-                        <a class="collapse-item" href="all-Result.html">분석결과</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- 마이페이지 메뉴 -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>마이페이지</span>
-                </a>
-            </li>
-
-            
-
-            <!-- 회원관리 메뉴 -->
-            <li class="nav-item active">
-                <a class="nav-link" href="MemberManagement.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>전체회원관리</span></a>
-            </li>
-
-            
-
-            <!-- 바 숨기기 / 열기 -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                <!-- <button class="rounded-circle border-0" id="sidebarToggle"></button> -->
-            </div>
-
-        </ul>
-        <!-- 사이드바 끝!!! -->
-
-
-
-        <!-- 콘텐츠 Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- 상단바 -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
-
-
-                    <!-- 상단 Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav 아이텐 - 알림 -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- 알림 갯수 - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-
-                            <!-- 알림 누르면! -->
-                            
-                            <!-- 제목 -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    알림
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">2023.11.27</div>
-                                        <span class="font-weight-bold">금일 분석 결과 안내</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">2023.11.27</div>
-                                        00회사 주식 급락..
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">2023.11.26</div>
-                                        행복한 주말 보내세요!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">.</a>
-                            </div>
-                        </li>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav 아이템 - 프로필 -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-
-                            <!-- 프로필 누르면 정보 출력 -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    내 프로필
-                                </a>
-                                
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    로그아웃
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- 상단바 끝!!! -->
-
-                <!-- 주 페이지 콘텐츠 -->
-                <div class="container-fluid">
-
-                    <!-- 페이지 말머리 -->
-                    <h1 class="h3 mb-2 text-gray-800">전체 회원 관리</h1>
-                    <p class="mb-4">관리자만 볼 수 있으며, 회원 수락과 삭제 등 모든 회원들을 총괄한다</p>
-
-                    <!-- 회원 카드 -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
-
-                            <ul class="nav nav-tabs card-header-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="allMembersTab">전체회원</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pendingMembersTab">회원요청</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="addMemberTab">회원추가</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- 전체회원 -->
-                        <div class="card-body" id="allMembersTable">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">사진</th>
-                                        <th scope="col">회사명</th>
-                                        <th scope="col">회원이름</th>
-                                        <th scope="col">회원ID</th>
-                                        <th scope="col">회원가입일</th>
-                                        <th scope="col">회원 최종 접속일</th>
-                                        <th scope="col">회원삭제여부</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="allMembersBody"></tbody>
-                            </table>
-                        </div>
-
-                        <!-- 회원요청 -->
-                        <div class="card-body" id="pendingMembersTable" style="display: none;">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">회사명</th>
-                                        <th scope="col">회원이름</th>
-                                        <th scope="col">회원ID</th>
-                                        <th scope="col">수락여부</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="pendingMembersBody">
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>00회사</td>
-                                        <td>서희주</td>
-                                        <td>DOZZI</td>
-                                        <td>
-                                            <button class='btn btn-success'>O</button>
-                                            <button class='btn btn-danger'>X</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- 추가 내용 (회원추가) -->
-                        <div class="card-body" id="addMemberForm" style="display: none;">
-                            <!-- 회원 추가 폼 등의 내용을 추가 -->
-                            <div style="width: 600px; height: 400px;">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="company-name" class="col-form-label">회사명</label>
-                                        <input type="text" class="form-control" id="company-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user-name" class="col-form-label">이름</label>
-                                        <input type="text" class="form-control" id="user-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user-id" class="col-form-label">아이디</label>
-                                        <input type="text" class="form-control" id="user-id">
-                                    </div>
-            
-                                    <div class="form-group">
-                                        <label for="user-password" class="col-form-label">비밀번호</label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" id="user-password">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="toggle-password">Show</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" id="addMemberBtn">추가</button>
-                                </form>
-                            </div>
-                        </div>
-                    
-
-                            
-                          
-                              <!-- 하단 pagination -->
-                              <nav id="allMembersPagination" aria-label="Page navigation example">
-                                <ul class="pagination">
-                                  <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                      <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  
-                                  <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                      <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </nav>
-                        </div>
-                </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- Main Content 끝 -->
-
-            
-            
-        </div>
-        <!-- Content Wrapper 끝 -->
-        <!-- 푸터 -->
-        <footer class="sticky-footer" style="background-color: #F8F9FC;">
-            <hr>
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>CRUD &copy; 2023.11.28<br><br>
-                    진영준 | 장채린 | 서희주 | 한창헌 | 김동민</span>
-                </div>
-            </div>
-        </footer>
-        <!-- 푸터 끝 -->
-        
-    </div>
-    <!-- 이 페이지 wrapper 끝! -->
-
-
-
-
-<!-- 
-------------------------------------
-전체, 요청, 추가 버튼 누르면
-active로 활성화,
-추가시 엔터키 이벤트 방지,
-추가시 비밀번호 hide/show
-------------------------------------
--->
-<script>
-        $(document).ready(function () {
-
-
-        // 전체회원 
-        $("#allMembersTab").click(function () {
-           
-            // div
-            $("#allMembersTable").show();
-            $("#pendingMembersTable").hide();
-            $("#addMemberForm").hide();
-            $("#allMembersPagination").show();
-
-            // active
-            $(this).addClass("active");
-            $("#pendingMembersTab").removeClass("active");
-            $("#addMemberTab").removeClass("active");
-        });
-
-        
-        // 회원요청
-        $("#pendingMembersTab").click(function () {
-            // div
-            $("#allMembersTable").hide();
-            $("#pendingMembersTable").show();
-            $("#addMemberForm").hide();
-            $("#allMembersPagination").hide();
-
-            // active
-            $(this).addClass("active");
-            $("#allMembersTab").removeClass("active");
-            $("#addMemberTab").removeClass("active");
-        });
-
-
-        // 회원추가
-        $("#addMemberTab").click(function () {
-            // div
-            $("#allMembersTable").hide();
-            $("#pendingMembersTable").hide();
-            $("#addMemberForm").show();
-            $("#allMembersPagination").hide();
-
-            // active
-            $(this).addClass("active");
-            $("#allMembersTab").removeClass("active");
-            $("#pendingMembersTab").removeClass("active");
-        });
-
-        // 회원추가 - 엔터 키 이벤트 감지하고 추가버튼 클릭으로
-        $("#addMemberForm").on("keydown", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault(); 
-                $("#addMemberBtn").click(); 
-            }
-        });
-
-        // 회원추가 - 비밀번호 show/hide
-        $("#toggle-password").click(function () {
-            var passwordInput = $("#user-password");
-            var toggleBtn = $(this);
-
-            if (passwordInput.attr("type") === "password") {
-                passwordInput.attr("type", "text");
-                toggleBtn.text("Hide");
-            } else {
-                passwordInput.attr("type", "password");
-                toggleBtn.text("Show");
-            }
-        });
-
-    });
-    </script>
-
-
-
-<!-- 
-------------------------------------
-회원추가 폼에서 추가버튼 클릭시
-추가 모달이 나타나고
-전체 회원에 출력
-------------------------------------
--->
-<script>
-
-$(document).ready(function () {
-
-        // 추가 버튼 클릭 시
-        $("#addMemberBtn").click(function (event) {
-    
-            // 기본 폼 제출 동작 방지
-            event.preventDefault();
-
-            // 필요한 데이터 수집
-            var companyName = $("#company-name").val();
-            var userName = $("#user-name").val();
-            var userId = $("#user-id").val();
-            var userPassword = $("#user-password").val();
-            var signUpDate = new Date().toLocaleDateString();
-            var lastAccessDate = null;
-
-            // 현재 테이블의 행 개수 가져오기
-            var rowCount = $("#allMembersTable tbody tr").length;
-
-            // 새로운 행 생성
-            var newRow = "<tr>" +
-                "<th scope='row'>" + (rowCount + 1) + "</th>" +
-                "<td><img class='img-profile rounded-circle' src='img/undraw_profile.svg' width='30' height='30'></td>" +
-                "<td>" + companyName + "</td>" +
-                "<td>" + userName + "</td>" +
-                "<td>" + userId + "</td>" +
-                "<td>" + signUpDate + "</td>" +
-                "<td>" + lastAccessDate + "</td>" +
-                "<td><button class='btn btn-danger' data-toggle='modal' data-target='#deleteModal' onclick='deleteMember(this)'>X</button></td>" +
-                "</tr>";
-
-            // 행을 테이블에 추가
-            $("#allMembersBody").append(newRow);
-
-            // 추가 모달 열기
-            $("#insertModal").modal("show");
-
-            // '추가' 버튼 클릭 시 이벤트 바인딩
-            $("#confirmInsert").off("click").on("click", function () {
-                // 추가 완료 후 폼 초기화
-                $("#company-name, #user-name, #user-id, #user-password").val('');
-                
-                // 모달 닫기
-                $("#insertModal").modal("hide");
-
-            });
-        });
-    });
-
-    
-</script>
-
-
-
-<!-- 
-------------------------------------
-전체회원에서 회원삭제 버튼 클릭시
-삭제 모달이 나타나고
-삭제됨!
-------------------------------------
--->
-<script>
-
-    $(document).ready(function () {
-        // 삭제 버튼 클릭 시
-        $("#allMembersBody").on("click", ".btn-danger", function () {
-        // 해당 행 찾기
-        var row = $(this).closest("tr");
-
-        // 삭제 모달 표시
-        $("#deleteModal").modal("show");
-
-        // 모달 내 '삭제' 버튼에 데이터 삭제 이벤트 바인딩
-        $("#deleteModal").find(".btn-primary").off("click").on("click", function () {
-            // 행 삭제
-            row.remove();
-
-            // 모달 닫기
-            $("#deleteModal").modal("hide");
-            });
-        });
-
-
-        // 모달이 닫힐 때 이벤트 발생 시 데이터 삭제 이벤트 바인딩 해제
-        $("#deleteModal").on("hidden.bs.modal", function () {
-            $("#deleteModal").find(".btn-primary").off("click");
-        });
-
-    });
-</script>
-
-
-<!-- 
-------------------------------------
-회원요청에서 수락여부
-O -> 수락 모달창 나타나고 전체회원추가
-X -> 거부 모달창 나타남
-------------------------------------
--->
-<script>
-     $(document).ready(function () {
-        // 수락모달
-        $("#pendingMembersTable").on("click", ".btn-success", function () {
-            
-            $("#okModal").modal("show");
-        });
-
-        // 수락눌렀을 때
-        $("#confirmok").click(function () {
-            // 수락 처리 로직 추가
-            // 아직안함
-            
-            // 모달 닫기
-            $("#okModal").modal("hide");
-        });
-
-
-        // 거부모달
-        $("#pendingMembersTable").on("click", ".btn-danger", function () {
-            
-            $("#noModal").modal("show");
-        });
-
-
-        // 거부눌렀을 때
-        $("#confirmno").click(function () {
-            // 거부 처리 로직 추가
-            // 아직안함
-
-            // 모달 닫기
-            $("#noModal").modal("hide");
-        });
-    });
-</script>
-
-
-
-<!-- 요청 수락 모달-->
-<div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby=""
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="okModalLabel">요청을 수락하시겠습니까?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">수락하려면 아래의 '수락'을 선택하십시오.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-            <a class="btn btn-primary" id="confirmok" >수락</a>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- 요청 거부 모달-->
-<div class="modal fade" id="noModal" tabindex="-1" role="dialog" aria-labelledby=""
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="noModalLabel">요청을 거부하시겠습니까?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">거부하려면 아래의 '거부'를 선택하십시오.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-            <a class="btn btn-primary" id="confirmno" >거부</a>
-        </div>
-    </div>
-</div>
-</div>
-
-
-<!-- 추가 모달-->
-<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby=""
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="insertModalLabel">회원을 추가하시겠습니까?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">추가하려면 아래의 '추가'를 선택하십시오.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-            <a class="btn btn-primary" id="confirmInsert" >추가</a>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- 삭제 모달-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby=""
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">회원을 삭제하시겠습니까?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">삭제하려면 아래의 '삭제'를 선택하십시오.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-            <a class="btn btn-primary" href="tables.html">삭제</a>
-        </div>
-    </div>
-</div>
-</div>
-
-
-
-<!-- 로그아웃 모달-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">현재 세션을 종료하려면 아래의 '로그아웃'을 선택하십시오.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-            <a class="btn btn-primary" href="login.html">로그아웃</a>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- 길어지면 아래에 위로올리기버튼-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-    
-    
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+	<div layout:fragment="content">
+		<!-- 주 페이지 콘텐츠 -->
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			document.addEventListener('DOMContentLoaded', function () {
+				var msg = /*[[${msg}]]*/ null;
+
+				console.log("Value in model (JavaScript):", msg);
+
+				if (msg !== null) {
+					console.log("Opening modal...");
+					var modal = new bootstrap.Modal(document.getElementById('joinModal'));
+					modal.show();
+				}
+			});
+        /*]]>*/
+		</script>
+
+		<!-- 주 페이지 콘텐츠 -->
+		<div class="container-fluid">
+
+			<!-- 페이지 말머리 -->
+			<h1 class="h3 mb-2 text-gray-800">전체 회원 관리</h1>
+			<p class="mb-4">관리자만 볼 수 있으며, 회원 수락과 삭제 등 모든 회원들을 총괄한다</p>
+
+			<!-- 회원 카드 -->
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
+
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" id="allMembersTab">전체회원</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="pendingMembersTab">회원요청</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="addMemberTab">회원추가</a>
+						</li>
+					</ul>
+				</div>
+
+				<!-- 전체회원 -->
+				<div class="card-body" id="allMembersTable">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">사진</th>
+								<th scope="col">회사명</th>
+								<th scope="col">회원이름</th>
+								<th scope="col">회원ID</th>
+								<th scope="col">회원가입일</th>
+								<!-- <th scope="col">회원 최종 접속일</th>
+                        <th scope="col">회원삭제여부</th> -->
+							</tr>
+						</thead>
+						<tbody id="allMembersBody">
+							<tr th:each="member, stat : ${memberList}">
+								<td th:text="|${stat.count}|"></td>
+								<td><img th:src="${member.profileImg}" alt="Profile Image"></td>
+								<td th:text="${member.mbCompany}"></td>
+								<td th:text="${member.mbName}"></td>
+								<td th:text="${member.mbId}"></td>
+								<td th:text="${#temporals.format(member.joineDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- 페이징처리 시작 -->
+					<div th:if="${memberList != null and not memberList.empty}">
+						<!--paging.isEmpty:페이지존재여부(게시물있으면 false,없으면 true)-->
+						<ul class="pagination justify-content-center">
+							<li class="page-item" th:classappend="${!memberList.hasPrevious} ? 'disabled'">
+								<!-- !paging.hasPrevious - disabled : 이전페이지가 없으면 비활성화-->
+
+								<a class="page-link" th:href="@{|/memberManagement?page=${memberList.number-1}|}">
+									<!--이전페이지 링크-->
+									<span>이전</span>
+								</a>
+							</li>
+
+
+							<!--th:each :페이지 리스트 루프--> <!--#numbers.sequence(시작, 끝)-->
+							<li th:each="page: ${#numbers.sequence(1, memberList.totalPages)}"
+								th:if="${page >= memberList.number-5 and page <= memberList.number+5}"
+								th:classappend="${page - 1 == memberList.number} ? 'active'" class="page-item">
+								<!-- 1페이지 칸 순서에 맞게 적용 -->
+
+								<!--page == paging.number : 현재페이지와 같으면 active 적용-->
+								<a th:text="${page}" class="page-link"
+									th:href="@{|/memberManagement?page=${page-1}|}"></a>
+							</li>
+
+
+							<li class="page-item" th:classappend="${!memberList.hasNext} ? 'disabled'">
+								<!-- !paging.hasNext - disabled : 다음페이지 없으면 비활성화-->
+
+								<a class="page-link" th:href="@{|/memberManagement?page=${memberList.number+1}|}">
+									<!--다음페이지 링크-->
+									<span>다음</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!-- 페이징처리 끝 -->
+
+
+
+
+
+				</div>
+				<!-- 회원요청 -->
+				<div class="card-body" id="pendingMembersTable" style="display: none;">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">회사명</th>
+								<th scope="col">회원이름</th>
+								<th scope="col">회원ID</th>
+								<th scope="col">수락여부</th>
+							</tr>
+						</thead>
+						<tbody th:each="list, stat : ${requestMemberList}" id="pendingMembersBody">
+
+
+							<tr>
+								<td th:text="|${stat.count}|"></td>
+								<td th:text="${list.mbCompany}"></td>
+								<td th:text="${list.mbName}"></td>
+								<td th:text="${list.mbId}"></td>
+								<td>
+
+									<div class="btn-group mr-1" role="group" aria-label="Basic example">
+										<form th:action="@{'/members/approve/' + ${list.mbId}}" method="post">
+											<button type="submit" class='btn btn-success'>O</button>
+										</form>
+									</div>
+									<div class="btn-group ml-1" role="group" aria-label="Basic example">
+										<form th:action="@{'/members/delete/' + ${list.mbId}}" method="post">
+											<button type="submit" class='btn btn-danger'>X</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+
+
+
+
+				<!-- 추가 내용 (회원추가) -->
+				<div class="card-body" id="addMemberForm" style="display: none;">
+					<!-- 회원 추가 폼 등의 내용을 추가 -->
+					<form th:action="@{/memberManagement}" th:object="${memberForm}" method="post">
+						<div>
+							<h1 th:text="${msg}"></h1>
+							<div class="form-group w-50">
+								<label for="mbCompany" class="col-form-label">회사명</label>
+								<input type="text" th:field="*{mbCompany}" class="form-control" id="company-name">
+							</div>
+							<div class="form-group w-50">
+								<label for="mbName" class="col-form-label">이름</label>
+								<input type="text" th:field="*{mbName}" class="form-control" id="user-name"
+									name="username" autocomplete="username">
+							</div>
+							<div class="form-group w-50">
+								<label for="mbId" class="col-form-label">아이디</label>
+								<input type="text" th:field="*{mbId}" class="form-control" id="user-id"
+									th:attr="autocomplete=${'username'}">
+							</div>
+							<div class="form-group w-50">
+								<label for="mbPw1" class="col-form-label">비밀번호</label>
+								<div class="input-group">
+									<input type="password" th:field="*{mbPw1}" class="form-control" id="user-password1"
+										autocomplete="new-password">
+								</div>
+							</div>
+							<div class="form-group w-50">
+								<label for="mbPw2" class="col-form-label">비밀번호 확인</label>
+								<div class="input-group">
+									<input type="password" th:field="*{mbPw2}" class="form-control" id="user-password2"
+										autocomplete="new-password">
+								</div>
+								<div class="d-flex flex-row-reverse mt-4">
+									<button type="submit" class="btn btn-primary" id="addMemberBtn" data-toggle="modal"
+										data-target="#exampleModal">회원 추가하기</button>
+								</div>
+							</div>
+					</form>
+				</div>
+
+
+
+				<!-- Modal -->
+				<div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="joinModalLabel">Modal title</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p th:text="${msg}"></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 하단 pagination -->
+				<nav id="allMembersPagination" aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- 이 페이지 wrapper 끝! -->
+
+		<!--
+  ------------------------------------
+  전체, 요청, 추가 버튼 누르면
+  active로 활성화,
+  추가시 엔터키 이벤트 방지,
+  추가시 비밀번호 hide/show
+  ------------------------------------
+  -->
+		<script>
+			$(document).ready(function () {
+
+
+				// 전체회원
+				$("#allMembersTab").click(function () {
+
+					// div
+					$("#allMembersTable").show();
+					$("#pendingMembersTable").hide();
+					$("#addMemberForm").hide();
+					$("#allMembersPagination").show();
+
+					// active
+					$(this).addClass("active");
+					$("#pendingMembersTab").removeClass("active");
+					$("#addMemberTab").removeClass("active");
+				});
+
+
+				// 회원요청
+				$("#pendingMembersTab").click(function () {
+					// div
+					$("#allMembersTable").hide();
+					$("#pendingMembersTable").show();
+					$("#addMemberForm").hide();
+					$("#allMembersPagination").hide();
+
+					// active
+					$(this).addClass("active");
+					$("#allMembersTab").removeClass("active");
+					$("#addMemberTab").removeClass("active");
+				});
+
+
+				// 회원추가
+				$("#addMemberTab").click(function () {
+					// div
+					$("#allMembersTable").hide();
+					$("#pendingMembersTable").hide();
+					$("#addMemberForm").show();
+					$("#allMembersPagination").hide();
+
+					// active
+					$(this).addClass("active");
+					$("#allMembersTab").removeClass("active");
+					$("#pendingMembersTab").removeClass("active");
+				});
+
+
+
+			});
+		</script>
+
+		<!-- 요청 수락 모달-->
+		<div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="okModalLabel">요청을 수락하시겠습니까?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">수락하려면 아래의 '수락'을 선택하십시오.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+						<a class="btn btn-primary" id="confirmok">수락</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 요청 거부 모달-->
+		<div class="modal fade" id="noModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="noModalLabel">요청을 거부하시겠습니까?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">거부하려면 아래의 '거부'를 선택하십시오.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+						<a class="btn btn-primary" id="confirmno">거부</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 회원 추가 완료 모달 -->
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						...
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 삭제 모달-->
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="deleteModalLabel">회원을 삭제하시겠습니까?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">삭제하려면 아래의 '삭제'를 선택하십시오.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+						<a class="btn btn-primary" href="tables.html">삭제</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- 길어지면 아래에 위로올리기버튼-->
+		<a class="scroll-to-top rounded" href="#page-top">
+			<i class="fas fa-angle-up"></i>
+		</a>
 
 </body>
 

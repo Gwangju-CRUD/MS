@@ -1,5 +1,6 @@
 package com.crud.entity;
 
+
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -8,13 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
+@Table(name = "TBL_REQUEST_MEMBER")
 @Entity
-@Table(name = "TBL_MEMBER")
-public class Member {
-	
-	
-	
+@Data
+public class RequestMember {
+
 	@Id
 	private String mbId; // 아이디
 
@@ -26,12 +25,8 @@ public class Member {
 
 	@Column(nullable = false)
 	private String mbCompany; // 회사명
-
+	@Column(nullable = false)
 	private LocalDateTime joineDate; // 회원가입한 날짜
-
-	@Column(length = 1000, columnDefinition = "varchar2(1000) default 'local'")
-	private String profileImg; // 프로필 이미지
-
 	
 
 }
