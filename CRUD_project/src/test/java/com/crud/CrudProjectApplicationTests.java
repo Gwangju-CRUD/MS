@@ -59,4 +59,23 @@ class CrudProjectApplicationTests {
 		
 	}
 
+	@Test
+	public void 멤버더미데이터(){
+
+		LocalDateTime now = LocalDateTime.now();
+
+		for(int i=51; i<100; i++){
+			Member member = new Member();
+			member.setMbId(String.format("가즈아%d", i));
+			member.setMbName("가즈아");
+			member.setJoineDate(now);
+			member.setMbCompany("가즈아");
+			member.setMbPw("몰라");
+
+			memberRepository.save(member);
+		}
+
+		
+	}
+
 }

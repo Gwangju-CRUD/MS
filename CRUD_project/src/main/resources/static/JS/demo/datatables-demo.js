@@ -113,7 +113,7 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data.message);
         setTimeout(function () {
-          window.location.href = "/deep/imgAnalysis";
+          window.location.href = "/singleAnalysis";
         }, 200);
       },
       error: function (error) {
