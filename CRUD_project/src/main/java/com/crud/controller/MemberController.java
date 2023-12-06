@@ -44,7 +44,7 @@ public class MemberController {
 	private final MemberRepository memberRepository;
 	private final RequestMemberRepository requestMemberRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final AlarmService alarmService;
+
 
 	private final AlarmService alarmService;
 
