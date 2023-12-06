@@ -77,10 +77,11 @@ window.onload = function () {
       items: 6,
       loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
       autoplay: true,
-      autoplayTimeout: 2000,
+      autoplayTimeout: 2150,
       autoplayHoverPause: true,
+      smartSpeed:1950,
+      margin: 20,
       rtl: true,
-      margin: 50,
       onTranslated: function () {
         console.log("Slide has been translated");
         fetchImage();
@@ -127,123 +128,126 @@ window.onload = function () {
     });
   });
 
-  // 꺾은선 그래프 코드
+// 꺾은선 그래프 코드
 
-  var dom = document.getElementById("container");
-  var myChart = echarts.init(dom, null, {
-    renderer: "canvas",
-    useDirtyRect: false,
-  });
-  var app = {};
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom, null, {
+  renderer: "canvas",
+  useDirtyRect: false,
+});
+var app = {};
 
-  var option;
+var option;
 
-  option = {
-    title: {
-      text: "-1",
+option = {
+  title: {
+    text: "",
+  },
+  tooltip: {
+    trigger: "axis",
+  },
+  legend: {},
+  toolbox: {
+    show: true,
+    feature: {
+      dataZoom: {
+        yAxisIndex: "none",
+      },
+      dataView: {
+        readOnly: false,
+      },
+      magicType: {
+        type: ["line", "bar"],
+      },
+      restore: {},
+      saveAsImage: {},
     },
-    tooltip: {
-      trigger: "axis",
+  },
+  xAxis: {
+    type: "category",
+    boundaryGap: false,
+    data: ["0000", "0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008"],
+  },
+  yAxis: {
+    type: "value",
+    axisLabel: {
+      formatter: "{value} 상태",
     },
-    legend: {},
-    toolbox: {
-      show: true,
-      feature: {
-        dataZoom: {
-          yAxisIndex: "none",
-        },
-        dataView: {
-          readOnly: false,
-        },
-        magicType: {
-          type: ["line", "bar"],
-        },
-        restore: {},
-        saveAsImage: {},
+  },
+  series: [
+    {
+      name: "정상",
+      type: "line",
+      data: [1, 1, -1, 1, 1, -1, 1, 1, 1],
+      color: '#00AAFF',
+      markPoint: {
+        data: [
+          {
+            type: "max",
+            name: "Max",
+          },
+          {
+            type: "min",
+            name: "Min",
+          },
+        ],
+      },
+      markLine: {
+        data: [
+          {
+            type: "average",
+            name: "Avg",
+          },
+        ],
       },
     },
-    xAxis: {
-      type: "category",
-      boundaryGap: false,
-      data: ["0000", "0001", "0002", "0003", "0004", "0005", "0006", "0007"],
-    },
-    yAxis: {
-      type: "value",
-      axisLabel: {
-        formatter: "{value} 상태",
+    {
+      name: "불량",
+      type: "line",
+      data: [-1, -1, 1, -1, -1, 1, -1, -1, -1],
+      color: 'rgb(251, 118, 123)',
+      markPoint: {
+        data: [
+          {
+            name: "周最低",
+            value: -2,
+            xAxis: 1,
+            yAxis: -1.5,
+          },
+        ],
       },
-    },
-    series: [
-      {
-        name: "정상",
-        type: "line",
-        data: [1, 1, -1, 1, 1, -1, 1],
-        markPoint: {
-          data: [
+      markLine: {
+        data: [
+          {
+            type: "average",
+            name: "Avg",
+          },
+          [
             {
+              symbol: "none",
+              x: "90%",
+              yAxis: "max",
+            },
+            {
+              symbol: "circle",
+              label: {
+                position: "start",
+                formatter: "Max",
+              },
               type: "max",
-              name: "Max",
-            },
-            {
-              type: "min",
-              name: "Min",
+              name: "最高点",
             },
           ],
-        },
-        markLine: {
-          data: [
-            {
-              type: "average",
-              name: "Avg",
-            },
-          ],
-        },
+        ],
       },
-      {
-        name: "불량",
-        type: "line",
-        data: [-1, -1, 1, -1, -1, 1, -1],
-        markPoint: {
-          data: [
-            {
-              name: "周最低",
-              value: -2,
-              xAxis: 1,
-              yAxis: -1.5,
-            },
-          ],
-        },
-        markLine: {
-          data: [
-            {
-              type: "average",
-              name: "Avg",
-            },
-            [
-              {
-                symbol: "none",
-                x: "90%",
-                yAxis: "max",
-              },
-              {
-                symbol: "circle",
-                label: {
-                  position: "start",
-                  formatter: "Max",
-                },
-                type: "max",
-                name: "最高点",
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  };
+    },
+  ],
+};
 
-  if (option && typeof option === "object") {
-    myChart.setOption(option);
-  }
+if (option && typeof option === "object") {
+  myChart.setOption(option);
+}
 
-  window.addEventListener("resize", myChart.resize);
+window.addEventListener("resize", myChart.resize);
+
 };
