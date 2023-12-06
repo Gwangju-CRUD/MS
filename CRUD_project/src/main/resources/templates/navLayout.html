@@ -77,6 +77,7 @@
         <script
         src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+
         <!-- Owl Carousel CSS - 슬라이드 호환 -->
         <link
         rel="stylesheet"
@@ -136,8 +137,8 @@
                         aria-labelledby="headingTwo"
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="/singleAnalysis">단건분석</a>
-                            <a class="collapse-item" href="/deep/realtimeAnalysis">실시간분석</a>
+                            <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="image">단건분석</a>
+                            <a class="collapse-item" data-toggle="modal" data-target="#analysisModal" data-analysis="video">실시간분석</a>
                             <a class="collapse-item" href="/deep/create">모델 생성</a>
                             <a class="collapse-item" href="allResult">분석결과</a>
                         </div>
