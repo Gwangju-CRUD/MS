@@ -316,7 +316,7 @@
                                                         axisPointer: {
                                                             label: {
                                                                 formatter: function (params) {
-                                                                    return ('Precipitation  ' + params.value + (
+                                                                    return ('불량  ' + params.value + (
                                                                         params.seriesData.length
                                                                             ? '：' + params.seriesData[0].data
                                                                             : ''
@@ -353,7 +353,7 @@
                                                         axisPointer: {
                                                             label: {
                                                                 formatter: function (params) {
-                                                                    return ('Precipitation  ' + params.value + (
+                                                                    return ('정상' + params.value + (
                                                                         params.seriesData.length
                                                                             ? '：' + params.seriesData[0].data
                                                                             : ''
@@ -385,7 +385,7 @@
                                                 ],
                                                 series: [
                                                     {
-                                                        name: 'Precipitation(2015)',
+                                                        name: '정상',
                                                         type: 'line',
                                                         xAxisIndex: 1,
                                                         smooth: true,
@@ -407,7 +407,7 @@
                                                             2.3
                                                         ]
                                                     }, {
-                                                        name: 'Precipitation(2016)',
+                                                        name: '불량',
                                                         type: 'line',
                                                         smooth: true,
                                                         emphasis: {
