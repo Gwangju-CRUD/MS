@@ -1,0 +1,61 @@
+
+/*
+----------------------
+사이드바 고정 css
+---------------------
+*/
+
+    #accordionSidebar {
+        position: fixed;
+        z-index: 1;
+        height: 100%;
+    }
+    
+    #content-wrapper {
+        /* 사이드바 넓이 여백 */
+        margin-left: 220px;
+        /* 부드럽게 설정 */
+        transition: margin-left 0.3s;
+    }
+
+/*
+----------------------
+상단바 검색 css
+---------------------
+*/
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+
+.search {
+    margin-left: 30px;
+    margin-top: 18px;
+
+  }
+  
+  .search input {
+    width: 300px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    
+  }
+  
+  .search button {
+    font-size: 18px;
+    border: none;
+    /* background-color:#fff; */
+    width: 60px;
+    height: 40px;
+    border-radius: 5px;
+    /* color: #0d6efd; */
+    cursor: pointer;
+    /* border: 1px solid #0d6efd; */
+    margin-bottom: 5px;
+    
+  }
+  

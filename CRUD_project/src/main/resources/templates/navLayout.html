@@ -86,7 +86,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
-        
+        <link rel="stylesheet" href="/css/navLayout.css">
         <base href="/"/>
     </head>
 
@@ -164,10 +164,10 @@
                         <span>전체회원관리</span></a>
                 </li>
 
-                <!-- 바 숨기기 / 열기 -->
-                <div class="text-center mt-5">
+                <!-- 바 접기 / 열기 -->
+                <!-- <div class="text-center mt-5">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
+                </div> -->
 
             </ul>
 
@@ -193,44 +193,30 @@
                         </form>
 
                         <!-- 상단 Navbar -->
-                        <ul class="navbar-nav ml-auto">
 
-                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                            <li class="nav-item dropdown no-arrow d-sm-none">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="searchDropdown"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="fas fa-search fa-fw"></i>
-                                </a>
-                                <!-- Dropdown - Messages -->
-                                <div
-                                    class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                    aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search">
-                                        <div class="input-group">
-                                            <input
-                                                type="text"
-                                                class="form-control bg-light border-0 small"
-                                                placeholder="Search for..."
-                                                aria-label="Search"
-                                                aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search fa-sm"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
+                            <!-- 상단 왼쪽 탭 -->
+                            <!-- nav 아이템 - 검색기능 -->
+                            <section>
+                                <form action="https://www.google.com/search" target="_blank" onsubmit="searchinput()">
+                                    <div class="search">
+                                        <input type="text" name="query" id="searchinputText" value="" placeholder="Google Search">
+                                        <button type="submit" class="btn btn-primary">검색</button>
+                                    </div>
+                                </form>
+                            </section>
+                                <!-- 검색이 완료되면 text 초기화 : js인데 짧아서 여기에 둠 -->
+                                <script>
+                                    function searchinput() {
+                                        document.getElementById('searchinputText').value = '';
+                                    }
+                                </script>
 
-                            <!-- Nav 아이텐 - 알림 -->
+                            <!-- 상단 오른쪽 탭 -->
+                            <ul class="navbar-nav ml-auto">
+                            
+                            <!-- Nav 아이텐템 - 알림 -->
                             <li class="nav-item dropdown no-arrow mx-1">
+
                                 <a
                                     class="nav-link dropdown-toggle"
                                     href="#"
