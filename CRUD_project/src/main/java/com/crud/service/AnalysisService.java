@@ -33,10 +33,10 @@ public class AnalysisService {
 	public void imgSave(Analysis analysis) {
 		analysisRepository.save(analysis);
 
-		defectTracker.checkDefect(analysis.getPredictionJdm());
+		boolean check = defectTracker.checkDefect(analysis.getPredictionJdm());
 
 		// 슬렉에 알람이 보내지면 로그를 DB에 저장을 하는 로직
-		if (defectTracker.checkDefect(analysis.getPredictionJdm()) == true) {
+		if (check == true) {
 			
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
