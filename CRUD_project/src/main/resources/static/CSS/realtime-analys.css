@@ -16,14 +16,11 @@
 }
 /* 41 */
 /* 46.5 */
-#highlight-box {
-  width: 235.3px !important;
-  height: 357.23px !important;
-}
+
 
 /* 215,310.14.50.91 */
 #slide {
-    padding: 50px;
+    /* padding: 20px; */
 }
 
 .owl-carousel .owl-item img {
@@ -58,10 +55,21 @@
 
 
 .t-box {
-  font-size: 34px; /* 폰트 크기 */
+  font-size: 1.7vw; /* 폰트 크기 */
   color: black; /* 텍스트 색상 */
-  padding: 10px; /* 내부 여백 */
-  text-align: right;
-  margin-right: 4.5vw;
+  text-align: center;
+  margin-left: 2.8vw;
 }
+
+.owl-carousel .owl-stage {
+  margin-top: 3rem;   /* mt-5 */
+  margin-bottom: 3rem; /* mb-5 */
+  /* margin-right: 3em; 
+  margin-left: 1.2rem; */
+}
+
+.owl-carousel .owl-item img {
+  border-radius: 10px; 
+}
+
 

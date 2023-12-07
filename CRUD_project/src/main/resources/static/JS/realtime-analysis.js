@@ -16,21 +16,22 @@ function sendImageToFastAPI(imageData) {
     success: function (response) {
       globalResult = response.result; // 전역 변수에 결과 저장
       console.log(response);
-      $.ajax({
-        url: "/deep/aysUpload",
-        method: "post",
-        data: JSON.stringify({ ...response, class: "실시간" }), // FastAPI에서 받아온 데이터를 그대로 전달
-        contentType: "application/json",
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader(header, token);
-        },
-        success: function (data) {
-          console.log("test");
-        },
-        error: function (error) {
-          console.error("Error in second AJAX request:", error);
-        },
-      });
+      //DB넣기
+      // $.ajax({
+      //   url: "/deep/aysUpload",
+      //   method: "post",
+      //   data: JSON.stringify({ ...response, class: "실시간" }), // FastAPI에서 받아온 데이터를 그대로 전달
+      //   contentType: "application/json",
+      //   beforeSend: function (xhr) {
+      //     xhr.setRequestHeader(header, token);
+      //   },
+      //   success: function (data) {
+      //     console.log("test");
+      //   },
+      //   error: function (error) {
+      //     console.error("Error in second AJAX request:", error);
+      //   },
+      // });
       printResultBasedOnCondition(); // 조건에 따라 결과 출력
       updateResultDisplay(); // 결과 표시 업데이트
       displayResultInTBox(); // t-box에 결과 표시 함수 호출
@@ -48,22 +49,20 @@ function printResult() {
 
 
 function handleResultDisplay() {
-  var highlightBox = document.getElementById('highlight-box');
+  var shadowBox = $('.shadow-effect');
 
   // 판정에 따른 스타일 적용
   if (globalResult === "정상") {
-    highlightBox.style.boxShadow = "0 0 60px green"; // 초록색 쉐도우 적용
-    highlightBox.style.display = "block"; // 박스 보이게 설정
+    shadowBox.css('box-shadow', '0 0 27px green'); // 초록색 쉐도우 적용
     console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
   } else if (globalResult === "불량") {
-    highlightBox.style.boxShadow = "0 0 60px red"; // 빨간색 쉐도우 적용
-    highlightBox.style.display = "block"; // 박스 보이게 설정
+    shadowBox.css('box-shadow', '0 0 27px red'); // 빨간색 쉐도우 적용
     console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
   }
 
-  // 1초 후에 다시 숨기기
+  // 1초 후에 스타일 초기화
   setTimeout(function() {
-    highlightBox.style.display = "none"; // 박스 숨기기
+    shadowBox.css('box-shadow', ''); // 쉐도우 제거
   }, 1180);
 }
 
@@ -179,38 +178,47 @@ window.onload = function () {
         },
       });
     }
-
-    // 초기에 정상 탭을 활성화
-    $("#goodmodeltab").click();
-
-    // Owl Carousel 초기화
-    $(".owl-carousel").owlCarousel({
-      items: 6,
-      loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
-      autoplay: true,
-      autoplayTimeout: 3150,
-      autoplayHoverPause: true,
-      smartSpeed: 1950,
-      margin: 20,
-      dots: false,
-      rtl: true,
-      onTranslated: function () {
-        console.log("Slide has been translated");
-        fetchImage();
-        // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
-        if (images.length > 6) {
-          setTimeout(function () {
-            // setTimeout을 사용하여 이미지 추가와 제거를 비동기적으로 처리합니다.
-            images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
-            $(".owl-carousel")
-              .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
-              .trigger("refresh.owl.carousel");
-            sendImageToFastAPI(images[0]);
-          }, 0);
-        }
-      }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
+// 초기에 정상 탭을 활성화
+$("#goodmodeltab").click();
+$(document).ready(function () {
+  // Owl Carousel 초기화
+  $(".owl-carousel").owlCarousel({
+    items: 6, loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
+    autoplay: true,
+    autoplayTimeout: 3150,
+    autoplayHoverPause: true,
+    smartSpeed: 1950,
+    margin: 20,
+    dots: false,
+    rtl: true,
+    onTranslated: function () {
+      console.log("Slide has been translated");
+      fetchImage();
+      // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
+      if (images.length > 6) {
+        setTimeout(function () {
+          // setTimeout을 사용하여 이미지 추가와 제거를 비동기적으로 처리합니다.
+          images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
+          $(".owl-carousel")
+          .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
+          .trigger("refresh.owl.carousel");
+          sendImageToFastAPI(images[0]);
+        }, 0);
+      }
+      console.log("Applying shadow to the first image");
+      $(".owl-carousel .owl-item img").css('box-shadow', '');
+      var firstImage = $(".owl-carousel .owl-item")
+      .eq(2)
+      .find('img');
+      firstImage.addClass('shadow-effect');
+    }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
     });
-
+    $(".owl-carousel").on('initialized.owl.carousel', function (event) {
+      setTimeout(function(){
+        $('.owl-stage').addClass('mt-5 mb-5 mr-5');
+    }, 100);
+    });
+});
 
 
 // JavaScript를 사용하여 창 크기에 따라 #highlight-box 조절
