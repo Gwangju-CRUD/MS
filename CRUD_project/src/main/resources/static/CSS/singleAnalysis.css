@@ -1,154 +1,161 @@
- @charset "utf-8";
+@charset "utf-8";
 
+/* ------------------------
+    파일링크 css
+    ------------------------*/
 
-/* css 단건분석 따로 만들었는데 
-적용자체가 안되서 html에도 그대로 넣어놈. */
+input[type="file"]::file-selector-button {
+  width: 150px;
+  height: 50px;
+  background: rgb(255, 255, 255);
+  border: 1px solid #dc3545;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #dc3545;
+}
 
+input[type="file"]:hover::file-selector-button {
+  background-color: #dc3545;
+  color: #fff;
+}
 
+/* 숫자 css */
 
+.goodcount,
+.badcount {
+  width: 150px;
+  height: 50px;
+  margin-left: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  color: #000;
+}
 
-    /* ------------------------
-        결과 상세 카드 차트 css
-        ------------------------*/
+@media (max-width: 1500px) {
+  .goodcount,
+  .badcount {
+    width: 100%;
+    margin-left: 0;
+    font-size: 2rem;
+  }
+}
 
-        input[type=file]::file-selector-button {
-            width: 150px;
-            height: 30px;
-            background: rgb(255, 255, 255);
-            border: 1px solid #dc3545;
-            border-radius: 10px;
-            cursor: pointer;
-            
-        }
+/*
+    ------------------------
+    결과 상세 카드 차트 css
+    ------------------------*/
+.card-container-chart {
+  display: flex;
+  justify-content: space-between;
+  margin-right: -10px;
+}
 
-        input[type=file]:hover::file-selector-button {
-            background-color: #dc3545;
-            color: #fff;
-        }
+.chartcard {
+  width: 48%;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+}
 
+/* 결과상세 불량사진 호버 */
+.owl-carousel .owl-item img {
+  transition: transform 0.3s;
+}
 
-        /*
-        ------------------------
-        결과 상세 카드 차트 css
-        ------------------------*/
+.owl-carousel .owl-item:hover img {
+  transform: scale(1.2);
+}
 
-        .card-container-chart {
-            display: flex;
-            justify-content: space-between;
-            margin-right: -10px;
-        }
+/*
+    ------------------------
+    분석로그 컨테이너 설정
+    ------------------------
+    */
 
-        .chartcard {
-            width: 48%;
-            margin-bottom: 20px;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: white;
-        }
+/* 상위 컨테이너 */
+.good-model-table {
+  width: 70vw;
+  height: 11vw;
+}
 
-        /* 결과상세 불량사진 호버 */
-        .owl-carousel .owl-item img {
-            transition: transform 0.3s;
-        }
+.card-red {
+  width: 67vw;
+  height: 8vw;
+  /* background-color: red; */
+}
 
-        .owl-carousel .owl-item:hover img {
-            transform: scale(1.2);
-        }
+/* 이미지 컨테이너 */
+.fixed-card {
+  width: 15vw;
+  height: 8vw;
+}
 
-        
-        /*
-        ------------------------
-        분석로그 컨테이너 설정
-        ------------------------
-        */
+/* 이미지 자체 */
+.img-container img {
+  width: 15vw;
+  height: 8vw;
+}
 
-        /* 상위 컨테이너 */
-        .good-model-table {
-            width: 70vw;
-            height: 11vw;
-            
-        }
+/* 텍스트 컨테이너 */
+.text-card {
+  width: 65vw;
+  height: 15vw;
+  padding: 1vmin;
+}
 
-        .card-red {
-            width: 67vw;
-            height: 8vw;
-            /* background-color: red; */
-        }
+@media (max-width: 868px) {
+  .good-model-table {
+    height: 120px;
+  }
 
-        /* 이미지 컨테이너 */
-        .fixed-card {
-            width: 15vw;   
-            height: 8vw;
-            
-        }
+  .card-red {
+    width: auto;
+    height: 84px;
+  }
 
-        /* 이미지 자체 */
-        .img-container img {
-            width: 15vw;
-            height: 8vw;
-        }
+  .fixed-card {
+    width: 54px;
+    height: 84px;
+  }
 
-        /* 텍스트 컨테이너 */
-        .text-card {
-            width: 65vw;
-            height: 15vw;
-            padding: 1vmin;
-        }
+  .img-container img {
+    width: 54px;
+    height: 84px;
+  }
+}
 
-        @media (max-width: 868px) {
+.col-12 {
+  flex: none;
+}
 
-            .good-model-table {
-                height: 120px;
-                
-            }
+@media (min-width: 1px) and (max-width: 1391px) {
+  .card-text {
+    display: none;
+  }
 
-            .card-red {
-                width: auto;
-                height: 84px;
-            }
+  .card-title {
+    display: none;
+  }
+}
 
-            .fixed-card {
-                width: 54px;
-                height: 84px;
-                
-            }
+@media (min-width: 1391px) {
+  .card-text-sub {
+    display: none;
+  }
+}
 
-            .img-container img {
-                width: 54px;
-                height: 84px;
-            }
-        }
+/* 정상과 불량 개수가 많아져도 내부 스크롤 멈추게 하기 */
+#goodmodeltable {
+  overflow: hidden;
+}
 
-
-        .col-12 {
-            flex:none;
-        }
-
-
-        @media (min-width: 1px) and (max-width: 1391px) {
-            .card-text {
-                display: none;
-            }
-
-            .card-title {
-                display: none;
-            }
-
-        }
-
-        @media (min-width: 1391px) {
-            .card-text-sub {
-                display: none;
-            }
-
-        }
-
-        /* 정상과 불량 개수가 많아져도 내부 스크롤 멈추게 하기 */
-        #goodmodeltable {
-            overflow: hidden; 
-        }
-
-        #badmodeltable {
-            overflow: hidden;
-        }
+#badmodeltable {
+  overflow: hidden;
+}
