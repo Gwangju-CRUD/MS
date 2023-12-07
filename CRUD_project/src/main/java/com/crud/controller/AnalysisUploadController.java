@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,6 +61,7 @@ public class AnalysisUploadController {
         String result = (String) data.get("result");
         double score = (Double) data.get("score");
         String image = (String) data.get("image");
+		String classData = (String) data.get("class");
         
         // Base64 인코딩된 이미지 데이터를 디코딩하여 바이트 배열로 변환
         byte[] imageBytes = Base64.getDecoder().decode(image);
@@ -83,6 +85,7 @@ public class AnalysisUploadController {
 		analysis.setPredictionAccuracy((Double) score);
 		analysis.setPredictionJdm(result);
 		analysis.setMember(member);
+		analysis.setPredictionClassfication(classData);
 
 		System.out.println(analysis.toString());	
 		
