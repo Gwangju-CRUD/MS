@@ -7,6 +7,21 @@ function sendImageToFastAPI(imageData) {
     contentType: "application/json",
     success: function (response) {
       console.log(response);
+      $.ajax({
+        url: "/deep/aysUpload",
+        method: "post",
+        data: JSON.stringify({ ...response, class: "실시간" }), // FastAPI에서 받아온 데이터를 그대로 전달
+        contentType: "application/json",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (data) {
+          console.log("test");
+        },
+        error: function (error) {
+          console.error("Error in second AJAX request:", error);
+        },
+      });
     },
     error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage); // Optional
