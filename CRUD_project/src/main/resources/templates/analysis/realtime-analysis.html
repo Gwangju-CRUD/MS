@@ -6,72 +6,78 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{navLayout}">
 
-    
-
     <body id="page-top">
 
         <div layout:fragment="content">
 
-           
+            <!-- 이미지 슬라이드 -->
 
-                <!-- 이미지 슬라이드 -->
+            <!-- 불량사진 슬라이드 -->
+            <div class="container-fluid">
+                <!-- 페이지 말머리 -->
+                <br><br>
+                <h1 class="h3 mb-2 text-gray-800">실시간 분석</h1>
+                <p class="mb-4">실시간 이미지 처리 분석 </p>
 
-                <!-- 불량사진 슬라이드 -->
-                <div class="container-fluid">
-                    <div class="card shadow mb-4">
-                        <!-- Use the card class for shadow effect -->
-                        <div class="card-header py-3">
-                            <h5 class="card-title">실시간 이미지 분석</h5>
+
+                <div class="card shadow mb-4">
+
+                    <!-- Use the card class for shadow effect -->
+
+                    <div class="card-body" id="slide">
+                        <!-- 슬라이드쇼로 불량 사진 보여주기 -->
+                        <div class="owl-carousel owl-theme">
+                            <!-- 이미지는 JavaScript에서 동적으로 추가됩니다. -->
                         </div>
-                        <div class="card-body">
-                            <!-- 슬라이드쇼로 불량 사진 보여주기 -->
-                            <div class="owl-carousel owl-theme">
-                                <!-- 이미지는 JavaScript에서 동적으로 추가됩니다. -->
+                        <div id="highlight-box"></div>
+                        <!-- 여기에 추가 -->
+                    </div>
+                </div>
+            </div>
+            <div class="t-box"></div>
+            <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
+            <div class="container-fluid">
+                        <!-- 페이지 말머리 -->
+                        <br><br>
+                        <h1 class="h3 mb-2 text-gray-800">차트</h1>
+                        <p class="mb-4">정상과 불량 분석 그래프화</p>
+                <div class="card shadow mb-4">
+                    <!-- Use the card class for shadow effect -->
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">양불 판정 그래프</h6>
+                        <!-- Card header for title -->
+                    </div>
+                    <div class="card-body">
+                        <!-- Card body for content -->
+
+                        <!-- 분석 양불판정 그래프 -->
+                        <div class="card-container-chart">
+                            <div class="chartcard">
+
+                                <div class="card-body" style="overflow: hidden;">
+                                    <h5 class="card-title"></h5>
+                                    <!--양불 꺽은선 그래프 -->
+                                    <div id="container" style="height: 400%"></div>
+
+                                </div>
                             </div>
-                            <div class="highlight-box" >이 곳에 오면 판독합니다</div> <!-- 여기에 추가 -->
+
                         </div>
+
                     </div>
                 </div>
 
-                <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
-                <div class="container-fluid">
-
-                    <div class="card shadow mb-4">
-                        <!-- Use the card class for shadow effect -->
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">양불 판정 그래프</h6>
-                            <!-- Card header for title -->
-                        </div>
-                        <div class="card-body">
-                            <!-- Card body for content -->
-
-                            <!-- 분석 양불판정 그래프 -->
-                            <div class="card-container-chart">
-                                <div class="chartcard">
-
-                                    <div class="card-body" style="overflow: hidden;">
-                                        <h5 class="card-title"></h5>
-                                        <!--양불 꺽은선 그래프 -->
-                                        <div id="container" style="height: 400%"></div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                </div>
-
-
                 <!-- card-container-chart 끝 -->
+
+                                        <!-- 페이지 말머리 -->
+                                        <br><br>
+                                        <h1 class="h3 mb-2 text-gray-800">분석로그</h1>
+                                        <p class="mb-4">정상과 불량 분석 로그 출력</p>
 
                 <!-- 회원 카드 -->
                 <div class="card shadow mb-4 container-fixed">
                     <div class="card-header py-3">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">실시간 분석 로그</h6>
-                            <!-- Card header for title -->
-                        </div>
+
                         <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
@@ -184,38 +190,35 @@
                     </ul>
                 </nav>
 
-
-            <!-- 사진을 눌렀을 때 나타날 모달 -->
-            <div
-                class="modal fade"
-                id="imageModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="imageModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="imageModalLabel">이미지 상세보기</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body d-flex justify-content-center">
-                            <img id="modalImage" src="" class="img-fluid" alt="모달 이미지">
+                <!-- 사진을 눌렀을 때 나타날 모달 -->
+                <div
+                    class="modal fade"
+                    id="imageModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="imageModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="imageModalLabel">이미지 상세보기</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body d-flex justify-content-center">
+                                <img id="modalImage" src="" class="img-fluid" alt="모달 이미지">
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- 길어지면 아래에 위로올리기버튼-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+
             </div>
- 
-            <!-- 길어지면 아래에 위로올리기버튼-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-            
 
-        </div>
-
-
-    </body>
-</html>
+        </body>
+    </html>

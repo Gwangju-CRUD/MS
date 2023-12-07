@@ -1,3 +1,8 @@
+
+
+var globalResult; // 전역 변수 선언
+
+
 // 전역 범위에 함수를 정의합니다.
 function sendImageToFastAPI(imageData) {
   $.ajax({
@@ -6,7 +11,11 @@ function sendImageToFastAPI(imageData) {
     data: JSON.stringify({ encoded_image_data: imageData }),
     contentType: "application/json",
     success: function (response) {
+      globalResult = response.result; // 전역 변수에 결과 저장
       console.log(response);
+      printResultBasedOnCondition(); // 조건에 따라 결과 출력
+      updateResultDisplay(); // 결과 표시 업데이트
+      displayResultInTBox(); // t-box에 결과 표시 함수 호출
     },
     error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage); // Optional
@@ -14,6 +23,90 @@ function sendImageToFastAPI(imageData) {
   });
 }
 
+// 다른 스크립트에서 전역 변수 사용
+function printResult() {
+  console.log(globalResult); // 전역 변수 출력
+}
+
+
+function handleResultDisplay() {
+  var highlightBox = document.getElementById('highlight-box');
+
+  // 판정에 따른 스타일 적용
+  if (globalResult === "정상") {
+    highlightBox.style.boxShadow = "0 0 60px green"; // 초록색 쉐도우 적용
+    highlightBox.style.display = "block"; // 박스 보이게 설정
+    console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
+  } else if (globalResult === "불량") {
+    highlightBox.style.boxShadow = "0 0 60px red"; // 빨간색 쉐도우 적용
+    highlightBox.style.display = "block"; // 박스 보이게 설정
+    console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
+  }
+
+  // 1초 후에 다시 숨기기
+  setTimeout(function() {
+    highlightBox.style.display = "none"; // 박스 숨기기
+  }, 1180);
+}
+
+// AJAX 요청 성공 시 호출되는 함수 내에서 handleResultDisplay 호출
+function sendImageToFastAPI(imageData) {
+  $.ajax({
+    url: "http://218.157.38.54:8002/predict/",
+    type: "POST",
+    data: JSON.stringify({ encoded_image_data: imageData }),
+    contentType: "application/json",
+    success: function (response) {
+      globalResult = response.result; // 전역 변수에 결과 저장
+      handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
+      // handleResultDisplay2();
+    },
+    error: function (jqXHR, textStatus, errorMessage) {
+      console.log(errorMessage);
+    },
+  });
+}
+
+// 결과를 t-box에 표시하는 함수
+function displayResultInTBox() {
+  var tBox = document.querySelector('.t-box'); // '.t-box' 클래스를 가진 첫 번째 요소를 찾습니다.
+  tBox.textContent = globalResult; // t-box의 텍스트 내용을 globalResult 값으로 설정합니다.
+  // 결과 값에 따라 글씨 색상 변경
+  if (globalResult === '정상') {
+    tBox.style.color = 'green'; // '정상'일 경우 글씨 색상을 초록색으로 설정
+  } else if (globalResult === '불량') {
+    tBox.style.color = 'red'; // '불량'일 경우 글씨 색상을 빨간색으로 설정
+  } else {
+    tBox.style.color = 'black'; // 그 외의 경우 글씨 색상을 기본값(검정색)으로 설정
+  }
+    // 1초 후에 텍스트와 색상을 초기 상태로 되돌림
+    setTimeout(function() {
+      tBox.textContent = ''; // 텍스트 내용 지우기
+      tBox.style.color = 'black'; // 글씨 색상을 기본값으로 되돌리기
+    }, 1180);
+}
+// AJAX 요청 성공 시 호출되는 함수 내에서 displayResultInTBox 호출
+function sendImageToFastAPI(imageData) {
+  $.ajax({
+    url: "http://218.157.38.54:8002/predict/",
+    type: "POST",
+    data: JSON.stringify({ encoded_image_data: imageData }),
+    contentType: "application/json",
+    success: function (response) {
+      globalResult = response.result; // 전역 변수에 결과 저장
+      displayResultInTBox(); // t-box에 결과 표시 함수 호출
+      handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
+    },
+    error: function (jqXHR, textStatus, errorMessage) {
+      console.log(errorMessage);
+    },
+  });
+}
+
+
+
+
+//슬라이드
 window.onload = function () {
   $(document).ready(function () {
     // Tab 초기 설정
@@ -77,7 +170,7 @@ window.onload = function () {
       items: 6,
       loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
       autoplay: true,
-      autoplayTimeout: 2150,
+      autoplayTimeout: 3150,
       autoplayHoverPause: true,
       smartSpeed:1950,
       margin: 20,
@@ -95,6 +188,36 @@ window.onload = function () {
         }
       }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
     });
+
+
+
+// JavaScript를 사용하여 창 크기에 따라 #highlight-box 조절
+window.addEventListener('resize', adjustHighlightBox);
+
+function adjustHighlightBox() {
+  var highlightBox = document.getElementById('highlight-box');
+  var windowWidth = window.innerWidth;
+
+  // 기준이 되는 창 너비 설정 (예: 1000px)
+  var baseWidth = 1950;
+
+  // 현재 창 너비와 기준 너비의 차이에 따라 크기 조절
+  var widthDiff = baseWidth - windowWidth;
+  var newWidth = 290 - (widthDiff+100)/5.9; // 기본 너비에서 차이만큼 감소
+  var newHeight = 400 - (widthDiff+100)/4.4; // 기본 높이에서 차이만큼 감소
+
+  // 새로운 너비와 높이 적용
+  highlightBox.style.width = newWidth + 'px';
+  highlightBox.style.height = newHeight + 'px';
+}
+
+// 초기 로드시에도 한번 실행
+adjustHighlightBox();
+
+
+    
+
+
 
     // 초기 이미지 데이터 요청 (첫 7개)
     fetchImage(function (data) {
@@ -251,3 +374,4 @@ if (option && typeof option === "object") {
 window.addEventListener("resize", myChart.resize);
 
 };
+
