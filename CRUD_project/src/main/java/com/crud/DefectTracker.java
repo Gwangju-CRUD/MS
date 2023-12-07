@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class DefectTracker {
    private int defectCount = 0;
    // 클래스 내부에서만 접근 가능한 정수형 변수 defectCount를 선언하고, 이 변수의 초기값을 0으로 설정
-   public void checkDefect(String predictionJdm) {
+   public boolean checkDefect(String predictionJdm) {
       /*
       * Description : 제품의 품질 예측 결과를 받아, 이 결과가 불량인지 아닌지를 확인하고,
                      불량일 경우 불량 제품 수를 증가시킵니다. 불량 제품 수가 5개 이상일 경우
@@ -24,9 +24,12 @@ public class DefectTracker {
          if (defectCount >= 5) {
             sendSlackNotification();
             defectCount = 0; // 알림을 보낸 후에는 카운터를 초기화합니다.
+            return true;
          }
+         return false;
       } else {
          defectCount = 0; // 양호한 제품이 확인되면 카운터를 초기화합니다.
+         return false;
       }
    }
 
@@ -49,7 +52,7 @@ public class DefectTracker {
 
       // Slack 웹훅 URL에 POST 요청을 보냅니다.
       ResponseEntity<String> response = restTemplate.exchange(
-    		  "https://hooks.slack.com/services/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", // 본인의 Slack 웹훅
+    		  "https://hooks.slack.com/services/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", // 본인의 Slack 웹훅
                                                                               // URL로 변경해주세요.
             HttpMethod.POST, request, String.class);
 
