@@ -1,6 +1,119 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 
+// 현재 페이지 번호를 저장하는 변수
+var currentPageGood = 0;
+var currentPageBad = 0;
+var pageSize = 10;
+
+// AJAX 요청과 HTML 생성 코드를 별도의 함수로 분리합니다.
+function loadLogData(type, page, size) {
+  console.log(
+    `Sending request to /deep/getAysLog with param: ${"단건"}, type: ${type}, page: ${page}, size: ${size}`
+  );
+  $.ajax({
+    url: "/deep/getAysLog",
+    type: "post",
+    data: { param: "단건", type: type, page: page, size: size },
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (data) {
+      console.log("Received data: ", data);
+      var html = "";
+      data.content.forEach(function (row) {
+        html += `
+              <table>
+                  <tr>
+                      <td>
+                          <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                      </td>
+                      <td>${row.predictionDate}</td>
+                      <td>${row.predictionAccuracy}%</td>
+                      <td>${row.predictionJdm}</td>
+                  </tr>
+              </table>
+              `;
+      });
+
+      if (type === "정상") {
+        $("#goodModelTableBody").html(html);
+        $("#goodPageNumber").text(data.number + 1);
+        if (data.first) {
+          $("#goodPreviousPage").addClass("disabled");
+        } else {
+          $("#goodPreviousPage").removeClass("disabled");
+        }
+        if (data.last) {
+          $("#goodNextPage").addClass("disabled");
+        } else {
+          $("#goodNextPage").removeClass("disabled");
+        }
+      } else if (type === "불량") {
+        $("#badModelTableBody").html(html);
+        $("#badPageNumber").text(data.number + 1);
+        if (data.first) {
+          $("#badPreviousPage").addClass("disabled");
+        } else {
+          $("#badPreviousPage").removeClass("disabled");
+        }
+        if (data.last) {
+          $("#badNextPage").addClass("disabled");
+        } else {
+          $("#badNextPage").removeClass("disabled");
+        }
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("AJAX Error: ", textStatus);
+    },
+  });
+}
+
+$(document).ready(function () {
+  // 페이지 로드 시에 첫 번째 페이지의 데이터를 불러옵니다.
+  loadLogData("정상", currentPageGood, pageSize);
+  loadLogData("불량", currentPageBad, pageSize);
+
+  // 페이지 이동 버튼을 클릭하면 새로운 페이지의 데이터를 불러옵니다.
+  $("#goodPreviousPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled") && currentPageGood > 0) {
+      console.log("뒤로가는버튼");
+      currentPageGood--;
+      loadLogData("정상", currentPageGood, pageSize);
+    }
+  });
+
+  $("#goodNextPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled")) {
+      console.log("앞으로가는버튼");
+      currentPageGood++;
+      loadLogData("정상", currentPageGood, pageSize);
+    }
+  });
+
+  $("#badPreviousPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled") && currentPageBad > 0) {
+      console.log("뒤로가는버튼2");
+      currentPageBad--;
+      loadLogData("불량", currentPageBad, pageSize);
+    }
+  });
+
+  $("#badNextPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled")) {
+      console.log("앞으로가는버튼2");
+      currentPageBad++;
+      loadLogData("불량", currentPageBad, pageSize);
+    }
+  });
+});
+
+// 선택 이미지들 분석 후 로그 저장하기
 function readFilesAndSend(files) {
   var promises = []; // 각 파일의 전송 상태를 추적하는 Promise 객체를 저장할 배열
 

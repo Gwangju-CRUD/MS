@@ -9,13 +9,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +30,7 @@ import com.crud.entity.Analysis;
 import com.crud.entity.DeepModel;
 import com.crud.entity.Member;
 import com.crud.entity.OriginImage;
+import com.crud.repository.AnalysisRepository;
 import com.crud.repository.DeepModelRepository;
 import com.crud.repository.OriginImageRepository;
 import com.crud.service.AnalysisService;
@@ -43,6 +47,9 @@ public class AnalysisUploadController {
 
 	@Autowired
 	private AnalysisService analysisService;
+
+	@Autowired
+	private AnalysisRepository analysisRepository;
 	
     @Autowired
     private DeepModelRepository deepModelRepository;
@@ -195,6 +202,27 @@ public class AnalysisUploadController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PostMapping("/getAysLog")
+	@ResponseBody
+	public Page<Analysis> getAysLog(@RequestParam String param, @RequestParam String type, @RequestParam int page, @RequestParam int size) {
+		System.out.println("getAysLog called with param: " + param + ", type: " + type + ", page: " + page + ", size: " + size);
+	
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		String classData = param;
+		// 사용자의 ID를 가져옵니다.
+		String userId = authentication.getName();
+	
+		// 페이징
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "productIdx"));
+	
+		// '정상' 또는 '불량' 데이터를 가져옵니다.
+		Page<Analysis> aysLog = analysisRepository.findByMember_MbIdAndPredictionClassficationAndPredictionJdm(userId, classData, type, pageable);
+	
+		return aysLog;
+	}
+	
 
 
 }

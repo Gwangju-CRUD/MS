@@ -15,4 +15,7 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 
 	Long countByPredictionClassfication(String predictionClassfication);
 	
+	Page<Analysis> findByMember_MbIdAndPredictionClassfication(String mbId, String predictionClassfication, Pageable pageable);
+
+	Page<Analysis> findByMember_MbIdAndPredictionClassficationAndPredictionJdm(String mbId, String predictionClassfication, String predictionJdm, Pageable pageable);
 }

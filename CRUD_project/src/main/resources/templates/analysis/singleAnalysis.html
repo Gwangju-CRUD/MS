@@ -225,76 +225,54 @@
           </div>
 
           <!-- 정상 -->
-          <div class="goodmodeltable">
+          <div id="goodModelTable" class="goodmodeltable">
             <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
-            <div class="card-body good-model-table">
-              <!-- for each문 사용해서 모든 Analysis데이터 출력 -->
-              <table>
-                <tr th:each="analysis : ${analysisList}">
-                  <td>
-                    <img
-                      class="img"
-                      th:src="'data:image/png;base64,' + ${analysis.base64ProductImg}"
-                      alt="Image"
-                      width="100"
-                      height="100"
-                    />
-                  </td>
-                  <td th:text="${analysis.predictionDate}"></td>
-                  <td th:text="${analysis.predictionAccuracy} + '%'"></td>
-                  <td th:text="${analysis.predictionJdm}"></td>
-                  <br />
-                </tr>
-              </table>
-            </div>
+            <div id="goodModelTableBody" class="card-body good-model-table"></div>
+            <!-- 하단 pagination -->
+            <nav id="goodPagination" aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a id="goodPreviousPage" class="page-link good-previous-page" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a id="goodPageNumber" class="page-link good-page-number">1</a>
+                </li>
+                <li class="page-item">
+                  <a id="goodNextPage" class="page-link good-next-page" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
 
           <!-- 불량 -->
-          <div class="badmodeltable">
+          <div id="badModelTable" class="badmodeltable">
             <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
-            <div class="card-body good-model-table">
-              <!-- for each문 사용해서 모든 Analysis데이터 출력 -->
-              <table>
-                <tr th:each="analysis : ${analysisList}">
-                  <td>
-                    <img
-                      class="img"
-                      th:src="'data:image/png;base64,' + ${analysis.base64ProductImg}"
-                      alt="Image"
-                      width="100"
-                      height="100"
-                    />
-                  </td>
-                  <td th:text="${analysis.predictionDate}"></td>
-                  <td th:text="${analysis.predictionAccuracy} + '%'"></td>
-                  <td th:text="${analysis.predictionJdm}"></td>
-                  <br />
-                </tr>
-              </table>
-            </div>
+            <div id="badModelTableBody" class="card-body bad-model-table"></div>
+            <!-- 하단 pagination -->
+            <nav id="badPagination" aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a id="badPreviousPage" class="page-link bad-previous-page" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a id="badPageNumber" class="page-link bad-page-number">1</a>
+                </li>
+                <li class="page-item">
+                  <a id="badNextPage" class="page-link bad-next-page" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
 
-        <!-- 하단 pagination -->
-        <nav id="Pagination" aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">1</a>
-            </li>
-
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
       <!-- 회원카드 div 끝 -->
 
       <!-- 사진을 눌렀을 때 나타날 모달 -->
