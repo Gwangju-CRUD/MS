@@ -48,7 +48,7 @@ public class MemberService {
 		member.setMbName(mbName);
 		member.setMbCompany(mbCompany);
 		member.setJoineDate(LocalDateTime.now());
-		member.setProfileImg("local");
+		member.setProfileImg("imgFolder/profile.png");
 		this.memberRepository.save(member);
 
 		return member;
