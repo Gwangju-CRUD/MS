@@ -29,12 +29,7 @@
                         >
                           파일 업로드
                         </div>
-                        <form
-                          th:action="@{/deep/imgUpload}"
-                          method="post"
-                          id="uploadForm"
-                          enctype="multipart/form-data"
-                        >
+                        <form id="uploadForm" enctype="multipart/form-data">
                           <div class="d-flex justify-content-between">
                             <input
                               type="file"
@@ -42,11 +37,13 @@
                               name="file"
                               accept="image/*"
                               required="required"
+                              multiple
                             />
                             <input
                               class="btn btn-danger btn-lg"
-                              type="submit"
+                              type="button"
                               value="분석하기"
+                              onclick="readFilesAndSend(document.getElementById('fileInput').files)"
                             />
                           </div>
                         </form>
