@@ -1,8 +1,11 @@
 package com.crud.controller;
 
+import com.crud.dto.RealTimeAnalysis;
+import com.crud.dto.SingleAnalysis;
 import groovy.lang.GString;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import java.util.List;
@@ -142,11 +145,18 @@ public class MemberController {
 			Long memberCount = memberService.memberCount();
 			Long singleAnalysisCount = analysisService.singleAnalysisCount();
 			Long realTimeAnalysisCount = analysisService.realTimeAnalysisCount();
+			Map<String, Object> resultMap = analysisService.AnalysisCount();
+			// 실시간 정상 불량 카운트가 완료된 객체
+			RealTimeAnalysis realTimeAnalysis = (RealTimeAnalysis)resultMap.get("real");
+			// 단건 정상 불량 카운트가 완료된 객체
+			SingleAnalysis singleAnalysis = (SingleAnalysis)resultMap.get("single");
 
 			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
 			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
 			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
+			model.addAttribute("singleAnalysis",singleAnalysis);
+			model.addAttribute("realTimeAnalysis",realTimeAnalysis);
 
 			return "main";
 

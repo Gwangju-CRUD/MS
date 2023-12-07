@@ -2,6 +2,8 @@ package com.crud.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.crud.DefectTracker;
+import com.crud.dto.RealTimeAnalysis;
+import com.crud.dto.SingleAnalysis;
 import com.crud.entity.AlarmLog;
 import com.crud.entity.Analysis;
 import com.crud.repository.AlarmLogRepository;
@@ -77,5 +81,35 @@ public class AnalysisService {
 		Long realTimeAnalysisCount = analysisRepository.countByPredictionClassfication("실시간");
 		return realTimeAnalysisCount;
 	}
+
+	// 실시간 분석 로그의 정상과 불량 카운트를 객체에 담아 컨트롤러에 전달
+	public Map<String, Object> AnalysisCount(){
+		String normal = "정상";
+		String error = "불량";
+		String realTime = "실시간";
+		String single = "단건";
+
+		RealTimeAnalysis realTimeAnalysis = new RealTimeAnalysis();
+		SingleAnalysis singleAnalysis = new SingleAnalysis();
+
+		// 실시간 정상 
+		realTimeAnalysis.setNormalRealTimeAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(realTime, normal));
+
+		// 실시간 불량
+		realTimeAnalysis.setErrorRealTimeAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(realTime, error));
+
+		// 단건 정상
+		singleAnalysis.setNormalSingleAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(single, normal));
+		
+		// 단건 불량
+		singleAnalysis.setErrorSingleAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(single, error));
+
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("real",realTimeAnalysis);
+		resultMap.put("single",singleAnalysis);
+
+		return resultMap;
+	}
+
 
 }
