@@ -48,23 +48,45 @@ function printResult() {
 }
 
 
-function handleResultDisplay() {
-  var shadowBox = $('.shadow-effect');
+// function handleResultDisplay() {
+//   var shadowBox = $('.shadow-effect');
 
-  // 판정에 따른 스타일 적용
-  if (globalResult === "정상") {
-    shadowBox.css('box-shadow', '0 0 27px green'); // 초록색 쉐도우 적용
-    console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
-  } else if (globalResult === "불량") {
-    shadowBox.css('box-shadow', '0 0 27px red'); // 빨간색 쉐도우 적용
-    console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
-  }
+//   // 판정에 따른 스타일 적용
+//   if (globalResult === "정상") {
+//     shadowBox.css('box-shadow', '0 0 27px green'); // 초록색 쉐도우 적용
+//     console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
+//   } else if (globalResult === "불량") {
+//     shadowBox.css('box-shadow', '0 0 27px red'); // 빨간색 쉐도우 적용
+//     console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
+//   }
 
-  // 1초 후에 스타일 초기화
-  setTimeout(function() {
-    shadowBox.css('box-shadow', ''); // 쉐도우 제거
-  }, 1180);
-}
+//   // 1초 후에 스타일 초기화
+//   setTimeout(function() {
+//     shadowBox.css('box-shadow', ''); // 쉐도우 제거
+//   }, 1180);
+// }
+
+// function handleResultDisplay() {
+//   // .owl-stage 클래스를 가진 요소를 찾음
+//   var shadowBox = $('.owl-carousel .owl-stage');
+
+//   // 판정에 따른 스타일 적용
+//   if (globalResult === "정상") {
+//     shadowBox.css('box-shadow', '0 0 27px green'); // 초록색 쉐도우 적용
+//     console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
+//   } else if (globalResult === "불량") {
+//     shadowBox.css('box-shadow', '0 0 27px red'); // 빨간색 쉐도우 적용
+//     console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
+//   }
+
+//   // 1초 후에 스타일 초기화
+//   setTimeout(function() {
+//     shadowBox.css('box-shadow', ''); // 쉐도우 제거
+//   }, 1180);
+// }
+
+
+
 
 // AJAX 요청 성공 시 호출되는 함수 내에서 handleResultDisplay 호출
 function sendImageToFastAPI(imageData) {
@@ -76,7 +98,6 @@ function sendImageToFastAPI(imageData) {
     success: function (response) {
       globalResult = response.result; // 전역 변수에 결과 저장
       handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
-      // handleResultDisplay2();
     },
     error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage);
@@ -205,6 +226,7 @@ $(document).ready(function () {
           sendImageToFastAPI(images[0]);
         }, 0);
       }
+      // $(".owl-carousel .owl-stage").css('box-shadow', '');
       console.log("Applying shadow to the first image");
       $(".owl-carousel .owl-item img").css('box-shadow', '');
       var firstImage = $(".owl-carousel .owl-item")
@@ -414,3 +436,25 @@ adjustHighlightBox();
   window.addEventListener("resize", myChart.resize);
 };
 
+
+function handleResultDisplay() {
+  var shadowEffectBox = $('.shadow-effect');
+  var owlStageBox = $('.owl-carousel .owl-stage-outer');
+
+  // 판정에 따른 스타일 적용
+  if (globalResult === "정상") {
+    shadowEffectBox.css('box-shadow', '-30px 0px 45px -33px green'); // .shadow-effect에 초록색 쉐도우 적용
+    owlStageBox.css('box-shadow', '30px 0px 45px -33px green'); // .owl-stage에 수정된 초록색 쉐도우 적용
+    console.log("%c정상", "color: green;");
+  } else if (globalResult === "불량") {
+    shadowEffectBox.css('box-shadow', '-30px 0px 45px -33px red');   // .shadow-effect에 빨간색 쉐도우 적용
+    owlStageBox.css('box-shadow', '30px 0px 45px -33px red');   // .owl-stage에 수정된 빨간색 쉐도우 적용
+    console.log("%c불량", "color: red;");
+  }
+
+  // 1초 후에 스타일 초기화
+  setTimeout(function() {
+    shadowEffectBox.css('box-shadow', ''); // .shadow-effect의 쉐도우 제거
+    owlStageBox.css('box-shadow', '');     // .owl-stage의 쉐도우 제거
+  }, 1180);
+}

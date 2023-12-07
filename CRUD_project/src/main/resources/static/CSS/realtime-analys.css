@@ -62,8 +62,8 @@
 }
 
 .owl-carousel .owl-stage {
-  margin-top: 3rem;   /* mt-5 */
-  margin-bottom: 3rem; /* mb-5 */
+  margin-top: 0rem;   /* mt-5 */
+  margin-bottom: 0rem; /* mb-5 */
   /* margin-right: 3em; 
   margin-left: 1.2rem; */
 }
