@@ -85,6 +85,7 @@ public class AnalysisUploadController {
 		analysis.setPredictionAccuracy((Double) score);
 		analysis.setPredictionJdm(result);
 		analysis.setMember(member);
+		analysis.setPredictionClassfication(classData);
 
 		System.out.println(analysis.toString());	
 		

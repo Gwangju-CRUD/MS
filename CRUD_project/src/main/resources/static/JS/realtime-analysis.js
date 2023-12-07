@@ -1,3 +1,6 @@
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
 // 전역 범위에 함수를 정의합니다.
 function sendImageToFastAPI(imageData) {
   $.ajax({
