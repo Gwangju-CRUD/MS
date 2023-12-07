@@ -54,6 +54,11 @@ public class MemberService {
 		return member;
 	}
 
+	// 모든 회원의 수를 count하는 service
+	public Long memberCount(){
+		return memberRepository.countBy();
+	}
+
 	// 전체 회원 조회
 	public Page<Member> getAllMember(int page) {
 		Pageable pageable = PageRequest.of(page, 10); // 한 페이지당 10개만 보여주겠다는 의미
