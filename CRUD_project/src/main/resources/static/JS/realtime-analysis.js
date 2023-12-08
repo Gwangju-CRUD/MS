@@ -168,17 +168,22 @@ function sendImageToFastAPI(imageData) {
     data: JSON.stringify({ encoded_image_data: imageData }),
     contentType: "application/json",
     success: function (response) {
-      globalResult = response.result; // 전역 변수에 결과 저장
-      console.log(globalResult);
-
-      // DB넣기 $.ajax({   url: "/deep/aysUpload",   method: "post",   data:
-      // JSON.stringify({ ...response, class: "실시간" }),  FastAPI에서 받아온 데이터를 그대로 전달
-      // contentType: "application/json",   beforeSend: function (xhr) {
-      // xhr.setRequestHeader(header, token);   },   success: function (data) {
-      // console.log("test");   },   error: function (error) {
-      // console.error("Error in second AJAX request:", error);   }, });
-      // printResultBasedOnCondition();  조건에 따라 결과 출력 updateResultDisplay();  결과 표시
-      // 업데이트 displayResultInTBox();  t-box에 결과 표시 함수 호출
+      console.log(response);
+      $.ajax({
+        url: "/deep/aysUpload",
+        method: "post",
+        data: JSON.stringify({ ...response, class: "실시간" }), // FastAPI에서 받아온 데이터를 그대로 전달
+        contentType: "application/json",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (data) {
+          console.log("test");
+        },
+        error: function (error) {
+          console.error("Error in second AJAX request:", error);
+        },
+      });
     },
     error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage); // Optional
