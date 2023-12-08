@@ -1,6 +1,7 @@
 package com.crud.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,6 +61,26 @@ public class MemberService {
 		Page<Member> PageList = memberRepository.findAll(pageable);
 		return PageList;
 	}
+
+	// 로그인 회원 조회
+	public Member getUserByMbId(String mbId) {
+	    Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
+	    if (optionalMember.isPresent()) {
+	        return optionalMember.get();
+	    } else {
+	        throw new RuntimeException("회원을 찾을 수 없습니다."); // 예외 처리 방식은 필요에 따라 수정 가능합니다.
+	    }
+	}
+
+	// 이미지
+	   public Member updateProfileImage(String mbId, String imagePath) {
+	  Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
+	  if(optionalMember.isPresent()) { Member member = optionalMember.get();
+	  member.setProfileImg(imagePath); memberRepository.save(member); return
+	  member; }else { return null; }
+	  
+	  }
+	 
 
 	// 회원 요청 로직
 	public void requestMember(RequestMember requestMember) {

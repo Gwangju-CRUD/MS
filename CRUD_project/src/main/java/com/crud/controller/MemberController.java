@@ -1,6 +1,8 @@
 package com.crud.controller;
 
 import groovy.lang.GString;
+
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crud.DuplicateIdException;
 import com.crud.entity.Member;
@@ -89,25 +93,22 @@ public class MemberController {
 
 		if (memberService.request(memberForm.getMbId()) == true) {
 			model.addAttribute("msg", "요청이 완료되었습니다");
-			
+
 			// 1. memberService에 요청 메소드 만들기
-			RequestMember requestMember =  new RequestMember();
-			
+			RequestMember requestMember = new RequestMember();
+
 			LocalDateTime now = LocalDateTime.now();
-			
+
 			requestMember.setMbId(memberForm.getMbId());
 			requestMember.setMbPw(memberForm.getMbPw1());
 			requestMember.setMbName(memberForm.getMbName());
 			requestMember.setMbCompany(memberForm.getMbCompany());
 			requestMember.setJoineDate(now);
-			
-			
+
 			memberService.requestMember(requestMember);
-			
-			
+
 			// 3. DB에 회원의 값 저장하기
-			
-			
+
 			return "member/login_form";
 		} else {
 			model.addAttribute("msg", "동일한 아이디가 있습니다");
@@ -124,7 +125,6 @@ public class MemberController {
 		model.addAttribute("memberForm", new MemberForm());
 		return "member/login_form";
 	}
-
 
 	// 로그인이 아무 이상없이 성공하면 main으로 이동함
 	@GetMapping("/main")
@@ -148,79 +148,107 @@ public class MemberController {
 
 	// ------- 네비바 컨트롤러 -------
 
-	@GetMapping("myPage")
-	public String myPage(){
-		return "myPage";
-	}
-
 	@GetMapping("/memberManagement")
-	public String memberManagement(Model model, @RequestParam(value = "page", defaultValue = "0")int page) {
+	public String memberManagement(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 		// 전체 회원 조회
 		Page<Member> memberList = this.memberService.getAllMember(page);
 		model.addAttribute("memberForm", new MemberForm());
-		model.addAttribute("memberList",memberList);
-		
+		model.addAttribute("memberList", memberList);
+
 		// 요청 회원 조회
 		Page<RequestMember> requestMemberList = this.memberService.getRequestMember(page);
-		model.addAttribute("requestMemberList",requestMemberList);
-		
+		model.addAttribute("requestMemberList", requestMemberList);
+
 		return "member/memberManagement";
 	}
-	
-		
-		// 회원 추가 및 요청회원 삭제 
-		@PostMapping("/members/approve/{mbId}")
-		public String approveMember(@PathVariable String mbId) {
-			Optional<RequestMember> requestMember = requestMemberRepository.findById(mbId);
-			
-			if(requestMember.isPresent()) {
-		        Member member = new Member();
-		        
-		     // RequestMember의 정보를 Member로 복사
-		        member.setMbId(requestMember.get().getMbId());
-		        member.setMbPw(passwordEncoder.encode(requestMember.get().getMbPw()));
-		        member.setMbCompany(requestMember.get().getMbCompany());
-		        member.setMbName(requestMember.get().getMbName());
-		        member.setJoineDate(requestMember.get().getJoineDate());
-		        
-		        // Member 저장
-		        memberRepository.save(member);
 
-		        // RequestMember 삭제
-		        requestMemberRepository.deleteById(mbId);
+	// 로그인 회원 조회 > 프로필
+	@GetMapping("/myPage")
+	public String showMyPage(Model model, Authentication authentication) {
+		// 현재 로그인한 사용자의 회원 정보를 가져옵니다.
+		String mbId = authentication.getName();
+		Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
+		if (optionalMember.isPresent()) {
+			// 모델에 회원 정보를 담아 myPage.html로 전달합니다.
+			model.addAttribute("member", optionalMember.get());
+		} else {
+			// ID에 해당하는 회원이 없을 때의 처리도 필요합니다.
+		}
+
+		return "myPage";
+	}
+
+	// 이미지 업로드
+
+	@PostMapping("/myPage")
+	public String upload(@RequestParam("file") MultipartFile file, Authentication authentication, RedirectAttributes redirectAttributes) {
+		String fileName = file.getOriginalFilename();
+		String uploadDir = System.getProperty("user.dir") + "/CRUD_project/src/main/resources/static/imgFolder/";
+		File dest = new File(uploadDir + fileName);
+		try {
+			
+			file.transferTo(dest);
+			String imagePath = "/imgFolder/" + fileName;
+
+			// 현재 로그인한 사용자의 회원 정보를 가져옵니다.
+			String mbId = authentication.getName();
+			Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
+
+			if (optionalMember.isPresent()) {
+				Member member = optionalMember.get();
+				member.setProfileImg(imagePath);
+				memberRepository.save(member);
 			}
-			return "redirect:/memberManagement";  // 처리 후 리다이렉트할 경로			
+
+			return "redirect:/myPage";
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			return "파일 업로드에 실패했습니다.";
 		}
 		
-	
-	
-		//요청 회원 삭제
-		@PostMapping("/members/delete/{mbId}")
-		public String deleteMember(@PathVariable String mbId) {
-		    requestMemberRepository.deleteById(mbId);
-		    return "redirect:/memberManagement";  // 삭제 후 리다이렉트할 경로
+	}
+
+	// 회원 추가 및 요청회원 삭제
+	@PostMapping("/members/approve/{mbId}")
+	public String approveMember(@PathVariable String mbId) {
+		Optional<RequestMember> requestMember = requestMemberRepository.findById(mbId);
+
+		if (requestMember.isPresent()) {
+			Member member = new Member();
+
+			// RequestMember의 정보를 Member로 복사
+			member.setMbId(requestMember.get().getMbId());
+			member.setMbPw(passwordEncoder.encode(requestMember.get().getMbPw()));
+			member.setMbCompany(requestMember.get().getMbCompany());
+			member.setMbName(requestMember.get().getMbName());
+			member.setJoineDate(requestMember.get().getJoineDate());
+
+			// Member 저장
+			memberRepository.save(member);
+
+			// RequestMember 삭제
+			requestMemberRepository.deleteById(mbId);
 		}
-	
-	
-	
-	
-	
-	
-	
-	 
-	
-	
+		return "redirect:/memberManagement"; // 처리 후 리다이렉트할 경로
+	}
+
+	// 요청 회원 삭제
+	@PostMapping("/members/delete/{mbId}")
+	public String deleteMember(@PathVariable String mbId) {
+		requestMemberRepository.deleteById(mbId);
+		return "redirect:/memberManagement"; // 삭제 후 리다이렉트할 경로
+	}
 
 	@GetMapping("allResult")
-	public String allResult(){
+	public String allResult() {
 		return "analysis/allResult";
 	}
 
 	@GetMapping("singleAnalysis")
-	public String singleAnalysis(){
+	public String singleAnalysis() {
 		return "analysis/singleAnalysis";
 	}
-	
-		
-		
+
 }

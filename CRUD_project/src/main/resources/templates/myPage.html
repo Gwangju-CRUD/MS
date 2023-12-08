@@ -22,18 +22,18 @@
                                 <!-- 프로필 이미지 -->
                                 <div class="profile-img" data-toggle="tooltip" data-placement="top" title="프로필 사진 변경">
                                     <!-- 이미지 누르면 프로필 변경 할 수 있게 해야함.. -->
-                                    <img id="profileImg" src="img/undraw_profile.svg" alt="프로필사진" data-toggle="modal"
-                                        data-target="#profileModal" > 
+                                    <img id="profileImg" th:src="${member.profileImg}" alt="프로필사진" data-toggle="modal" data-target="#profileModal"> 
                                 </div>
 
-                                <!-- 프로필 정보 입력 -->
-                                <div class="profile-text">
-                                    <h1>서희주</h1>
+                               <!-- 프로필 정보 입력 -->
+								<div class="profile-text">
+									<h2 th:text="${member.mbName}"></h2>
                                     <hr>
-                                    <h3>00회사</h3>
+									<h4 th:text="${member.mbCompany}"></h4>
                                     <hr>
-                                    <h5>ID | HEEJU</h5>
-                                    <h5>가입일 | 2023년12월01일</h5>
+									<h5 style="display: inline;">ID | </h5><h5 style="display: inline;" th:text="${member.mbId}"></h5>
+									<br>
+                                    <h5 style="display: inline;">가입일 | </h5><h5 style="display: inline;" th:text="${#temporals.format(member.joineDate, 'yyyy년 MM월 dd일')}"></h5>
                                 </div>
                             </div>
                         </section>
@@ -135,7 +135,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="profileModalLabel">File Upload</h5>
+                        <h5 class="modal-title" id="profileModalLabel">프로필 사진 변경</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -151,8 +151,11 @@
                                   <p class="message">파일을 드래그하여 업로드하세요</p>
                                   <img src="" alt="미리보기 이미지" class="preview">
                                 </div>
-                                <label class="file-label" for="chooseFile">파일선택</label>
-                                <input class="file" id="chooseFile" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/PNG">
+                                <form th:action="@{/myPage}" method="post" enctype="multipart/form-data">
+                                    <label class="file-label" for="chooseFile" style="width: 170px;">파일선택</label>
+                                    <input class="file" id="chooseFile" type="file" name="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/PNG , image/JPG">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    
                               </div>
                             </div>
                         </div>
@@ -161,8 +164,9 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                        <a class="btn btn-primary" href="myPage.html">변경</a>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                            <button type="submit" class="btn btn-primary">변경</button>
+                        </form>
                     </div>
                 </div>
             </div>
