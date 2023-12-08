@@ -233,6 +233,20 @@ public class AnalysisUploadController {
 	
 		return aysLog;
 	}
+
+
+    @PostMapping("/getGraphLog")
+    @ResponseBody 
+    public List<Map<String, Object>> getGraphLog() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		// 사용자의 ID를 가져옵니다.
+		String mbId = authentication.getName();
+
+        List<Map<String, Object>> result = analysisRepository.findSelectedColumnsByMbId(mbId);
+        return result;
+    }
 	
 
 
