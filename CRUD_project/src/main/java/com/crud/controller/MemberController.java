@@ -179,7 +179,18 @@ public class MemberController {
 	}
 
 	// 이미지 업로드
-
+	/**
+	 * Description : 사용자가 선택한 이미지 파일을 서버에 업로드하고, 이미지 파일의 경로를 사용자 정보에 저장하는 메소드입니다.
+	 * 
+	 * Params      : 
+	 * @param file - 사용자가 업로드한 이미지 파일
+	 * @param authentication - 현재 로그인한 사용자의 인증 정보
+	 * @param redirectAttributes - 리다이렉트 시 속성을 추가하기 위한 객체
+	 * 
+	 * Returns     : 
+	 * @return String - 성공 시 'redirect:/myPage'를 반환하여 마이페이지로 리다이렉트, 실패 시 에러 메시지를 반환합니다.
+	 */
+	
 	@PostMapping("/myPage")
 	public String upload(@RequestParam("file") MultipartFile file, Authentication authentication, RedirectAttributes redirectAttributes) {
 		String fileName = file.getOriginalFilename();
