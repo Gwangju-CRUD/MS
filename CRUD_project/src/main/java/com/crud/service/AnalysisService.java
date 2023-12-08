@@ -158,7 +158,6 @@ public class AnalysisService {
 		allCountAnalysis.setMonthNomalCount(monthCountNomalList);
 		allCountAnalysis.setMonthErrorCount(monthCountErrorList);
 
-		System.out.println(analysisRepository.countByPredictionDateContaining("2023년 12월"));
 
     return allCountAnalysis;
   }

@@ -25,5 +25,4 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 	// 전체 정상과 불량에 관한 모든 count 데이터를 DB에서 가져오는 JPA작성
 	Long countByPredictionDateContainingAndPredictionJdm(String predictionDate, String jdm);
 
-	Long countByPredictionDateContaining(String predictionDate);
 }

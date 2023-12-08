@@ -9,11 +9,10 @@
             <!--본문 내용만 적으면 됨-->
             <!-- 주 페이지 콘텐츠 -->
             <div class="container-fluid ml-4 mt-4 mb-4 mr-4 p-4">
-
+                <div th:text="${allCountAnalysis}"></div>
                 <div class="content">
                     <div class="animated fadeIn">
                         <div class="row">
-                            <div th:text="${allCountAnalysis}"></div>
                             <div class="col-lg-6">
                                 <!-- 알람 each문 시작 -->
                                 <div class="card shadow-sm">
@@ -112,8 +111,8 @@
                                         <div id="pieChartCoustom" style="height: 100%"></div>
                                         <script type="text/javascript">
                                              var dom = document.getElementById('pieChartCoustom');
-                                             var normalAnalysis = [[${singleAnalysis.normalSingleAnalysis}]];
-                                             var errorAnalysis = [[${singleAnalysis.errorSingleAnalysis}]];
+                                             var normalAnalysis = [[${allCountAnalysis.dailyNomalCount}]];
+                                             var errorAnalysis = [[${allCountAnalysis.dailyErrorCount}]];
                                              var myChart = echarts.init(dom, null, {
                                                  renderer: 'canvas',
                                                  useDirtyRect: false
