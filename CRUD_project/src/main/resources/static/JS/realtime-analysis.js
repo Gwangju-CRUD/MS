@@ -87,7 +87,6 @@ function printResult() {
 
 
 
-
 // AJAX 요청 성공 시 호출되는 함수 내에서 handleResultDisplay 호출
 function sendImageToFastAPI(imageData) {
   $.ajax({
@@ -132,6 +131,7 @@ function sendImageToFastAPI(imageData) {
     contentType: "application/json",
     success: function (response) {
       globalResult = response.result; // 전역 변수에 결과 저장
+      updateChartData(globalResult); // 그래프 데이터 업데이트
       displayResultInTBox(); // t-box에 결과 표시 함수 호출
       handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
     },
@@ -303,7 +303,67 @@ adjustHighlightBox();
     });
   });
 
-  // 꺾은선 그래프 코드
+
+
+
+
+
+// X축 라벨과 시리즈 데이터를 위한 전역 변수
+var xAxisData = ["0000"];
+var normalData = [0]; // 정상 데이터 초기화
+var faultData = [0]; // 불량 데이터 초기화
+
+function updateChartData(globalResult) {
+  // X축 라벨 업데이트
+  var nextLabel = String(parseInt(xAxisData[xAxisData.length - 1]) + 1).padStart(4, '0');
+  xAxisData.push(nextLabel);
+
+  // 정상 또는 불량 데이터 업데이트
+  if (globalResult === "정상") {
+    normalData.push(1);
+    faultData.push(-1);
+  } else if (globalResult === "불량") {
+    normalData.push(-1);
+    faultData.push(1);
+  }
+
+  // ECharts 인스턴스에 새 데이터 적용
+  myChart.setOption({
+    xAxis: { data: xAxisData },
+    series: [
+      { name: "정상", data: normalData },
+      { name: "불량", data: faultData }
+    ]
+  });
+}
+// 이미지 데이터를 FastAPI에 보내고 결과를 받는 함수
+function sendImageToFastAPI(imageData) {
+  $.ajax({
+    url: "http://218.157.38.54:8002/predict/",
+    type: "POST",
+    data: JSON.stringify({ encoded_image_data: imageData }),
+    contentType: "application/json",
+    success: function (response) {
+      globalResult = response.result; // 전역 변수에 결과 저장
+      updateChartData(globalResult); // 그래프 데이터 업데이트
+      // 다른 관련 처리...
+    },
+    error: function (jqXHR, textStatus, errorMessage) {
+      console.log(errorMessage);
+    },
+  });
+}
+
+// // // ECharts 그래프 초기화
+// // var dom = document.getElementById("container");
+// // var myChart = echarts.init(dom, null, {
+// //   renderer: "canvas",
+// //   useDirtyRect: false,
+// // });
+
+//   // 꺾은선 그래프 코드
+
+
 
   var dom = document.getElementById("container");
   var myChart = echarts.init(dom, null, {
@@ -341,29 +401,29 @@ adjustHighlightBox();
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: [
-        "0000",
-        "0001",
-        "0002",
-        "0003",
-        "0004",
-        "0005",
-        "0006",
-        "0007",
-        "0008",
-      ],
+      // data: [
+      //   "0000",
+      //   "0001",
+      //   "0002",
+      //   "0003",
+      //   "0004",
+      //   "0005",
+      //   "0006",
+      //   "0007",
+      //   "0008",
+      // ],
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: "{value} 상태",
+        formatter: "{value} ",
       },
     },
     series: [
       {
         name: "정상",
         type: "line",
-        data: [1, 1, -1, 1, 1, -1, 1, 1, 1],
+        // data: [1, 1, -1, 1, 1, -1, 1, 1, 1],
         color: "#00AAFF",
         markPoint: {
           data: [
@@ -389,7 +449,7 @@ adjustHighlightBox();
       {
         name: "불량",
         type: "line",
-        data: [-1, -1, 1, -1, -1, 1, -1, -1, -1],
+        // data: [-1, -1, 1, -1, -1, 1, -1, -1, -1],
         color: "rgb(251, 118, 123)",
         markPoint: {
           data: [
@@ -436,6 +496,20 @@ adjustHighlightBox();
   window.addEventListener("resize", myChart.resize);
 };
 
+// // 초기 옵션 설정
+// var option = {
+//   xAxis: {
+//     type: 'category',
+//     data: xAxisData
+//   },
+//   // 기타 옵션 설정...
+// };
+
+// myChart.setOption(option);
+////
+
+
+
 
 function handleResultDisplay() {
   var shadowEffectBox = $('.shadow-effect');
@@ -443,12 +517,12 @@ function handleResultDisplay() {
 
   // 판정에 따른 스타일 적용
   if (globalResult === "정상") {
-    shadowEffectBox.css('box-shadow', '-30px 0px 45px -33px green'); // .shadow-effect에 초록색 쉐도우 적용
-    owlStageBox.css('box-shadow', '30px 0px 45px -33px green'); // .owl-stage에 수정된 초록색 쉐도우 적용
+    shadowEffectBox.css('box-shadow', '0px 0px 60px -3px green'); // .shadow-effect에 초록색 쉐도우 적용
+    owlStageBox.css('box-shadow', '40px 0px 40px -43px green'); // .owl-stage에 수정된 초록색 쉐도우 적용
     console.log("%c정상", "color: green;");
   } else if (globalResult === "불량") {
-    shadowEffectBox.css('box-shadow', '-30px 0px 45px -33px red');   // .shadow-effect에 빨간색 쉐도우 적용
-    owlStageBox.css('box-shadow', '30px 0px 45px -33px red');   // .owl-stage에 수정된 빨간색 쉐도우 적용
+    shadowEffectBox.css('box-shadow', '0px 0px 60px -3px red');   // .shadow-effect에 빨간색 쉐도우 적용
+    owlStageBox.css('box-shadow', '40px 0px 40px -43px red');   // .owl-stage에 수정된 빨간색 쉐도우 적용
     console.log("%c불량", "color: red;");
   }
 

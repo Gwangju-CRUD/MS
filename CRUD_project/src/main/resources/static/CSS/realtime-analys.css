@@ -58,12 +58,12 @@
   font-size: 1.7vw; /* 폰트 크기 */
   color: black; /* 텍스트 색상 */
   text-align: center;
-  margin-left: 2.8vw;
+  margin-left: 4.4vw;
 }
 
 .owl-carousel .owl-stage {
-  margin-top: 0rem;   /* mt-5 */
-  margin-bottom: 0rem; /* mb-5 */
+  margin-top: 3rem;   /* mt-5 */
+  margin-bottom: 3rem; /* mb-5 */
   /* margin-right: 3em; 
   margin-left: 1.2rem; */
 }
