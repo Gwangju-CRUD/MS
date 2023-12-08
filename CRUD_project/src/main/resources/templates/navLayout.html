@@ -85,7 +85,8 @@
         <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-
+        <!-- 부트스트랩 아이콘 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-bfsS/JFnFO9RkoTUnZoBzenVsdh8LW2eUnF6VqDjzF/6EBvqhPC5QFPIFky7k1Ib" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/navLayout.css">
         <base href="/"/>
     </head>
@@ -200,7 +201,7 @@
                                 <form action="https://www.google.com/search" target="_blank" onsubmit="searchinput()">
                                     <div class="search">
                                         <input type="text" name="query" id="searchinputText" value="" placeholder="Google Search">
-                                        <button type="submit" class="btn btn-primary">검색</button>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
                                 </form>
                             </section>
@@ -288,15 +289,15 @@
                                     data-toggle="dropdown"
                                     aria-haspopup="true"
                                     aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                    <span class="mr-4 d-none d-lg-inline text-gray-600">서희주</span>
+                                    <img class="img-profile rounded-circle" src="imgFolder/profile.png">
                                 </a>
 
                                 <!-- 프로필 누르면 정보 출력 -->
                                 <div
                                     class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="myPage.html">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         내 프로필
                                     </a>

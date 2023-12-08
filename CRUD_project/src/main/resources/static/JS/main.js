@@ -30,7 +30,7 @@ const counter = ($counter, max) => {
     const $realtimeCounter = document.querySelector(".realtimecount");
 
     // 대기 시간 조정
-    const delayTime = 2000; // 2초후 시작
+    const delayTime = 1000; // 2초후 시작
   
     // Thymeleaf 변수 사용
     setTimeout(() => {
