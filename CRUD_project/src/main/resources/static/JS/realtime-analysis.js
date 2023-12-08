@@ -280,35 +280,6 @@ window.onload = function () {
         $('.owl-stage').addClass('mt-5 mb-5 mr-5');
     }, 100);
     });
-});
-
-
-// JavaScript를 사용하여 창 크기에 따라 #highlight-box 조절
-window.addEventListener('resize', adjustHighlightBox);
-
-function adjustHighlightBox() {
-  var highlightBox = document.getElementById('highlight-box');
-  var windowWidth = window.innerWidth;
-
-  // 기준이 되는 창 너비 설정 (예: 1000px)
-  var baseWidth = 1950;
-
-  // 현재 창 너비와 기준 너비의 차이에 따라 크기 조절
-  var widthDiff = baseWidth - windowWidth;
-  var newWidth = 290 - (widthDiff+100)/5.9; // 기본 너비에서 차이만큼 감소
-  var newHeight = 400 - (widthDiff+100)/4.4; // 기본 높이에서 차이만큼 감소
-
-  // 새로운 너비와 높이 적용
-  highlightBox.style.width = newWidth + 'px';
-  highlightBox.style.height = newHeight + 'px';
-}
-
-// 초기 로드시에도 한번 실행
-adjustHighlightBox();
-
-
-    
-
 
 
         // 초기 이미지 데이터 요청 (첫 7개)
@@ -422,23 +393,7 @@ adjustHighlightBox();
             ]
         });
     }
-    // 이미지 데이터를 FastAPI에 보내고 결과를 받는 함수
-    function sendImageToFastAPI(imageData) {
-        $.ajax({
-            url: "http://218.157.38.54:8002/predict/",
-            type: "POST",
-            data: JSON.stringify({encoded_image_data: imageData}),
-            contentType: "application/json",
-            success: function (response) {
-                globalResult = response.result; // 전역 변수에 결과 저장
-                updateChartData(globalResult); // 그래프 데이터 업데이트
-                // 다른 관련 처리...
-            },
-            error: function (jqXHR, textStatus, errorMessage) {
-                console.log(errorMessage);
-            }
-        });
-    }
+
 
     // 꺾은선 그래프 코드
 
