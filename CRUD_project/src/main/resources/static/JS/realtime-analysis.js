@@ -164,9 +164,10 @@ function sendImageToFastAPI(imageData) {
       //     console.error("Error in second AJAX request:", error);
       //   },
       // });
-      printResultBasedOnCondition(); // 조건에 따라 결과 출력
-      updateResultDisplay(); // 결과 표시 업데이트
-      displayResultInTBox(); // t-box에 결과 표시 함수 호출
+
+      // printResultBasedOnCondition(); // 조건에 따라 결과 출력
+      // updateResultDisplay(); // 결과 표시 업데이트
+      // displayResultInTBox(); // t-box에 결과 표시 함수 호출
     },
     error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage); // Optional
@@ -180,43 +181,6 @@ function printResult() {
 }
 
 
-// function handleResultDisplay() {
-//   var shadowBox = $('.shadow-effect');
-
-//   // 판정에 따른 스타일 적용
-//   if (globalResult === "정상") {
-//     shadowBox.css('box-shadow', '0 0 27px green'); // 초록색 쉐도우 적용
-//     console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
-//   } else if (globalResult === "불량") {
-//     shadowBox.css('box-shadow', '0 0 27px red'); // 빨간색 쉐도우 적용
-//     console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
-//   }
-
-//   // 1초 후에 스타일 초기화
-//   setTimeout(function() {
-//     shadowBox.css('box-shadow', ''); // 쉐도우 제거
-//   }, 1180);
-// }
-
-// function handleResultDisplay() {
-//   // .owl-stage 클래스를 가진 요소를 찾음
-//   var shadowBox = $('.owl-carousel .owl-stage');
-
-//   // 판정에 따른 스타일 적용
-//   if (globalResult === "정상") {
-//     shadowBox.css('box-shadow', '0 0 27px green'); // 초록색 쉐도우 적용
-//     console.log("%c정상", "color: green;"); // 콘솔에 초록색으로 "정상" 출력
-//   } else if (globalResult === "불량") {
-//     shadowBox.css('box-shadow', '0 0 27px red'); // 빨간색 쉐도우 적용
-//     console.log("%c불량", "color: red;"); // 콘솔에 빨간색으로 "불량" 출력
-//   }
-
-//   // 1초 후에 스타일 초기화
-//   setTimeout(function() {
-//     shadowBox.css('box-shadow', ''); // 쉐도우 제거
-//   }, 1180);
-// }
-
 
 
 // AJAX 요청 성공 시 호출되는 함수 내에서 handleResultDisplay 호출
@@ -229,6 +193,9 @@ function sendImageToFastAPI(imageData) {
     success: function (response) {
       globalResult = response.result; // 전역 변수에 결과 저장
       handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
+      printResultBasedOnCondition(); // 조건에 따라 결과 출력
+      updateResultDisplay(); // 결과 표시 업데이트
+      displayResultInTBox(); // t-box에 결과 표시 함수 호출
     },
     error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage);
@@ -444,7 +411,10 @@ adjustHighlightBox();
 var xAxisData = ["0000"];
 var normalData = [0]; // 정상 데이터 초기화
 var faultData = [0]; // 불량 데이터 초기화
+// 이부분을 제거하면 초기화가 사라짐
 
+
+// 요기부터 X축 추가 구문 시작하는곳임
 function updateChartData(globalResult) {
   // X축 라벨 업데이트
   var nextLabel = String(parseInt(xAxisData[xAxisData.length - 1]) + 1).padStart(4, '0');
@@ -458,6 +428,13 @@ function updateChartData(globalResult) {
     normalData.push(-1);
     faultData.push(1);
   }
+
+    // X축 라벨이 8개가 넘어가면, 가장 오래된 라벨과 데이터 제거
+    if (xAxisData.length > 8) {
+      xAxisData.shift(); // 가장 오래된 X축 라벨 제거
+      normalData.shift(); // 해당하는 정상 데이터 제거
+      faultData.shift(); // 해당하는 불량 데이터 제거
+    }
 
   // ECharts 인스턴스에 새 데이터 적용
   myChart.setOption({
@@ -486,12 +463,12 @@ function sendImageToFastAPI(imageData) {
   });
 }
 
-// // // ECharts 그래프 초기화
-// // var dom = document.getElementById("container");
-// // var myChart = echarts.init(dom, null, {
-// //   renderer: "canvas",
-// //   useDirtyRect: false,
-// // });
+// ECharts 그래프 초기화
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom, null, {
+  renderer: "canvas",
+  useDirtyRect: false,
+});
 
 //   // 꺾은선 그래프 코드
 
@@ -533,17 +510,7 @@ function sendImageToFastAPI(imageData) {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      // data: [
-      //   "0000",
-      //   "0001",
-      //   "0002",
-      //   "0003",
-      //   "0004",
-      //   "0005",
-      //   "0006",
-      //   "0007",
-      //   "0008",
-      // ],
+
     },
     yAxis: {
       type: "value",
@@ -555,7 +522,6 @@ function sendImageToFastAPI(imageData) {
       {
         name: "정상",
         type: "line",
-        // data: [1, 1, -1, 1, 1, -1, 1, 1, 1],
         color: "#00AAFF",
         markPoint: {
           data: [
@@ -581,7 +547,6 @@ function sendImageToFastAPI(imageData) {
       {
         name: "불량",
         type: "line",
-        // data: [-1, -1, 1, -1, -1, 1, -1, -1, -1],
         color: "rgb(251, 118, 123)",
         markPoint: {
           data: [
@@ -628,17 +593,17 @@ function sendImageToFastAPI(imageData) {
   window.addEventListener("resize", myChart.resize);
 };
 
-// // 초기 옵션 설정
-// var option = {
-//   xAxis: {
-//     type: 'category',
-//     data: xAxisData
-//   },
-//   // 기타 옵션 설정...
-// };
+// 초기 옵션 설정
+var option = {
+  xAxis: {
+    type: 'category',
+    data: xAxisData
+  },
+  // 기타 옵션 설정...
+};
 
-// myChart.setOption(option);
-////
+myChart.setOption(option);
+//
 
 
 
