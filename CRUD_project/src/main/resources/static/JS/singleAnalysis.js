@@ -4,10 +4,13 @@ var header = $("meta[name='_csrf_header']").attr("content");
 // 현재 페이지 번호를 저장하는 변수
 var currentPageGood = 0;
 var currentPageBad = 0;
-var pageSize = 10;
-
+var pageSize = 5;
 // AJAX 요청과 HTML 생성 코드를 별도의 함수로 분리합니다.
 function loadLogData(type, page, size) {
+  // 로딩 인디케이터 표시
+  $("#loadingIndicator").removeClass("d-none");
+
+  $(".page-link").addClass("disabled");
   console.log(
     `Sending request to /deep/getAysLog with param: ${"단건"}, type: ${type}, page: ${page}, size: ${size}`
   );
@@ -60,9 +63,23 @@ function loadLogData(type, page, size) {
           $("#badNextPage").removeClass("disabled");
         }
       }
+
+      // 페이지 이동 버튼 활성화
+      $(".page-link").removeClass("disabled");
+
+      // 로딩 인디케이터 숨김
+
+      $("#loadingIndicator").addClass("d-none");
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("AJAX Error: ", textStatus);
+
+      // 페이지 이동 버튼 활성화
+      $(".page-link").removeClass("disabled");
+
+      // 로딩 인디케이터 숨김
+
+      $("#loadingIndicator").addClass("d-none");
     },
   });
 }
@@ -107,6 +124,12 @@ $(document).ready(function () {
       currentPageBad++;
       loadLogData("불량", currentPageBad, pageSize);
     }
+  });
+
+  $("#refreshButton").click(function () {
+    // 현재 페이지의 데이터를 다시 로드
+    loadLogData("정상", currentPageGood, pageSize);
+    loadLogData("불량", currentPageBad, pageSize);
   });
 });
 
