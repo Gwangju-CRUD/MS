@@ -23,19 +23,16 @@ function loadLogData(type, page, size) {
       var html = "";
       data.content.forEach(function (row) {
         html += `
-              <table>
-                  <tr>
-                      <td>
-                          <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
-                      </td>
-                      <td>${row.predictionDate}</td>
-                      <td>${row.predictionAccuracy}%</td>
-                      <td>${row.predictionJdm}</td>
-                  </tr>
-              </table>
+              <tr>
+                <td>
+                    <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                </td>
+                <td>${row.predictionDate}</td>
+                <td>${row.predictionAccuracy}%</td>
+                <td>${row.predictionJdm}</td>
+              </tr>
               `;
       });
-
       if (type === "정상") {
         $("#goodModelTableBody").html(html);
         $("#goodPageNumber").text(data.number + 1);
