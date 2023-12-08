@@ -227,7 +227,7 @@ public class MemberController {
 		return "analysis/allResult";
 	}
 
-	@GetMapping("singleAnalysis")
+	@GetMapping("/singleAnalysis")
 	public String singleAnalysis(){
 		return "analysis/singleAnalysis";
 	}
