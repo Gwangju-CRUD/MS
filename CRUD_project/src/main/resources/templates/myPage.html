@@ -22,7 +22,7 @@
                                 <!-- 프로필 이미지 -->
                                 <div class="profile-img" data-toggle="tooltip" data-placement="top" title="프로필 사진 변경">
                                     <!-- 이미지 누르면 프로필 변경 할 수 있게 해야함.. -->
-                                    <img id="profileImg" th:src="${member.profileImg}" alt="프로필사진" data-toggle="modal" data-target="#profileModal"> 
+                                    <img id="profileImg" th:src="${member.profileImg}" alt="프로필사진" data-toggle="modal" data-target="#profileModalPath"> 
                                 </div>
 
                                <!-- 프로필 정보 입력 -->
@@ -130,7 +130,7 @@
 
 
         <!-- --------------------프로필사진 변경 모달 --------------------- -->
-        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="profileModalPath" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -140,7 +140,7 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-userbody">
 
 
                         <div id="root">

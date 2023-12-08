@@ -136,8 +136,20 @@ public class MemberController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication != null && authentication.isAuthenticated()) {
+			
+			
+			
+			
 			String username = authentication.getName();
 			System.out.println("인증된 사용자: " + username);
+
+			// 모델로 객체 받아와서 네비바에 Member프로필 이미지,이름 불러오기
+			Optional<Member> optionalMember = memberRepository.findBymbId(username);
+			if (optionalMember.isPresent()) {
+				Member member = optionalMember.get();
+				model.addAttribute("member", member);
+			}
+
 			List<AlarmLog> alarmList = alarmService.alarmList();
 			Long memberCount = memberService.memberCount();
 			Long singleAnalysisCount = analysisService.singleAnalysisCount();
@@ -147,7 +159,7 @@ public class MemberController {
 			model.addAttribute("alarmList", alarmList);
 			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
 			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
-
+			
 			return "main";
 
 		} else {
@@ -169,6 +181,14 @@ public class MemberController {
 		// 요청 회원 조회
 		Page<RequestMember> requestMemberList = this.memberService.getRequestMember(page);
 		model.addAttribute("requestMemberList", requestMemberList);
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<Member> optionalMember = memberRepository.findBymbId(username);
+		if (optionalMember.isPresent()) {
+			Member member = optionalMember.get();
+			model.addAttribute("member", member);
+		}
 
 		return "member/memberManagement";
 	}
@@ -264,14 +284,32 @@ public class MemberController {
 	}
 
 	@GetMapping("allResult")
-	public String allResult() {
+	public String allResult(Model model) {
+		// 모델로 객체 받아와서 네비바에 Member프로필 이미지,이름 불러오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<Member> optionalMember = memberRepository.findBymbId(username);
+		if (optionalMember.isPresent()) {
+        Member member = optionalMember.get();
+        model.addAttribute("member", member);
+    }
+
+
 		return "analysis/allResult";
 	}
 
 
 
 	@GetMapping("/singleAnalysis")
-	public String singleAnalysis(){
+	public String singleAnalysis(Model model){
+		// 모델로 객체 받아와서 네비바에 Member프로필 이미지,이름 불러오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<Member> optionalMember = memberRepository.findBymbId(username);
+		if (optionalMember.isPresent()) {
+			Member member = optionalMember.get();
+			model.addAttribute("member", member);
+		}
 
 		return "analysis/singleAnalysis";
 	}
