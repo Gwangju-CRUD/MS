@@ -6,6 +6,23 @@ var header = $("meta[name='_csrf_header']").attr("content");
 var globalResult; // 전역 변수 선언
 
 
+function getGraphLog() {
+  $.ajax({
+    url: "/deep/getGraphLog",
+    type: "POST",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (data) {
+      console.log(data);
+      // 여기에 데이터를 처리하는 코드를 작성하십시오.
+    },
+    error: function (error) {
+      console.error("Error:", error);
+    },
+  });
+}
+
 // 현재 페이지 번호를 저장하는 변수
 var currentPageGood = 0;
 var currentPageBad = 0;
@@ -33,10 +50,14 @@ function loadLogData(type, page, size) {
         html += `
               <tr>
                 <td>
-                    <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                    <img class="img" src="data:image/png;base64,${
+                      row.base64ProductImg
+                    }" alt="Image" width="100" height="100" />
                 </td>
                 <td>${row.predictionDate}</td>
-                <td>${row.predictionAccuracy}%</td>
+                <td>${(row.predictionAccuracy * 100)
+                  .toString()
+                  .slice(0, 4)}%</td>
                 <td>${row.predictionJdm}</td>
               </tr>
               `;
@@ -298,41 +319,37 @@ window.onload = function () {
         },
       });
     }
-// 초기에 정상 탭을 활성화
-$("#goodmodeltab").click();
-$(document).ready(function () {
-  // Owl Carousel 초기화
-  $(".owl-carousel").owlCarousel({
-    items: 6, loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
-    autoplay: true,
-    autoplayTimeout: 3150,
-    autoplayHoverPause: true,
-    smartSpeed: 1950,
-    margin: 20,
-    dots: false,
-    rtl: true,
-    onTranslated: function () {
-      console.log("Slide has been translated");
-      fetchImage();
-      // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
-      if (images.length > 6) {
-        setTimeout(function () {
-          // setTimeout을 사용하여 이미지 추가와 제거를 비동기적으로 처리합니다.
-          images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
-          $(".owl-carousel")
-          .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
-          .trigger("refresh.owl.carousel");
-          sendImageToFastAPI(images[0]);
-        }, 0);
-      }
-      // $(".owl-carousel .owl-stage").css('box-shadow', '');
-      console.log("Applying shadow to the first image");
-      $(".owl-carousel .owl-item img").css('box-shadow', '');
-      var firstImage = $(".owl-carousel .owl-item")
-      .eq(2)
-      .find('img');
-      firstImage.addClass('shadow-effect');
-    }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
+
+    // 초기에 정상 탭을 활성화
+    $("#goodmodeltab").click();
+
+    // Owl Carousel 초기화
+    $(".owl-carousel").owlCarousel({
+      items: 6,
+      loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
+      autoplay: true,
+      autoplayTimeout: 2150,
+      autoplayHoverPause: false,
+      smartSpeed: 1950,
+      margin: 20,
+      dots: false,
+      rtl: true,
+      onTranslated: function () {
+        console.log("Slide has been translated");
+        fetchImage();
+        // 이미지 배열과 DOM 요소의 크기를 일정하게 유지합니다.
+        if (images.length > 6) {
+          setTimeout(function () {
+            // setTimeout을 사용하여 이미지 추가와 제거를 비동기적으로 처리합니다.
+            images.shift(); // 배열에서 첫 번째 이미지 데이터를 제거합니다.
+            $(".owl-carousel")
+              .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
+              .trigger("refresh.owl.carousel");
+            getGraphLog();
+            sendImageToFastAPI(images[0]);
+          }, 0);
+        }
+      }, // 슬라이드가 완전히 변경된 후에 다음 이미지를 미리 로드합니다.
     });
     $(".owl-carousel").on('initialized.owl.carousel', function (event) {
       setTimeout(function(){

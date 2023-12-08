@@ -28,10 +28,14 @@ function loadLogData(type, page, size) {
         html += `
               <tr>
                 <td>
-                    <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                    <img class="img" src="data:image/png;base64,${
+                      row.base64ProductImg
+                    }" alt="Image" width="100" height="100" />
                 </td>
                 <td>${row.predictionDate}</td>
-                <td>${row.predictionAccuracy}%</td>
+                <td>${(row.predictionAccuracy * 100)
+                  .toString()
+                  .slice(0, 4)}%</td>
                 <td>${row.predictionJdm}</td>
               </tr>
               `;
