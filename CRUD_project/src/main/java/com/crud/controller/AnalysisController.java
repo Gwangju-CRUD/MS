@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import com.crud.entity.Analysis;
 import com.crud.entity.AnalysisResult;
 import com.crud.entity.Image;
 import com.crud.entity.Member;
+import com.crud.repository.MemberRepository;
 import com.crud.service.AnalysisService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class AnalysisController {
+
+private final MemberRepository memberRepository;
 
 	@Autowired
 	private AnalysisService analysisService;
@@ -132,13 +136,28 @@ public class AnalysisController {
 	}
 
 	@GetMapping("/realtimeAnalysis")
-	private String goRealtimeAnalysis() {
-
+	// 모델로 객체 받아와서 네비바에 Member프로필 이미지,이름 불러오기
+	private String goRealtimeAnalysis(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<Member> optionalMember = memberRepository.findBymbId(username);
+		if (optionalMember.isPresent()) {
+			Member member = optionalMember.get();
+			model.addAttribute("member", member);
+		}
 		return "analysis/realtime-analysis";
 	}
 
 	@GetMapping("/create")
-	private String goCreate() {
+	private String goCreate(Model model) {
+		// 모델로 객체 받아와서 네비바에 Member프로필 이미지,이름 불러오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<Member> optionalMember = memberRepository.findBymbId(username);
+		if (optionalMember.isPresent()) {
+			Member member = optionalMember.get();
+			model.addAttribute("member", member);
+		}
 
 		return "analysis/createModel";
 	}
@@ -146,6 +165,8 @@ public class AnalysisController {
 	@GetMapping("/imgAnalysis")
 	private String goImgAnalysis() {
 
+		
+		
 		return "analysis/single-analysis";
 	}
 	
