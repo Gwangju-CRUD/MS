@@ -17,7 +17,6 @@
                             <div class="col-lg-6">
                                 <!-- 알람 each문 시작 -->
                                 <div class="card shadow-sm">
-                                <div th:text="${singleAnalysis.normalSingleAnalysis}"></div>
                                     <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">알림 및 공지사항</div>
                                     <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
                                     <div class="card-body container pt-1" style="height: 415px;">
@@ -112,68 +111,69 @@
                                     <div class="card-body" style="height: 415px">
                                         <div id="pieChartCoustom" style="height: 100%"></div>
                                         <script type="text/javascript">
-                                            var dom = document.getElementById('pieChartCoustom');
-                                            var myChart = echarts.init(dom, null, {
-                                                renderer: 'canvas',
-                                                useDirtyRect: false
-                                            });
-                                            var app = {};
+                                             var dom = document.getElementById('pieChartCoustom');
+                                             var normalAnalysis = [[${singleAnalysis.normalSingleAnalysis}]];
+                                             var errorAnalysis = [[${singleAnalysis.errorSingleAnalysis}]];
+                                             var myChart = echarts.init(dom, null, {
+                                                 renderer: 'canvas',
+                                                 useDirtyRect: false
+                                             });
+                                             var app = {};
 
-                                            var option;
+                                             var option;
 
-                                            option = {
-                                                tooltip: {
-                                                    trigger: 'item'
-                                                },
-                                                legend: {
-                                                    top: '0%',
-                                                    left: 'center'
-                                                },
-                                                color: [
-                                                    '#5470c6', '#EE6666'
-                                                ],
-                                                series: [
-                                                    {
-                                                        name: 'Access From',
-                                                        type: 'pie',
-                                                        radius: [
-                                                            '40%', '70%'
-                                                        ],
+                                             option = {
+                                                 tooltip: {
+                                                     trigger: 'item'
+                                                 },
+                                                 legend: {
+                                                     top: '0%',
+                                                     left: 'center'
+                                                 },
+                                                 color: [
+                                                     '#5470c6', '#EE6666'
+                                                 ],
+                                                 series: [
+                                                     {
+                                                         name: 'Access From',
+                                                         type: 'pie',
+                                                         radius: [
+                                                             '40%', '70%'
+                                                         ],
 
-                                                        avoidLabelOverlap: false,
-                                                        label: {
-                                                            show: false,
-                                                            position: 'center'
-                                                        },
-                                                        emphasis: {
-                                                            label: {
-                                                                show: false,
-                                                                fontSize: 40,
-                                                                fontWeight: 'bold'
-                                                            }
-                                                        },
-                                                        labelLine: {
-                                                            show: false
-                                                        },
-                                                        data: [
-                                                            {
-                                                                value: 1048,
-                                                                name: '정상'
+                                                         avoidLabelOverlap: false,
+                                                         label: {
+                                                             show: false,
+                                                             position: 'center'
+                                                         },
+                                                         emphasis: {
+                                                             label: {
+                                                                 show: false,
+                                                                 fontSize: 40,
+                                                                 fontWeight: 'bold'
+                                                             }
+                                                         },
+                                                         labelLine: {
+                                                             show: false
+                                                         },
+                                                         data: [
+                                                             {
+                                                                 value: normalAnalysis,
+                                                                 name: '정상'
+                                                             }, {
+                                                                 value: errorAnalysis,
+                                                                 name: '불량'
+                                                             }
+                                                         ]
+                                                     }
+                                                 ]
+                                             };
 
-                                                            }, {
-                                                                value: 735,
-                                                                name: '불량'
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            };
+                                             if (option && typeof option === 'object') {
+                                                 myChart.setOption(option);
+                                             }
 
-                                            if (option && typeof option === 'object') {
-                                                myChart.setOption(option);
-                                            }
-
-                                            window.addEventListener('resize', myChart.resize);
+                                             window.addEventListener('resize', myChart.resize);
                                         </script>
                                     </div>
                                 </div>

@@ -145,16 +145,19 @@ public class MemberController {
 			Long memberCount = memberService.memberCount();
 			Long singleAnalysisCount = analysisService.singleAnalysisCount();
 			Long realTimeAnalysisCount = analysisService.realTimeAnalysisCount();
-			Map<String, Object> resultMap = analysisService.AnalysisCount();
-			// 실시간 정상 불량 카운트가 완료된 객체
-			RealTimeAnalysis realTimeAnalysis = (RealTimeAnalysis)resultMap.get("real");
-			// 단건 정상 불량 카운트가 완료된 객체
-			SingleAnalysis singleAnalysis = (SingleAnalysis)resultMap.get("single");
 
 			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
 			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
 			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
+
+
+			// 단건 및 실시간의 정상 및 불량 갯수를 모델에 담아 main에 전달함
+			Map<String, Object> resultMap = analysisService.AnalysisCount();
+			// 실시간 정상 불량 카운트가 완료된 객체
+			RealTimeAnalysis realTimeAnalysis = (RealTimeAnalysis)resultMap.get("real");
+			// 단건 정상 불량 카운트가 완료된 객체
+			SingleAnalysis singleAnalysis = (SingleAnalysis)resultMap.get("single");
 			model.addAttribute("singleAnalysis",singleAnalysis);
 			model.addAttribute("realTimeAnalysis",realTimeAnalysis);
 
