@@ -1,31 +1,168 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 
-function readFilesAndSend(files) {
-  var promises = []; // 각 파일의 전송 상태를 추적하는 Promise 객체를 저장할 배열
+// 현재 페이지 번호를 저장하는 변수
+var currentPageGood = 0;
+var currentPageBad = 0;
+var pageSize = 5;
+// AJAX 요청과 HTML 생성 코드를 별도의 함수로 분리합니다.
+function loadLogData(type, page, size) {
+  // 로딩 인디케이터 표시
+  $("#loadingIndicator").removeClass("d-none");
+
+  $(".page-link").addClass("disabled");
+  console.log(
+    `Sending request to /deep/getAysLog with param: ${"단건"}, type: ${type}, page: ${page}, size: ${size}`
+  );
+  $.ajax({
+    url: "/deep/getAysLog",
+    type: "post",
+    data: { param: "단건", type: type, page: page, size: size },
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (data) {
+      console.log("Received data: ", data);
+      var html = "";
+      data.content.forEach(function (row) {
+        html += `
+              <tr>
+                <td>
+                    <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                </td>
+                <td>${row.predictionDate}</td>
+                <td>${row.predictionAccuracy}%</td>
+                <td>${row.predictionJdm}</td>
+              </tr>
+              `;
+      });
+      if (type === "정상") {
+        $("#goodModelTableBody").html(html);
+        $("#goodPageNumber").text(data.number + 1);
+        if (data.first) {
+          $("#goodPreviousPage").addClass("disabled");
+        } else {
+          $("#goodPreviousPage").removeClass("disabled");
+        }
+        if (data.last) {
+          $("#goodNextPage").addClass("disabled");
+        } else {
+          $("#goodNextPage").removeClass("disabled");
+        }
+      } else if (type === "불량") {
+        $("#badModelTableBody").html(html);
+        $("#badPageNumber").text(data.number + 1);
+        if (data.first) {
+          $("#badPreviousPage").addClass("disabled");
+        } else {
+          $("#badPreviousPage").removeClass("disabled");
+        }
+        if (data.last) {
+          $("#badNextPage").addClass("disabled");
+        } else {
+          $("#badNextPage").removeClass("disabled");
+        }
+      }
+
+      // 페이지 이동 버튼 활성화
+      $(".page-link").removeClass("disabled");
+
+      // 로딩 인디케이터 숨김
+
+      $("#loadingIndicator").addClass("d-none");
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("AJAX Error: ", textStatus);
+
+      // 페이지 이동 버튼 활성화
+      $(".page-link").removeClass("disabled");
+
+      // 로딩 인디케이터 숨김
+
+      $("#loadingIndicator").addClass("d-none");
+    },
+  });
+}
+
+$(document).ready(function () {
+  // 페이지 로드 시에 첫 번째 페이지의 데이터를 불러옵니다.
+  loadLogData("정상", currentPageGood, pageSize);
+  loadLogData("불량", currentPageBad, pageSize);
+
+  // 페이지 이동 버튼을 클릭하면 새로운 페이지의 데이터를 불러옵니다.
+  $("#goodPreviousPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled") && currentPageGood > 0) {
+      console.log("뒤로가는버튼");
+      currentPageGood--;
+      loadLogData("정상", currentPageGood, pageSize);
+    }
+  });
+
+  $("#goodNextPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled")) {
+      console.log("앞으로가는버튼");
+      currentPageGood++;
+      loadLogData("정상", currentPageGood, pageSize);
+    }
+  });
+
+  $("#badPreviousPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled") && currentPageBad > 0) {
+      console.log("뒤로가는버튼2");
+      currentPageBad--;
+      loadLogData("불량", currentPageBad, pageSize);
+    }
+  });
+
+  $("#badNextPage").click(function (event) {
+    event.preventDefault();
+    if (!$(this).hasClass("disabled")) {
+      console.log("앞으로가는버튼2");
+      currentPageBad++;
+      loadLogData("불량", currentPageBad, pageSize);
+    }
+  });
+
+  $("#refreshButton").click(function () {
+    // 현재 페이지의 데이터를 다시 로드
+    loadLogData("정상", currentPageGood, pageSize);
+    loadLogData("불량", currentPageBad, pageSize);
+  });
+});
+
+// 선택 이미지들 분석 후 로그 저장하기
+async function readFilesAndSend(files) {
+  var completedCount = 0;
 
   for (var i = 0; i < files.length; i++) {
-    var promise = new Promise((resolve, reject) => {
-      var reader = new FileReader();
+    var reader = new FileReader();
+    await new Promise((resolve, reject) => {
       reader.onload = function (event) {
         var base64Image = event.target.result.split(",")[1];
         sendDataToServer(base64Image)
           .then(() => {
-            resolve(); // sendDataToServer가 성공하면 Promise를 resolve
+            completedCount++;
+            var percentage = (completedCount / files.length) * 100;
+            $(".progress-bar")
+              .css("width", percentage + "%")
+              .attr("aria-valuenow", percentage);
+            $(".h5.mb-0.mr-3.font-weight-bold.text-gray-800").text(
+              percentage.toFixed(2) + "%"
+            );
+            resolve();
           })
-          .catch(() => {
-            reject(); // sendDataToServer가 실패하면 Promise를 reject
+          .catch((error) => {
+            console.error("Error in readFilesAndSend:", error);
+            reject(error);
           });
       };
       reader.readAsDataURL(files[i]);
     });
-
-    promises.push(promise);
   }
-
-  return Promise.all(promises); // 모든 이미지의 전송이 완료될 때까지 대기하는 Promise 객체를 반환
 }
-
 // 전역 범위에 함수를 정의합니다.
 function sendDataToServer(base64Image) {
   return new Promise((resolve, reject) => {

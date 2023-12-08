@@ -19,4 +19,7 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 	// 실시간, 정상
 	Long countByPredictionClassficationAndPredictionJdm(String predictionClassfication, String predictionJdm);
 	
+	Page<Analysis> findByMember_MbIdAndPredictionClassfication(String mbId, String predictionClassfication, Pageable pageable);
+
+	Page<Analysis> findByMember_MbIdAndPredictionClassficationAndPredictionJdm(String mbId, String predictionClassfication, String predictionJdm, Pageable pageable);
 }
