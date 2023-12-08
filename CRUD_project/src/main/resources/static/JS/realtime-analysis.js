@@ -137,7 +137,6 @@ $(document).ready(function () {
     loadLogData("불량", currentPageBad, pageSize);
   });
 });
-
 // 전역 범위에 함수를 정의합니다.
 function sendImageToFastAPI(imageData) {
   $.ajax({
@@ -147,7 +146,9 @@ function sendImageToFastAPI(imageData) {
     contentType: "application/json",
     success: function (response) {
       globalResult = response.result; // 전역 변수에 결과 저장
-      console.log(response);
+      console.log(response,"zzz");
+      console.log(globalResult);
+
       //DB넣기
       // $.ajax({
       //   url: "/deep/aysUpload",
@@ -164,7 +165,6 @@ function sendImageToFastAPI(imageData) {
       //     console.error("Error in second AJAX request:", error);
       //   },
       // });
-
       // printResultBasedOnCondition(); // 조건에 따라 결과 출력
       // updateResultDisplay(); // 결과 표시 업데이트
       // displayResultInTBox(); // t-box에 결과 표시 함수 호출
@@ -174,72 +174,6 @@ function sendImageToFastAPI(imageData) {
     },
   });
 }
-
-// 다른 스크립트에서 전역 변수 사용
-function printResult() {
-  console.log(globalResult); // 전역 변수 출력
-}
-
-
-
-
-// AJAX 요청 성공 시 호출되는 함수 내에서 handleResultDisplay 호출
-function sendImageToFastAPI(imageData) {
-  $.ajax({
-    url: "http://218.157.38.54:8002/predict/",
-    type: "POST",
-    data: JSON.stringify({ encoded_image_data: imageData }),
-    contentType: "application/json",
-    success: function (response) {
-      globalResult = response.result; // 전역 변수에 결과 저장
-      handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
-      printResultBasedOnCondition(); // 조건에 따라 결과 출력
-      updateResultDisplay(); // 결과 표시 업데이트
-      displayResultInTBox(); // t-box에 결과 표시 함수 호출
-    },
-    error: function (jqXHR, textStatus, errorMessage) {
-      console.log(errorMessage);
-    },
-  });
-}
-
-// 결과를 t-box에 표시하는 함수
-function displayResultInTBox() {
-  var tBox = document.querySelector('.t-box'); // '.t-box' 클래스를 가진 첫 번째 요소를 찾습니다.
-  tBox.textContent = globalResult; // t-box의 텍스트 내용을 globalResult 값으로 설정합니다.
-  // 결과 값에 따라 글씨 색상 변경
-  if (globalResult === '정상') {
-    tBox.style.color = 'green'; // '정상'일 경우 글씨 색상을 초록색으로 설정
-  } else if (globalResult === '불량') {
-    tBox.style.color = 'red'; // '불량'일 경우 글씨 색상을 빨간색으로 설정
-  } else {
-    tBox.style.color = 'black'; // 그 외의 경우 글씨 색상을 기본값(검정색)으로 설정
-  }
-    // 1초 후에 텍스트와 색상을 초기 상태로 되돌림
-    setTimeout(function() {
-      tBox.textContent = ''; // 텍스트 내용 지우기
-      tBox.style.color = 'black'; // 글씨 색상을 기본값으로 되돌리기
-    }, 1180);
-}
-// AJAX 요청 성공 시 호출되는 함수 내에서 displayResultInTBox 호출
-function sendImageToFastAPI(imageData) {
-  $.ajax({
-    url: "http://218.157.38.54:8002/predict/",
-    type: "POST",
-    data: JSON.stringify({ encoded_image_data: imageData }),
-    contentType: "application/json",
-    success: function (response) {
-      globalResult = response.result; // 전역 변수에 결과 저장
-      updateChartData(globalResult); // 그래프 데이터 업데이트
-      displayResultInTBox(); // t-box에 결과 표시 함수 호출
-      handleResultDisplay(); // 결과에 따라 판정 박스 표시 및 숨기기
-    },
-    error: function (jqXHR, textStatus, errorMessage) {
-      console.log(errorMessage);
-    },
-  });
-}
-
 
 
 
@@ -325,7 +259,6 @@ $(document).ready(function () {
           sendImageToFastAPI(images[0]);
         }, 0);
       }
-      // $(".owl-carousel .owl-stage").css('box-shadow', '');
       console.log("Applying shadow to the first image");
       $(".owl-carousel .owl-item img").css('box-shadow', '');
       var firstImage = $(".owl-carousel .owl-item")
@@ -340,33 +273,6 @@ $(document).ready(function () {
     }, 100);
     });
 });
-
-
-// JavaScript를 사용하여 창 크기에 따라 #highlight-box 조절
-window.addEventListener('resize', adjustHighlightBox);
-
-function adjustHighlightBox() {
-  var highlightBox = document.getElementById('highlight-box');
-  var windowWidth = window.innerWidth;
-
-  // 기준이 되는 창 너비 설정 (예: 1000px)
-  var baseWidth = 1950;
-
-  // 현재 창 너비와 기준 너비의 차이에 따라 크기 조절
-  var widthDiff = baseWidth - windowWidth;
-  var newWidth = 290 - (widthDiff+100)/5.9; // 기본 너비에서 차이만큼 감소
-  var newHeight = 400 - (widthDiff+100)/4.4; // 기본 높이에서 차이만큼 감소
-
-  // 새로운 너비와 높이 적용
-  highlightBox.style.width = newWidth + 'px';
-  highlightBox.style.height = newHeight + 'px';
-}
-
-// 초기 로드시에도 한번 실행
-adjustHighlightBox();
-
-
-    
 
 
 
@@ -428,13 +334,56 @@ function updateChartData(globalResult) {
     normalData.push(-1);
     faultData.push(1);
   }
+  // console.log(globalResult)
+  ////
+// 결과를 t-box에 표시하는 함수
+// function displayResultInTBox(globalResult) {
+  var tBox = document.querySelector('.t-box'); // '.t-box' 클래스를 가진 첫 번째 요소를 찾습니다.
+  tBox.textContent = globalResult; // t-box의 텍스트 내용을 globalResult 값으로 설정합니다.
+  // 결과 값에 따라 글씨 색상 변경
+  if (globalResult === '정상') {
+    tBox.style.color = 'green'; // '정상'일 경우 글씨 색상을 초록색으로 설정
+  } else if (globalResult === '불량') {
+    tBox.style.color = 'red'; // '불량'일 경우 글씨 색상을 빨간색으로 설정
+  } else {
+    tBox.style.color = 'black'; // 그 외의 경우 글씨 색상을 기본값(검정색)으로 설정
+  }
+    // 1초 후에 텍스트와 색상을 초기 상태로 되돌림
+    setTimeout(function() {
+      tBox.textContent = ''; // 텍스트 내용 지우기
+      tBox.style.color = 'black'; // 글씨 색상을 기본값으로 되돌리기
+    }, 1180);
+// }
 
-    // X축 라벨이 8개가 넘어가면, 가장 오래된 라벨과 데이터 제거
-    if (xAxisData.length > 8) {
-      xAxisData.shift(); // 가장 오래된 X축 라벨 제거
-      normalData.shift(); // 해당하는 정상 데이터 제거
-      faultData.shift(); // 해당하는 불량 데이터 제거
-    }
+////
+// function handleResultDisplay() {
+  console.log("handleResultDisplay called", globalResult);
+  var shadowEffectBox = $('.shadow-effect');
+  var owlStageBox = $('.owl-carousel .owl-stage-outer');
+
+  // 판정에 따른 스타일 적용
+  if (globalResult === "정상") {
+    shadowEffectBox.css('box-shadow', '0px 0px 60px -3px green'); // .shadow-effect에 초록색 쉐도우 적용
+    owlStageBox.css('box-shadow', '40px 0px 40px -43px green'); // .owl-stage에 수정된 초록색 쉐도우 적용
+    console.log("%c정상", "color: green;");
+  } else if (globalResult === "불량") {
+    shadowEffectBox.css('box-shadow', '0px 0px 60px -3px red');   // .shadow-effect에 빨간색 쉐도우 적용
+    owlStageBox.css('box-shadow', '40px 0px 40px -43px red');   // .owl-stage에 수정된 빨간색 쉐도우 적용
+    console.log("%c불량", "color: red;");
+  }
+
+  // 1초 후에 스타일 초기화
+  setTimeout(function() {
+    shadowEffectBox.css('box-shadow', ''); // .shadow-effect의 쉐도우 제거
+    owlStageBox.css('box-shadow', '');     // .owl-stage의 쉐도우 제거
+  }, 1180);
+// }
+/////
+    // if (xAxisData.length > 8) {
+    //   xAxisData.shift(); // 가장 오래된 X축 라벨 제거
+    //   normalData.shift(); // 해당하는 정상 데이터 제거
+    //   faultData.shift(); // 해당하는 불량 데이터 제거
+    // }
 
   // ECharts 인스턴스에 새 데이터 적용
   myChart.setOption({
@@ -463,14 +412,14 @@ function sendImageToFastAPI(imageData) {
   });
 }
 
-// ECharts 그래프 초기화
-var dom = document.getElementById("container");
-var myChart = echarts.init(dom, null, {
-  renderer: "canvas",
-  useDirtyRect: false,
-});
+// // ECharts 그래프 초기화
+// var dom = document.getElementById("container");
+// var myChart = echarts.init(dom, null, {
+//   renderer: "canvas",
+//   useDirtyRect: false,
+// });
 
-//   // 꺾은선 그래프 코드
+  // 꺾은선 그래프 코드
 
 
 
@@ -510,7 +459,6 @@ var myChart = echarts.init(dom, null, {
     xAxis: {
       type: "category",
       boundaryGap: false,
-
     },
     yAxis: {
       type: "value",
@@ -597,35 +545,15 @@ var myChart = echarts.init(dom, null, {
 var option = {
   xAxis: {
     type: 'category',
-    data: xAxisData
+    // data: xAxisData
   },
   // 기타 옵션 설정...
 };
 
-myChart.setOption(option);
-//
+// myChart.setOption(option);
 
 
 
 
-function handleResultDisplay() {
-  var shadowEffectBox = $('.shadow-effect');
-  var owlStageBox = $('.owl-carousel .owl-stage-outer');
 
-  // 판정에 따른 스타일 적용
-  if (globalResult === "정상") {
-    shadowEffectBox.css('box-shadow', '0px 0px 60px -3px green'); // .shadow-effect에 초록색 쉐도우 적용
-    owlStageBox.css('box-shadow', '40px 0px 40px -43px green'); // .owl-stage에 수정된 초록색 쉐도우 적용
-    console.log("%c정상", "color: green;");
-  } else if (globalResult === "불량") {
-    shadowEffectBox.css('box-shadow', '0px 0px 60px -3px red');   // .shadow-effect에 빨간색 쉐도우 적용
-    owlStageBox.css('box-shadow', '40px 0px 40px -43px red');   // .owl-stage에 수정된 빨간색 쉐도우 적용
-    console.log("%c불량", "color: red;");
-  }
 
-  // 1초 후에 스타일 초기화
-  setTimeout(function() {
-    shadowEffectBox.css('box-shadow', ''); // .shadow-effect의 쉐도우 제거
-    owlStageBox.css('box-shadow', '');     // .owl-stage의 쉐도우 제거
-  }, 1180);
-}
