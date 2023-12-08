@@ -123,8 +123,6 @@ public class AnalysisController {
 
 	}
 	
-
-	
 	
 	@GetMapping("/main")
 	public String goMain() {
