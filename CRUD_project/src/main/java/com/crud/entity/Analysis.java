@@ -28,6 +28,9 @@ public class Analysis {
 	@Column(name = "PREDICTION_DATE")
 	private String predictionDate; // 예측 시간
 
+	@Column(name = "PREDICTION_CLASSFICATION")
+	private String predictionClassfication; // 예측 분류 - 단건 or 실시간
+
 	@ManyToOne
     @JoinColumn(name = "mbId")
 	private Member member; // 회원 엔터티 참조

@@ -1,0 +1,175 @@
+@charset "utf-8";
+
+/* ------------------------
+    파일링크 css
+    ------------------------*/
+
+input[type="file"]::file-selector-button {
+  width: 150px;
+  height: 50px;
+  background: rgb(255, 255, 255);
+  border: 1px solid #dc3545;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #dc3545;
+}
+
+input[type="file"]:hover::file-selector-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* 숫자 css */
+
+.goodcount,
+.badcount {
+  width: 150px;
+  height: 50px;
+  margin-left: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  color: #000;
+}
+
+@media (max-width: 1500px) {
+  .goodcount,
+  .badcount {
+    width: 100%;
+    margin-left: 0;
+    font-size: 2rem;
+  }
+}
+
+/*
+    ------------------------
+    결과 상세 카드 차트 css
+    ------------------------*/
+.card-container-chart {
+  display: flex;
+  justify-content: space-between;
+  margin-right: -10px;
+}
+
+.chartcard {
+  width: 48%;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+}
+
+/* 결과상세 불량사진 호버 */
+.owl-carousel .owl-item img {
+  transition: transform 0.3s;
+}
+
+.owl-carousel .owl-item:hover img {
+  transform: scale(1.2);
+}
+
+/*
+    ------------------------
+    분석로그 컨테이너 설정
+    ------------------------
+    */
+
+/* 상위 컨테이너 */
+.good-model-table {
+  width: 70vw;
+  height: 11vw;
+}
+
+.card-red {
+  width: 67vw;
+  height: 8vw;
+  /* background-color: red; */
+}
+
+/* 이미지 컨테이너 */
+.fixed-card {
+  width: 15vw;
+  height: 8vw;
+}
+
+/* 이미지 자체 */
+.img-container img {
+  width: 15vw;
+  height: 8vw;
+}
+
+/* 텍스트 컨테이너 */
+.text-card {
+  width: 65vw;
+  height: 15vw;
+  padding: 1vmin;
+}
+
+@media (max-width: 868px) {
+  .good-model-table {
+    height: 120px;
+  }
+
+  .card-red {
+    width: auto;
+    height: 84px;
+  }
+
+  .fixed-card {
+    width: 54px;
+    height: 84px;
+  }
+
+  .img-container img {
+    width: 54px;
+    height: 84px;
+  }
+}
+
+.col-12 {
+  flex: none;
+}
+
+@media (min-width: 1px) and (max-width: 1391px) {
+  .card-text {
+    display: none;
+  }
+
+  .card-title {
+    display: none;
+  }
+}
+
+@media (min-width: 1391px) {
+  .card-text-sub {
+    display: none;
+  }
+}
+
+/* 정상과 불량 개수가 많아져도 내부 스크롤 멈추게 하기 */
+#goodmodeltable {
+  overflow: hidden;
+}
+
+#badmodeltable {
+  overflow: hidden;
+}
+
+/* 로딩 인디케이터 */
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}

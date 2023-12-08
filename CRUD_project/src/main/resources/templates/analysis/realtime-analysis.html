@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{navLayout}">
+
+    <body id="page-top">
+
+        <div layout:fragment="content">
+
+            <!-- 이미지 슬라이드 -->
+
+            <!-- 불량사진 슬라이드 -->
+            <div class="container-fluid">
+                <!-- 페이지 말머리 -->
+                <br><br>
+                <h1 class="h3 mb-2 text-gray-800">실시간 분석</h1>
+                <p class="mb-4">실시간 이미지 처리 분석 </p>
+
+
+                <div class="card shadow mb-4">
+
+                    <!-- Use the card class for shadow effect -->
+
+                    <div class="card-body" id="slide">
+                        <!-- 슬라이드쇼로 불량 사진 보여주기 -->
+                        <div class="owl-carousel owl-theme">
+                            <!-- 이미지는 JavaScript에서 동적으로 추가됩니다. -->
+                        </div>
+                        <div id="highlight-box"></div>
+                        <!-- 여기에 추가 -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9" style="font-size: 1.7vw;  text-align: right;">판정 :</div>
+                <div class="col-2 t-box"></div>
+            </div>
+            <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
+            <div class="container-fluid">
+                        <!-- 페이지 말머리 -->
+                        <br><br>
+                        <h1 class="h3 mb-2 text-gray-800">차트</h1>
+                        <p class="mb-4">정상과 불량 분석 그래프화</p>
+                <div class="card shadow mb-4">
+                    <!-- Use the card class for shadow effect -->
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">푸른 선이 1이면 정상, 붉은 선이 1이면 불량</h6>
+                        <!-- Card header for title -->
+                    </div>
+                    <div class="card-body">
+                        <!-- Card body for content -->
+
+                        <!-- 분석 양불판정 그래프 -->
+                        <div class="card-container-chart">
+                            <div class="chartcard">
+
+                                <div class="card-body" style="overflow: hidden;">
+                                    <h5 class="card-title"></h5>
+                                    <!--양불 꺽은선 그래프 -->
+                                    <div id="container" style="height: 400%"></div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- card-container-chart 끝 -->
+            
+
+            <!-- 페이지 말머리 -->
+            <br /><br />
+            <h1 class="h3 mb-2 text-gray-800">분석로그</h1>
+            <div class="mb-4 d-flex justify-content-between align-items-center">
+              <p class="mb-0">정상과 불량 분석 로그 출력</p>
+                <button id="refreshButton" class="btn btn-primary">
+                  <i class="fas fa-sync-alt"></i> 새로고침
+                </button>
+            </div>
+
+            <!-- 회원 카드 -->
+            <div class="card shadow mb-4 container-fixed">
+                <div class="card-header py-3">
+                <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                    <a class="nav-link" id="goodmodeltab">정상</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" id="badmodeltab">불량</a>
+                    </li>
+                </ul>
+                </div>
+
+                <!-- 정상 -->
+                <div id="goodModelTable" class="goodmodeltable">
+                <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
+                <div id="goodModelTableBody" class="card-body"></div>
+                <!-- 하단 pagination -->
+                <nav id="goodPagination" aria-label="Page navigation example">
+                    <ul class="pagination">
+                    <li class="page-item">
+                        <a id="goodPreviousPage" class="page-link good-previous-page" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a id="goodPageNumber" class="page-link good-page-number">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a id="goodNextPage" class="page-link good-next-page" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    </ul>
+                </nav>
+                </div>
+
+                <!-- 불량 -->
+                <div id="badModelTable" class="badmodeltable">
+                <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
+                <div id="badModelTableBody" class="card-body"></div>
+                <!-- 하단 pagination -->
+                <nav id="badPagination" aria-label="Page navigation example">
+                    <ul class="pagination">
+                    <li class="page-item">
+                        <a id="badPreviousPage" class="page-link bad-previous-page" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a id="badPageNumber" class="page-link bad-page-number">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a id="badNextPage" class="page-link bad-next-page" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    </ul>
+                </nav>
+                </div>
+            </div>
+            <!-- 사진을 눌렀을 때 나타날 모달 -->
+            <div
+                class="modal fade"
+                id="imageModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="imageModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="imageModalLabel">이미지 상세보기</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center">
+                            <img id="modalImage" src="" class="img-fluid" alt="모달 이미지">
+                        </div>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- 길어지면 아래에 위로올리기버튼-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            
+            <!-- 로딩 인디케이터 -->
+            <div id="loadingIndicator" class="loading-indicator d-none">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+
+            <script src="/JS/realtime-analysis.js"></script>
+
+            </div>
+
+        </body>
+    </html>

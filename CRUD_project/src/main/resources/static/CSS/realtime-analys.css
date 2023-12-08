@@ -1,0 +1,93 @@
+#highlight-box {
+  /* display: none; */
+  position: absolute;
+  /* 절대 위치 */
+  top: 46.5%;
+  /* 상위 요소 대비 상단에서 50%의 위치에 배치 */
+  left: 89.7%;
+  /* 상위 요소 대비 왼쪽에서 50%의 위치에 배치 */
+  transform: translate(-50%, -50%);
+  /* 정확한 중앙에 위치하도록 조정 */
+  /* 테두리 스타일 */
+  background-color: transparent;
+  /* 배경색 투명 */
+  z-index: 10;
+  /* 다른 요소들 위에 표시되도록 z-index 설정 */
+}
+/* 41 */
+/* 46.5 */
+
+
+/* 215,310.14.50.91 */
+#slide {
+    /* padding: 20px; */
+}
+
+.owl-carousel .owl-item img {
+    width: 100%;
+    /* 너비를 컨테이너의 100%로 설정 */
+    height: 100%;
+    /* 높이를 컨테이너의 100%로 설정 */
+    object-fit: cover;
+    /* 이미지가 컨테이너를 가득 채우도록 조정하면서 종횡비 유지 */
+}
+
+.gline {
+  position: absolute;
+  /* 절대 위치 */
+  top: 45.5%;
+  /* 상위 요소 대비 상단에서 50%의 위치에 배치 */
+  left: 41.7%;
+  /* 상위 요소 대비 왼쪽에서 50%의 위치에 배치 */
+  transform: translate(-50%, -50%);
+  /* 정확한 중앙에 위치하도록 조정 */
+  background-size: cover;
+  /* 이미지가 요소를 전체적으로 커버하도록 설정 */
+  background-position: center;
+  /* 이미지가 요소의 중앙에 위치하도록 설정 */
+  background-repeat: no-repeat;
+  /* 이미지가 반복되지 않도록 설정 */
+  background-color: transparent;
+  width: 450px; /* 혹은 원하는 퍼센트 */
+  height: auto;
+  z-index: 10;
+}
+
+
+.t-box {
+  font-size: 1.7vw; /* 폰트 크기 */
+  color: black; /* 텍스트 색상 */
+  text-align: center;
+  margin-left: 4.4vw;
+}
+
+.owl-carousel .owl-stage {
+  margin-top: 3rem;   /* mt-5 */
+  margin-bottom: 3rem; /* mb-5 */
+  /* margin-right: 3em; 
+  margin-left: 1.2rem; */
+}
+
+.owl-carousel .owl-item img {
+  width: 100%; /* 너비를 컨테이너의 100%로 설정 */
+  height: 100%; /* 높이를 컨테이너의 100%로 설정 */
+  object-fit: cover; /* 이미지가 컨테이너를 가득 채우도록 조정하면서 종횡비 유지 */
+}
+
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+  border-radius: 10px; 
+}
+
+

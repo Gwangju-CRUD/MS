@@ -35,6 +35,7 @@ import jakarta.transaction.Transactional;
 import com.crud.entity.AlarmLog;
 import com.crud.form.MemberForm;
 import com.crud.service.AlarmService;
+import com.crud.service.AnalysisService;
 import com.crud.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,8 @@ public class MemberController {
 	private final MemberRepository memberRepository;
 	private final RequestMemberRepository requestMemberRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final AnalysisService analysisService;
+
 	private final AlarmService alarmService;
 
 	// 관리자만 보이도록 추후 설정할 것
@@ -135,10 +138,18 @@ public class MemberController {
 		if (authentication != null && authentication.isAuthenticated()) {
 			String username = authentication.getName();
 			System.out.println("인증된 사용자: " + username);
-
 			List<AlarmLog> alarmList = alarmService.alarmList();
+			Long memberCount = memberService.memberCount();
+			Long singleAnalysisCount = analysisService.singleAnalysisCount();
+			Long realTimeAnalysisCount = analysisService.realTimeAnalysisCount();
+
+			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
+			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
+			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
+
 			return "main";
+
 		} else {
 			System.out.println("사용자가 인증되지 않았습니다");
 			return "member/login_form";
@@ -257,8 +268,11 @@ public class MemberController {
 		return "analysis/allResult";
 	}
 
-	@GetMapping("singleAnalysis")
-	public String singleAnalysis() {
+
+
+	@GetMapping("/singleAnalysis")
+	public String singleAnalysis(){
+
 		return "analysis/singleAnalysis";
 	}
 
