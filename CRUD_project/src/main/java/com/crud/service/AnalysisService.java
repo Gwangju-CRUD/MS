@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import com.crud.repository.AnalysisRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnalysisService {
@@ -127,8 +129,8 @@ public class AnalysisService {
 		Long dailyNomalCount;
 		Long dailyErrorCount;
 
-		dailyNomalCount = analysisRepository.countByPredictionDateAndPredictionJdmLike(now.format(format), "정상");
-		dailyErrorCount = analysisRepository.countByPredictionDateAndPredictionJdmLike(now.format(format), "불량");
+		dailyNomalCount = analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.format(format), "정상");
+		dailyErrorCount = analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.format(format), "불량");
 
 		allCountAnalysis.setDailyNomalCount(dailyNomalCount);
 		allCountAnalysis.setDailyErrorCount(dailyErrorCount);
@@ -139,8 +141,8 @@ public class AnalysisService {
 
 		for(int i=0; i<7; i++){
 
-			weekCountNormalList.add(analysisRepository.countByPredictionDateAndPredictionJdmLike(now.minusDays(i).format(format), "정상"));
-			weekCountErrorList.add(analysisRepository.countByPredictionDateAndPredictionJdmLike(now.minusDays(i).format(format), "불량"));
+			weekCountNormalList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.minusDays(i).format(format), "정상"));
+			weekCountErrorList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.minusDays(i).format(format), "불량"));
 		}
 		allCountAnalysis.setWeekNomalCount(weekCountNormalList);
 		allCountAnalysis.setWeekErrorCount(weekCountErrorList);
@@ -150,11 +152,13 @@ public class AnalysisService {
 		List<Long> monthCountErrorList = new ArrayList<>();
 
 		for(int i=1; i<13; i++){
-			monthCountNomalList.add(analysisRepository.countByPredictionDateAndPredictionJdmLike(String.format("2023년 %d월", i), "정상"));
-			monthCountErrorList.add(analysisRepository.countByPredictionDateAndPredictionJdmLike(String.format("2023년 %d월", i), "불량"));
+			monthCountNomalList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(String.format("2023년 %d월", i), "정상"));
+			monthCountErrorList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(String.format("2023년 %d월", i), "불량"));
 		}
 		allCountAnalysis.setMonthNomalCount(monthCountNomalList);
 		allCountAnalysis.setMonthErrorCount(monthCountErrorList);
+
+		System.out.println(analysisRepository.countByPredictionDateContaining("2023년 12월"));
 
     return allCountAnalysis;
   }
