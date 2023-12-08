@@ -1,6 +1,23 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 
+function getGraphLog() {
+  $.ajax({
+    url: "/deep/getGraphLog",
+    type: "POST",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (data) {
+      console.log(data);
+      // 여기에 데이터를 처리하는 코드를 작성하십시오.
+    },
+    error: function (error) {
+      console.error("Error:", error);
+    },
+  });
+}
+
 // 현재 페이지 번호를 저장하는 변수
 var currentPageGood = 0;
 var currentPageBad = 0;
@@ -28,10 +45,14 @@ function loadLogData(type, page, size) {
         html += `
               <tr>
                 <td>
-                    <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                    <img class="img" src="data:image/png;base64,${
+                      row.base64ProductImg
+                    }" alt="Image" width="100" height="100" />
                 </td>
                 <td>${row.predictionDate}</td>
-                <td>${row.predictionAccuracy}%</td>
+                <td>${(row.predictionAccuracy * 100)
+                  .toString()
+                  .slice(0, 4)}%</td>
                 <td>${row.predictionJdm}</td>
               </tr>
               `;
@@ -228,7 +249,7 @@ window.onload = function () {
       loop: false, // 이미지가 더 이상 없을 때 슬라이드를 정지하기 위해 loop를 false로 설정합니다.
       autoplay: true,
       autoplayTimeout: 2150,
-      autoplayHoverPause: true,
+      autoplayHoverPause: false,
       smartSpeed: 1950,
       margin: 20,
       dots: false,
@@ -244,6 +265,7 @@ window.onload = function () {
             $(".owl-carousel")
               .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
               .trigger("refresh.owl.carousel");
+            getGraphLog();
             sendImageToFastAPI(images[0]);
           }, 0);
         }
