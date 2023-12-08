@@ -69,6 +69,24 @@
 }
 
 .owl-carousel .owl-item img {
+  width: 100%; /* 너비를 컨테이너의 100%로 설정 */
+  height: 100%; /* 높이를 컨테이너의 100%로 설정 */
+  object-fit: cover; /* 이미지가 컨테이너를 가득 채우도록 조정하면서 종횡비 유지 */
+}
+
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
   border-radius: 10px; 
 }
 
