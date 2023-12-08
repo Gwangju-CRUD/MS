@@ -1,6 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
-
+var myChart = null;
 var globalResult; // 전역 변수 선언
 
 function getGraphLog() {
@@ -11,8 +11,51 @@ function getGraphLog() {
       xhr.setRequestHeader(header, token);
     },
     success: function (data) {
-      console.log(data);
-      // 여기에 데이터를 처리하는 코드를 작성하십시오.
+      let now = moment(); // 현재 시간
+      let past = moment().subtract(30, "minutes"); // 30분 전
+
+      let normalCounts = new Array(7).fill(0); // 정상 개수
+      let abnormalCounts = new Array(7).fill(0); // 불량 개수
+      let timeLabels = []; // x축 레이블 (시간)
+
+      // 데이터를 분류하고 개수를 계산
+      for (let item of data) {
+        let time = moment(item.predictionDate, "YYYY년 MM월 DD일 HH시 mm분");
+
+        if (time.isBetween(past, now)) {
+          let index = Math.floor(now.diff(time, "minutes") / 5);
+          if (item.predictionJdm === "정상") {
+            normalCounts[index]++;
+          } else {
+            abnormalCounts[index]++;
+          }
+        }
+      }
+
+      // x축 레이블 생성
+      for (let i = 0; i < 7; i++) {
+        timeLabels.push(
+          past
+            .clone()
+            .add(5 * i, "minutes")
+            .format("HH:mm")
+        );
+      }
+
+      // 그래프에 데이터를 추가하고 업데이트
+      myChart.setOption({
+        xAxis: {
+          data: timeLabels,
+        },
+        series: [
+          {
+            data: normalCounts.reverse(),
+          },
+          {
+            data: abnormalCounts.reverse(),
+          },
+        ],
+      });
     },
     error: function (error) {
       console.error("Error:", error);
@@ -395,126 +438,126 @@ window.onload = function () {
       ],
     });
   }
-
-  // 꺾은선 그래프 코드
-
-  var dom = document.getElementById("container");
-  var myChart = echarts.init(dom, null, {
-    renderer: "canvas",
-    useDirtyRect: false,
-  });
-  var app = {};
-
-  var option;
-
-  option = {
-    title: {
-      text: "",
-    },
-    tooltip: {
-      trigger: "axis",
-    },
-    legend: {},
-    toolbox: {
-      show: true,
-      feature: {
-        dataZoom: {
-          yAxisIndex: "none",
-        },
-        dataView: {
-          readOnly: false,
-        },
-        magicType: {
-          type: ["line", "bar"],
-        },
-        restore: {},
-        saveAsImage: {},
-      },
-    },
-    xAxis: {
-      type: "category",
-      boundaryGap: false,
-    },
-    yAxis: {
-      type: "value",
-      axisLabel: {
-        formatter: "{value} ",
-      },
-    },
-    series: [
-      {
-        name: "정상",
-        type: "line",
-        color: "#00AAFF",
-        markPoint: {
-          data: [
-            {
-              type: "max",
-              name: "Max",
-            },
-            {
-              type: "min",
-              name: "Min",
-            },
-          ],
-        },
-        markLine: {
-          data: [
-            {
-              type: "average",
-              name: "Avg",
-            },
-          ],
-        },
-      },
-      {
-        name: "불량",
-        type: "line",
-        color: "rgb(251, 118, 123)",
-        markPoint: {
-          data: [
-            {
-              name: "周最低",
-              value: -2,
-              xAxis: 1,
-              yAxis: -1.5,
-            },
-          ],
-        },
-        markLine: {
-          data: [
-            {
-              type: "average",
-              name: "Avg",
-            },
-            [
-              {
-                symbol: "none",
-                x: "90%",
-                yAxis: "max",
-              },
-              {
-                symbol: "circle",
-                label: {
-                  position: "start",
-                  formatter: "Max",
-                },
-                type: "max",
-                name: "最高点",
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  };
-
-  if (option && typeof option === "object") {
-    myChart.setOption(option);
-  }
-
-  window.addEventListener("resize", myChart.resize);
 };
+
+// 꺾은선 그래프 코드
+
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom, null, {
+  renderer: "canvas",
+  useDirtyRect: false,
+});
+var app = {};
+
+var option;
+
+option = {
+  title: {
+    text: "",
+  },
+  tooltip: {
+    trigger: "axis",
+  },
+  legend: {},
+  toolbox: {
+    show: true,
+    feature: {
+      dataZoom: {
+        yAxisIndex: "none",
+      },
+      dataView: {
+        readOnly: false,
+      },
+      magicType: {
+        type: ["line", "bar"],
+      },
+      restore: {},
+      saveAsImage: {},
+    },
+  },
+  xAxis: {
+    type: "category",
+    boundaryGap: false,
+  },
+  yAxis: {
+    type: "value",
+    axisLabel: {
+      formatter: "{value} ",
+    },
+  },
+  series: [
+    {
+      name: "정상",
+      type: "line",
+      color: "#00AAFF",
+      markPoint: {
+        data: [
+          {
+            type: "max",
+            name: "Max",
+          },
+          {
+            type: "min",
+            name: "Min",
+          },
+        ],
+      },
+      markLine: {
+        data: [
+          {
+            type: "average",
+            name: "Avg",
+          },
+        ],
+      },
+    },
+    {
+      name: "불량",
+      type: "line",
+      color: "rgb(251, 118, 123)",
+      markPoint: {
+        data: [
+          {
+            name: "周最低",
+            value: -2,
+            xAxis: 1,
+            yAxis: -1.5,
+          },
+        ],
+      },
+      markLine: {
+        data: [
+          {
+            type: "average",
+            name: "Avg",
+          },
+          [
+            {
+              symbol: "none",
+              x: "90%",
+              yAxis: "max",
+            },
+            {
+              symbol: "circle",
+              label: {
+                position: "start",
+                formatter: "Max",
+              },
+              type: "max",
+              name: "最高点",
+            },
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+if (option && typeof option === "object") {
+  myChart.setOption(option);
+}
+
+window.addEventListener("resize", myChart.resize);
 
 // 초기 옵션 설정
 var option = {
