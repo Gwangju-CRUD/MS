@@ -28,10 +28,14 @@ function loadLogData(type, page, size) {
         html += `
               <tr>
                 <td>
-                    <img class="img" src="data:image/png;base64,${row.base64ProductImg}" alt="Image" width="100" height="100" />
+                    <img class="img" src="data:image/png;base64,${
+                      row.base64ProductImg
+                    }" alt="Image" width="100" height="100" />
                 </td>
                 <td>${row.predictionDate}</td>
-                <td>${row.predictionAccuracy}%</td>
+                <td>${(row.predictionAccuracy * 100)
+                  .toString()
+                  .slice(0, 4)}%</td>
                 <td>${row.predictionJdm}</td>
               </tr>
               `;
@@ -134,31 +138,35 @@ $(document).ready(function () {
 });
 
 // 선택 이미지들 분석 후 로그 저장하기
-function readFilesAndSend(files) {
-  var promises = []; // 각 파일의 전송 상태를 추적하는 Promise 객체를 저장할 배열
+async function readFilesAndSend(files) {
+  var completedCount = 0;
 
   for (var i = 0; i < files.length; i++) {
-    var promise = new Promise((resolve, reject) => {
-      var reader = new FileReader();
+    var reader = new FileReader();
+    await new Promise((resolve, reject) => {
       reader.onload = function (event) {
         var base64Image = event.target.result.split(",")[1];
         sendDataToServer(base64Image)
           .then(() => {
-            resolve(); // sendDataToServer가 성공하면 Promise를 resolve
+            completedCount++;
+            var percentage = (completedCount / files.length) * 100;
+            $(".progress-bar")
+              .css("width", percentage + "%")
+              .attr("aria-valuenow", percentage);
+            $(".h5.mb-0.mr-3.font-weight-bold.text-gray-800").text(
+              percentage.toFixed(2) + "%"
+            );
+            resolve();
           })
-          .catch(() => {
-            reject(); // sendDataToServer가 실패하면 Promise를 reject
+          .catch((error) => {
+            console.error("Error in readFilesAndSend:", error);
+            reject(error);
           });
       };
       reader.readAsDataURL(files[i]);
     });
-
-    promises.push(promise);
   }
-
-  return Promise.all(promises); // 모든 이미지의 전송이 완료될 때까지 대기하는 Promise 객체를 반환
 }
-
 // 전역 범위에 함수를 정의합니다.
 function sendDataToServer(base64Image) {
   return new Promise((resolve, reject) => {

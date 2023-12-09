@@ -1,163 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{navLayout}">
-<head>
-    <style>
-        /* 
-        ---------------------
-        프로필 정보 css
-        ---------------------
-         */
-        #profilediv {
-            display: flex;
-            margin: 60px;
-            /* background-color: orange; */
-            justify-content: center;
-        }
 
-        .profile-img {
-            /* background-color: gray; */
-            width: 48%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 300px;
-        }
-
-        .profile-img img {
-            max-width: 100%;
-            height: auto;
-            max-height: 250px;
-        }
-
-        .profile-text {
-            /* background-color: blue; */
-            width: 48%;
-            padding-left: 80px;
-            padding-top: 30px;
-        }
-
-        .btn-small {
-            font-size: 12px;
-            padding: 5px 10px;
-        }
-
-
-        /* 
-        ---------------------
-        프로필 변경 모달 css
-        ---------------------
-         */
-        #root {
-            width: 100%;
-            margin: 0 auto;
-            max-width: 800px; 
-                  
-        }
-        #upload-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-       
-        .contents {
-            display: flex;
-            flex-direction: row;
-            margin-top: 30px;
-            
-        }
-
-        .contents .upload-box {
-            width: 100%;
-            margin-right: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .contents .upload-box .drag-file {
-            position: relative;
-            width: 100%;
-            height: 360px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 3px dashed #dbdbdb;
-        }
-
-        .contents .upload-box .drag-file.highlight {
-            border: 3px dashed red;
-        }
-
-        .contents .upload-box .drag-file .image {
-            width: 40px;
-        }
-
-        .contents .upload-box .drag-file .message {
-            margin-bottom: 0;
-        }
-
-        .contents .upload-box .drag-file .preview {
-            display: none;
-            position: absolute;
-            left: 0;
-            height: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .contents .upload-box .file-label {
-            margin-top: 30px;
-            background-color: #5b975b;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            width: 65%;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .contents .upload-box .file {
-            display: none;
-        }
-
-        @media (max-width: 700px) {
-            .contents {
-                display: flex;
-                flex-direction: column;
-                margin-top: 30px;
-            }
-
-            .contents .upload-box {
-                width: 100%;
-                box-sizing: border-box;
-                margin-right: 0;
-            }
-
-            .contents .upload-box .drag-file {
-                height: 150px;
-            }
-
-            .contents .files {
-                width: 100%;
-                box-sizing: border-box;
-                margin-right: 0;
-                overflow: initial;
-            }
-        }
-    </style>
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="CSS/myPage.css">
+    
 </head>
+
 <body id="page-top">
     <div layout:fragment="content">
-    <!--
-    ------------------------
-    주 페이지 콘텐츠 시작
-    -----------------------
-    -->
-        <div class="container-fluid">
+        <!-- ------------------- 주 페이지 콘텐츠 시작 ----------------------- -->
+        <div class="container-fluid" style="height: 86vh;">
             <div class="card">
                 <h5 class="card-header">나의 프로필</h5>
                 <div class="card-body">
@@ -166,180 +20,20 @@
                         <section class="card">
                             <div class="card-body" id="profilediv">
                                 <!-- 프로필 이미지 -->
-                                <div class="profile-img">
+                                <div class="profile-img" data-toggle="tooltip" data-placement="top" title="프로필 사진 변경">
                                     <!-- 이미지 누르면 프로필 변경 할 수 있게 해야함.. -->
-                                    <img id="profileImg" src="img/undraw_profile.svg" alt="프로필사진" data-toggle="modal"
-                                        data-target="#profileModal">
+                                    <img id="profileImg" th:src="${member.profileImg}" alt="프로필사진" data-toggle="modal" data-target="#profileModalPath"> 
                                 </div>
 
-                                <!-- 프로필사진 변경 모달  -->
-                                <div class="modal fade" id="profileModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="profileModalLabel">File Upload</h5>
-                                                <button class="close" type="button" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-
-
-                                                <div id="root">
-
-
-                                                    <div class="contents">
-                                                        <div class="upload-box">
-                                                            <div id="drop-file" class="drag-file">
-                                                                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png"
-                                                                    alt="파일 아이콘" class="image">
-                                                                <p class="message">Drag files to upload</p>
-                                                                <img src="" alt="미리보기 이미지" class="preview">
-                                                            </div>
-                                                            <label class="file-label" for="chooseFile">Choose
-                                                                File</label>
-                                                            <input class="file" id="chooseFile" type="file"
-                                                                onchange="dropFile.handleFiles(this.files)"
-                                                                accept="image/png, image/jpeg, image/gif, image/PNG">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button class="btn btn-secondary" type="button"
-                                                    data-dismiss="modal">취소</button>
-                                                <a class="btn btn-primary" href="myPage.html">변경</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function () {
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                            function DropFile(dropAreaId, fileListId) {
-                                                let dropArea = document.getElementById(dropAreaId);
-                                                let fileList = document.getElementById(fileListId);
-                            
-                                                // 함수 설명
-                            
-                                                // < preventDefaults >
-                                                // 이벤트의 추가 전파를 막는다.
-                                                // 자신을 둘러싸고 있는 태그에 이벤트가 적용되면
-                                                // 자기까지는 오게하지 말아줘! 라는의미
-                            
-                                                // < stopPropagation >
-                                                // 브라우저가 해당 이벤트에 대해
-                                                // 수행하는 기본적인 작업을 막음
-                                                // 예) 파일을 내려놓을 경우 파일의 내용을
-                                                // 새 탬에서 보여주는 크롬 브라우저의 동작을 막음
-                                                function preventDefaults(e) {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                }
-                            
-                                                // < highlight >
-                                                // 파일을 드래그 해서 상자 안으로 가져갔을 때
-                                                // 표시를 해주기 위한 이벤트
-                                                // 파일이 상자 안으로 들어가면 highlight 함수를
-                                                // 파일이 상자 밖으로 벗어나면 unhighlight 함수를 사용
-                                                function highlight(e) {
-                                                    preventDefaults(e);
-                                                    dropArea.classList.add("highlight");
-                                                }
-                            
-                                                function unhighlight(e) {
-                                                    preventDefaults(e);
-                                                    dropArea.classList.remove("highlight");
-                                                }
-                            
-                                                // < handleDrop >
-                                                // 파일 업로드
-                                                // 상자안에 파일을 드래그해서
-                                                // 내려놓았을 때 drop 이벤트가 발생
-                                                // 그 이벤트 객체에서 files 라는 파일 배열을 가져올 수 있음
-                                                // 이 배열은 선택한 여러개의 파일 데이터를 가지고있음
-                                                function handleDrop(e) {
-                                                    unhighlight(e);
-                                                    let dt = e.dataTransfer;
-                                                    let files = dt.files;
-                            
-                                                    handleFiles(files);
-                            
-                                                    const fileList = document.getElementById(fileListId);
-                                                    if (fileList) {
-                                                        fileList.scrollTo({ top: fileList.scrollHeight });
-                                                    }
-                                                }
-                            
-                                                function handleFiles(files) {
-                                                    console.log("handleFiles 함수가 실행되었습니다.", files);
-                                                    files = [...files];
-                                                    files.forEach(previewFile);
-                                                }
-                            
-                                                function previewFile(file) {
-                                                    console.log(file);
-                                                    renderFile(file);
-                                                }
-                            
-                                                // < renderFile >
-                                                // 이미지 미리보기
-                                                // 파일이 선택이 되면 파일의 데이터를 가지고
-                                                // 이미지를 만들어 주는 함수(renderFile)를 사용
-                                                // 업로드 칸을 이미지로 변경
-                                                function renderFile(file) {
-                                                    let reader = new FileReader();
-                                                    reader.readAsDataURL(file);
-                                                    reader.onloadend = function () {
-                                                        let img = dropArea.getElementsByClassName("preview")[0];
-                                                        img.src = reader.result;
-                                                        img.style.display = "block";
-                                                    };
-                                                }
-                            
-                                                function resetFileUpload() {
-                                                    let img = dropArea.getElementsByClassName("preview")[0];
-                                                    img.src = ""; // 초기화
-                                                    img.alt = "";
-                                                }
-                            
-                                                dropArea.addEventListener("dragenter", highlight, false);
-                                                dropArea.addEventListener("dragover", highlight, false);
-                                                dropArea.addEventListener("dragleave", unhighlight, false);
-                                                dropArea.addEventListener("drop", handleDrop, false);
-                            
-                                                // 모달이 닫힐 때 초기화
-                                                $('#profileModal').on('hidden.bs.modal', function () {
-                                                    resetFileUpload();
-                                                });
-                            
-                                                return {
-                                                    handleFiles
-                                                };
-                                            }
-                            
-                            
-                                            const dropFile = new DropFile("drop-file", "files");
-                            
-                            
-                                        });
-                                    });
-                                </script>
-
-                                <!-- 프로필 정보 입력 -->
-                                <div class="profile-text">
-                                    <h1>서희주</h1>
+                               <!-- 프로필 정보 입력 -->
+								<div class="profile-text">
+									<h2 th:text="${member.mbName}"></h2>
                                     <hr>
-                                    <h3>00회사</h3>
+									<h4 th:text="${member.mbCompany}"></h4>
                                     <hr>
-                                    <h5>ID | HEEJU</h5>
-                                    <h5>가입일 | 2023년12월01일</h5>
+									<h5 style="display: inline;">ID | </h5><h5 style="display: inline;" th:text="${member.mbId}"></h5>
+									<br>
+                                    <h5 style="display: inline;">가입일 | </h5><h5 style="display: inline;" th:text="${#temporals.format(member.joineDate, 'yyyy년 MM월 dd일')}"></h5>
                                 </div>
                             </div>
                         </section>
@@ -374,7 +68,10 @@
                                 <th scope="col">제품분석정확도</th>
                             </tr>
                         </thead>
+
                         <tbody id="allresultBody">
+                            <!-- 여기서부터 회원별 분석 기록 넣어주기
+                            분석결과에서 회원id가 동일한 컬럼만 가져오면 됨-->
                             <tr onclick="window.location.href='Result-Detail.html';">
                                 <th scope="col">1</th>
                                 <th scope="col">2023년11월29일11시30분</th>
@@ -429,25 +126,56 @@
                 </nav>
             </div>
         </div>
-        <!--
-    ------------------------
-    주 페이지 콘텐츠 끝
-    -----------------------
-    -->
+        <!-- ------------------- 주 페이지 콘텐츠 끝 ----------------------- -->
+
+
+        <!-- --------------------프로필사진 변경 모달 --------------------- -->
+        <div class="modal fade" id="profileModalPath" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="profileModalLabel">프로필 사진 변경</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-userbody">
+
+
+                        <div id="root">
+                            <div class="contents">
+                              <div class="upload-box">
+                                <div id="drop-file" class="drag-file">
+                                  <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image" >
+                                  <p class="message">파일을 드래그하여 업로드하세요</p>
+                                  <img src="" alt="미리보기 이미지" class="preview">
+                                </div>
+                                <form th:action="@{/myPage}" method="post" enctype="multipart/form-data">
+                                    <label class="file-label" for="chooseFile" style="width: 170px;">파일선택</label>
+                                    <input class="file" id="chooseFile" type="file" name="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/PNG , image/JPG">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    
+                              </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                            <button type="submit" class="btn btn-primary">변경</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script src="JS/myPage.js"></script>
+        </div>
+        <!-- --------------------프로필사진 변경 모달 끝 --------------------- -->
+
+       
     </div>
-
-
-
-    <!-- 
------------------------
-프로필 변경 모달
-파일 드래그 앤 드롭
-업로드, 미리보기
------------------------
--->
-
-    
-
 
 </body>
 

@@ -85,8 +85,9 @@
         <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-
-        
+        <!-- 부트스트랩 아이콘 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-bfsS/JFnFO9RkoTUnZoBzenVsdh8LW2eUnF6VqDjzF/6EBvqhPC5QFPIFky7k1Ib" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/navLayout.css">
         <base href="/"/>
     </head>
 
@@ -164,10 +165,10 @@
                         <span>전체회원관리</span></a>
                 </li>
 
-                <!-- 바 숨기기 / 열기 -->
-                <div class="text-center mt-5">
+                <!-- 바 접기 / 열기 -->
+                <!-- <div class="text-center mt-5">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
+                </div> -->
 
             </ul>
 
@@ -193,44 +194,30 @@
                         </form>
 
                         <!-- 상단 Navbar -->
-                        <ul class="navbar-nav ml-auto">
 
-                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                            <li class="nav-item dropdown no-arrow d-sm-none">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="searchDropdown"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="fas fa-search fa-fw"></i>
-                                </a>
-                                <!-- Dropdown - Messages -->
-                                <div
-                                    class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                    aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search">
-                                        <div class="input-group">
-                                            <input
-                                                type="text"
-                                                class="form-control bg-light border-0 small"
-                                                placeholder="Search for..."
-                                                aria-label="Search"
-                                                aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search fa-sm"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
+                            <!-- 상단 왼쪽 탭 -->
+                            <!-- nav 아이템 - 검색기능 -->
+                            <section>
+                                <form action="https://www.google.com/search" target="_blank" onsubmit="searchinput()">
+                                    <div class="search">
+                                        <input type="text" name="query" id="searchinputText" value="" placeholder="Google Search">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </form>
+                            </section>
+                                <!-- 검색이 완료되면 text 초기화 : js인데 짧아서 여기에 둠 -->
+                                <script>
+                                    function searchinput() {
+                                        document.getElementById('searchinputText').value = '';
+                                    }
+                                </script>
 
-                            <!-- Nav 아이텐 - 알림 -->
+                            <!-- 상단 오른쪽 탭 -->
+                            <ul class="navbar-nav ml-auto">
+                            
+                            <!-- Nav 아이텐템 - 알림 -->
                             <li class="nav-item dropdown no-arrow mx-1">
+
                                 <a
                                     class="nav-link dropdown-toggle"
                                     href="#"
@@ -302,15 +289,15 @@
                                     data-toggle="dropdown"
                                     aria-haspopup="true"
                                     aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><p th:text="${member.mbName}" ></p></span>
+                                    <img class="img-profile rounded-circle" th:src="${member.profileImg}">
                                 </a>
 
                                 <!-- 프로필 누르면 정보 출력 -->
                                 <div
                                     class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="/myPage">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         내 프로필
                                     </a>
@@ -332,14 +319,14 @@
                     </nav>
                     <!-- 상단바 끝!!! -->
                     <script src="js/sb-admin-2.min.js"></script>
-
+                    
                     <!--주 페이지 콘텐츠-->
                     <div layout:fragment="content">
                         공통 레이아웃
                     </div>
-
+                    
                 </div>
-
+                
                 <!-- !!!!!!!! 푸터 시작 !!!!!!!! -->
                 <footer class="footer" style="background-color: #F8F9FC;">
                     <hr class="mt-0">
@@ -350,7 +337,7 @@
                         </div>
                     </footer>
                     <!-- !!!!!! 푸터 끝 !!!!!! -->
-                </div>
+            </div>
 
                 <!-- 로그아웃 모달-->
                 <div
