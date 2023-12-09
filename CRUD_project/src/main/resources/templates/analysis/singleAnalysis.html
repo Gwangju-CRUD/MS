@@ -107,9 +107,7 @@
                             >
                               정상
                             </div>
-                            <!-- 지금 사용자 수가 넣어져있음 . 불량수로 수정해야함 -->
-                            <!-- th:text="${memberCount}"를 넣어야함 -->
-                            <div class="goodcount" data-max-th="${memberCount}">0</div>
+                            <div class="goodcount">0</div>
                           </div>
                         </div>
                       </div>
@@ -127,20 +125,12 @@
                             >
                               불량
                             </div>
-                            <!-- 지금 단건분석 건수가 넣어져있음 . 불량수로 수정해야함 -->
-                            <!-- th:text="${singleAnalysisCount}"를 넣어야함 -->
-                            <div class="badcount" data-max-th="${singleAnalysisCount}">0</div>
+                            <div class="badcount">0</div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <script th:inline="javascript">
-                    /*<![CDATA[*/ 
-                    var memberCount = /*[[${memberCount}]]*/ 0;
-                    var singleAnalysisCount = /*[[${singleAnalysisCount}]]*/ 0;
-                    /*]]>*/
-                </script>
                 </div>
               </div>
             </div>

@@ -156,6 +156,11 @@ async function readFilesAndSend(files) {
             $(".h5.mb-0.mr-3.font-weight-bold.text-gray-800").text(
               percentage.toFixed(2) + "%"
             );
+            if (percentage === 100) {
+              setTimeout(() => {
+                location.reload();
+              }, 3000);
+            }
             resolve();
           })
           .catch((error) => {
@@ -370,9 +375,8 @@ window.onload = () => {
   // 대기 시간 조정
   const delayTime = 2000; // 2초후 시작
 
-  // Thymeleaf 변수 사용
   setTimeout(() => {
-    counter($goodCounter, memberCount);  
-    counter($badCounter, singleAnalysisCount);
+    counter($goodCounter, normalCount);  
+    counter($badCounter, errorCount);
 }, delayTime);
 };
