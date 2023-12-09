@@ -1,30 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta th:name="_csrf" th:content="${_csrf.token}"/>
-	<meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>모델 생성</title>
-    <style>
-      #video {
-        width: 300px;
-      }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <h1>모델 생성</h1>
-    <video id="video" autoplay></video>
-    <canvas id="canvas" style="display: none"></canvas>
-    <button id="capture_normal">정상 제품 이미지 생성</button>
-    <button id="capture_error">불량 제품 이미지 생성</button>
-    <button id="delete_images">전송한 이미지 삭제</button>
-    <p>정상 이미지 : <span id="normal_count"></span>/ 300</p>
-    <p>불량 이미지 : <span id="error_count"></span>/ 300</p>
-    <input id="model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input> <!-- 모델 이름 입력 -->
-    <button id="create_model">모델 생성 후 DB저장</button>
-    <button id="upload_images">이미지 업로드</button>
-    <p><button id="upload_images">폴더 이미지로 모델 생성</button></p>
-    <script src="/JS/createModel.js"></script>
-  </body>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{navLayout}">
+    <head>
+        <link href="/CSS/createModel.css" rel="stylesheet"></link>
+    </head>
+    <body id="page-top">
+        <div layout:fragment="content" style="height: 86vh;">
+
+            <h1>모델 생성</h1><br>
+            <div>
+                <video id="video" autoplay="autoplay"></video>
+                <p id="normal_count_place">정상 이미지 :
+                    <span id="normal_count"></span>/ 1000</p>
+                <p id="error_count_place">불량 이미지 :
+                    <span id="error_count"></span>/ 1000</p>
+            </div>
+            <canvas id="canvas" style="display: none"></canvas>
+            <p>
+                <button id="capture_normal">웹캠으로 정상 제품 이미지 생성</button>
+            </p>
+            <p>
+                <button id="capture_error">웹캠으로 불량 제품 이미지 생성</button>
+            </p>
+            <button id="delete_images">전송한 이미지 삭제</button>
+        </p>
+        <p>
+            <input id="model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
+            <!-- 모델 이름 입력 -->
+            <button id="create_model">모델 생성 후 DB저장</button>
+        </p>
+        <br><br>
+        <h3>폴더 이미지로 모델 생성</h3>
+        <p>
+            <input
+                id="folder_path_normal"
+                type="file"
+                multiple="multiple"
+                placeholder="정상 이미지 선택">정상 이미지 선택</input>
+            <input
+                id="folder_path_error"
+                type="file"
+                multiple="multiple"
+                placeholder="불량 이미지 선택">불량 이미지 선택</input>
+        </p>
+        <p>
+            <input id="imgae_model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
+            <button id="folder_image_create">폴더 이미지로 모델 생성</button>
+        </p>
+        <br><br>
+        <p>
+          <button id="upload_images">DB에 데이터셋 업로드</button>
+        </p>
+        <script src="/JS/createModel.js"></script>
+
+    </div>
+</body>
 </html>

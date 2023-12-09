@@ -6,184 +6,146 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{navLayout}">
 
-    
-
     <body id="page-top">
 
         <div layout:fragment="content">
 
-           
+            <!-- 이미지 슬라이드 -->
 
-                <!-- 이미지 슬라이드 -->
+            <!-- 불량사진 슬라이드 -->
+            <div class="container-fluid">
+                <!-- 페이지 말머리 -->
+                <br><br>
+                <h1 class="h3 mb-2 text-gray-800">실시간 분석</h1>
+                <p class="mb-4">실시간 이미지 처리 분석 </p>
 
-                <!-- 불량사진 슬라이드 -->
-                <div class="container-fluid">
-                    <div class="card shadow mb-4">
-                        <!-- Use the card class for shadow effect -->
-                        <div class="card-header py-3">
-                            <h5 class="card-title">실시간 이미지 분석</h5>
+
+                <div class="card shadow mb-4">
+
+                    <!-- Use the card class for shadow effect -->
+
+                    <div class="card-body" id="slide">
+                        <!-- 슬라이드쇼로 불량 사진 보여주기 -->
+                        <div class="owl-carousel owl-theme">
+                            <!-- 이미지는 JavaScript에서 동적으로 추가됩니다. -->
                         </div>
-                        <div class="card-body">
-                            <!-- 슬라이드쇼로 불량 사진 보여주기 -->
-                            <div class="owl-carousel owl-theme">
-                                <!-- 이미지는 JavaScript에서 동적으로 추가됩니다. -->
-                            </div>
-                        </div>
+                        <!-- 여기에 추가 -->
                     </div>
                 </div>
-
-                <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
-                <div class="container-fluid">
-
-                    <div class="card shadow mb-4">
-                        <!-- Use the card class for shadow effect -->
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">양불 판정 그래프</h6>
-                            <!-- Card header for title -->
+            </div>
+            <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
+            <div class="container-fluid">
+                        <!-- 페이지 말머리 -->
+                        <br>
+                        <h1 class="h3 mb-2 text-gray-800">차트</h1>
+                        <div class="mb-4 d-flex justify-content-between align-items-center">
+                          <span>정상과 불량 분석 그래프화</span>
+                          <div style="display: flex; align-items: center;">
+                            <span>판정 :</span>
+                            <div class="col-2 t-box"></div>
+                          </div>
                         </div>
-                        <div class="card-body">
-                            <!-- Card body for content -->
+                <div class="card shadow mb-4">
+                    <!-- Use the card class for shadow effect -->
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">직전 30분간 양/불 추이</h6>
+                        <!-- Card header for title -->
+                    </div>
+                    <div class="card-body">
+                        <!-- Card body for content -->
 
-                            <!-- 분석 양불판정 그래프 -->
-                            <div class="card-container-chart">
-                                <div class="chartcard">
+                        <!-- 분석 양불판정 그래프 -->
+                        <div class="card-container-chart">
+                            <div class="chartcard">
 
-                                    <div class="card-body" style="overflow: hidden;">
-                                        <h5 class="card-title"></h5>
-                                        <!--양불 꺽은선 그래프 -->
-                                        <div id="container" style="height: 400%"></div>
+                                <div class="card-body" style="overflow: hidden;">
+                                    <h5 class="card-title"></h5>
+                                    <!--양불 꺽은선 그래프 -->
+                                    <div id="container" style="height: 400%"></div>
 
-                                    </div>
                                 </div>
-
                             </div>
 
                         </div>
-                </div>
 
+                    </div>
+                </div>
 
                 <!-- card-container-chart 끝 -->
+            
 
-                <!-- 회원 카드 -->
-                <div class="card shadow mb-4 container-fixed">
-                    <div class="card-header py-3">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">실시간 분석 로그</h6>
-                            <!-- Card header for title -->
-                        </div>
-                        <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
-                        <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="goodmodeltab">정상</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="badmodeltab">불량</a>
-                            </li>
-                        </ul>
-                    </div>
+            <!-- 페이지 말머리 -->
+            <br /><br />
+            <h1 class="h3 mb-2 text-gray-800">분석로그</h1>
+            <div class="mb-4 d-flex justify-content-between align-items-center">
+              <p class="mb-0">정상과 불량 분석 로그 출력</p>
+                <button id="refreshButton" class="btn btn-primary">
+                  <i class="fas fa-sync-alt"></i> 새로고침
+                </button>
+            </div>
 
-                    <!-- 정상 -->
-                    <div class="goodmodeltable">
-                        <!-- 1 -->
-                        <div class="card-body good-model-table">
-                            no1.
-                            <div class="card mb-3 card-red">
-                                <div class="row no-gutters">
-                                    <!-- 사진 div -->
-                                    <div class="col-sm-1 col-md-1 col-12 fixed-card">
-                                        <div class="img-container">
-                                            <img
-                                                src="/img/p1.png"
-                                                class="img-thumbnail"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">
-                                        </div>
-                                    </div>
-                                    <!-- 글 div -->
-                                    <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">98% / 11월 30일 12시 34분</p>
-                                    <div class="col-md-6 col-12 text-card">
-                                        <div class="card-body text-lefts">
-                                            <h5 class="card-title" style="font-size: 1vw;">판정</h5>
-                                            <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
-                                            </p>
-                                            <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 불량 -->
-                    <div class="badmodeltable">
-
-                        <!-- 1 -->
-                        <div class="card-body good-model-table">
-                            no1.
-                            <div class="card mb-3 card-red">
-                                <div class="row no-gutters">
-                                    <!-- 사진 div -->
-                                    <div class="col-sm-1 col-md-1 col-12 fixed-card">
-                                        <div class="img-container">
-                                            <img
-                                                src="/img/p1.png"
-                                                class="img-thumbnail"
-                                                data-toggle="modal"
-                                                data-target="#imageModal">
-                                        </div>
-                                    </div>
-                                    <!-- 글 div -->
-                                    <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">98% / 11월 30일 12시 34분</p>
-                                    <div class="col-md-6 col-12 text-card">
-                                        <div class="card-body text-lefts">
-                                            <h5 class="card-title" style="font-size: 1vw;">판정</h5>
-                                            <p class="card-text" style="font-size: 0.8vw;">정확도: 98%
-                                            </p>
-                                            <p class="card-text" style="font-size: 0.8vw;">날짜: 2023년 11월 30일 12시 34분</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- 회원 카드 -->
+            <div class="card shadow mb-4 container-fixed">
+                <div class="card-header py-3">
+                <!-- <h6 class="m-0 font-weight-bold text-primary">회원관리</h6> -->
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                    <a class="nav-link" id="goodmodeltab">정상</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" id="badmodeltab">불량</a>
+                    </li>
+                </ul>
                 </div>
 
-                <!-- 하단 페이징 -->
-                <nav id="Pagination" aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">4</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">5</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                <!-- 정상 -->
+                <div id="goodModelTable" class="goodmodeltable">
+                <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
+                <div id="goodModelTableBody" class="card-body"></div>
+                <!-- 하단 pagination -->
+                <nav id="goodPagination" aria-label="Page navigation example">
+                    <ul class="pagination">
+                    <li class="page-item">
+                        <a id="goodPreviousPage" class="page-link good-previous-page" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a id="goodPageNumber" class="page-link good-page-number">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a id="goodNextPage" class="page-link good-next-page" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
                     </ul>
                 </nav>
+                </div>
 
-
+                <!-- 불량 -->
+                <div id="badModelTable" class="badmodeltable">
+                <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
+                <div id="badModelTableBody" class="card-body"></div>
+                <!-- 하단 pagination -->
+                <nav id="badPagination" aria-label="Page navigation example">
+                    <ul class="pagination">
+                    <li class="page-item">
+                        <a id="badPreviousPage" class="page-link bad-previous-page" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a id="badPageNumber" class="page-link bad-page-number">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a id="badNextPage" class="page-link bad-next-page" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    </ul>
+                </nav>
+                </div>
+            </div>
             <!-- 사진을 눌렀을 때 나타날 모달 -->
             <div
                 class="modal fade"
@@ -212,9 +174,17 @@
                 <i class="fas fa-angle-up"></i>
             </a>
             
+            <!-- 로딩 인디케이터 -->
+            <div id="loadingIndicator" class="loading-indicator d-none">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
 
-        </div>
+            <script src="/JS/realtime-analysis.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+            
+            </div>
 
-
-    </body>
-</html>
+        </body>
+    </html>

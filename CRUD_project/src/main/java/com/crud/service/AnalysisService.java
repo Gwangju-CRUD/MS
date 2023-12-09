@@ -33,10 +33,10 @@ public class AnalysisService {
 	public void imgSave(Analysis analysis) {
 		analysisRepository.save(analysis);
 
-		defectTracker.checkDefect(analysis.getPredictionJdm());
+		boolean check = defectTracker.checkDefect(analysis.getPredictionJdm());
 
 		// 슬렉에 알람이 보내지면 로그를 DB에 저장을 하는 로직
-		if (defectTracker.checkDefect(analysis.getPredictionJdm()) == true) {
+		if (check == true) {
 			
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H시 m분");
@@ -53,8 +53,6 @@ public class AnalysisService {
 		 */
 	}
 
-	
-
 	// Order By해서 리스트 값 리턴하기(이미지)
 	public Page<Analysis> getAllAnalysis(int page) {
 
@@ -66,6 +64,18 @@ public class AnalysisService {
 		Pageable pageable = PageRequest.of(page, 10); // 한 페이지당 10개만 보여주겠다는 의미
 		Page<Analysis> PageList = analysisRepository.findAllByOrderByProductIdxDesc(pageable);
 		return PageList;
+	}
+
+	// 단건 분석 결과를 count해주는 로직 
+	// main 페이지에서 사용
+	public Long singleAnalysisCount(){
+		Long singleAnalysisCount = analysisRepository.countByPredictionClassfication("단건");
+		return singleAnalysisCount;
+	}
+
+	public Long realTimeAnalysisCount(){
+		Long realTimeAnalysisCount = analysisRepository.countByPredictionClassfication("실시간");
+		return realTimeAnalysisCount;
 	}
 
 }

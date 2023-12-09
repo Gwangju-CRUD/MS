@@ -1,0 +1,112 @@
+
+.form-select {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.optionList {
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.optionItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.optionItem:hover {
+  background-color: lightgray;
+  color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+----------------------
+사이드바 고정 css
+---------------------
+*/
+
+    #accordionSidebar {
+        position: fixed;
+        z-index: 1;
+        height: 100%;
+    }
+    
+    #content-wrapper {
+        /* 사이드바 넓이 여백 */
+        margin-left: 220px;
+        /* 부드럽게 설정 */
+        transition: margin-left 0.3s;
+    }
+
+/*
+----------------------
+상단바 검색 css
+---------------------
+*/
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+
+.search {
+    margin-left: 30px;
+    margin-top: 18px;
+
+  }
+  
+  .search input {
+    width: 400px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f8f9fc;
+    
+  }
+
+  .search input:hover,
+  .search input:active,
+  .search input:focus {
+      border: 2px solid #b6d5f6;
+      outline: none;
+  }
+  
+  .search button {
+    font-size: 16px;
+    border: none;   
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    
+  }
+  
