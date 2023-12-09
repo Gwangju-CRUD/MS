@@ -168,6 +168,11 @@ async function readFilesAndSend(files) {
             $(".h5.mb-0.mr-3.font-weight-bold.text-gray-800").text(
               percentage.toFixed(2) + "%"
             );
+            if (percentage === 100) {
+              setTimeout(() => {
+                location.reload();
+              }, 1500);
+            }
             resolve();
           })
           .catch((error) => {
@@ -215,6 +220,8 @@ function sendDataToServer(base64Image) {
   });
 }
 
+let normalCount = null;
+let errorCount = null;
 // --------------------------
 // 원형 차트
 // ---------------------------
@@ -237,8 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(data);
 
       // '정상'과 '불량'의 개수를 세기
-      let normalCount = 0,
-        errorCount = 0;
+
       data.forEach((item) => {
         if (item.predictionJdm === "정상") {
           normalCount++;
@@ -390,16 +396,13 @@ window.onload = () => {
   const $goodCounter = document.querySelector(".goodcount");
   const $badCounter = document.querySelector(".badcount");
 
-  // 목표 수치
-  const max = 17249;
-
   // 대기 시간 조정
   const delayTime = 2000; // 2초후 시작
 
   setTimeout(() => {
-    counter($goodCounter, max);
-    counter($badCounter, max);
-  }, delayTime);
+    counter($goodCounter, normalCount);  
+    counter($badCounter, errorCount);
+}, delayTime);
 };
   });
 };

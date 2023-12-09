@@ -12,9 +12,8 @@
             width: 150px;
             height: 50px;
             display: flex;
-            font-size: 2.3rem;
-            border-radius: 1rem;
-            color: #000;
+            font-size: 1.5rem;
+            color: gray;
         }
 
         @media (max-width: 1500px) {
@@ -99,7 +98,7 @@
                                                     <div class="text-md font-weight-bold text-info text-uppercase mb-1">
                                                         단건 분석 건수</div>
                                                         <!-- th:text="${singleAnalysisCount}"를 넣어야함 -->
-                                                        <div class="singlecount">0</div>
+                                                        <div class="singlecount" data-max-th="${singleAnalysisCount}">0</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-weight-scale fa-2x text-gray-300"></i>
@@ -116,7 +115,7 @@
                                                     <div class="text-md font-weight-bold text-success text-uppercase mb-1">
                                                         누적 실시간 분석 건수</div>
                                                         <!-- th:text="${realTimeAnalysisCount}"를 넣어야함 -->
-                                                        <div class="realtimecount">0</div>                                                </div>
+                                                        <div class="realtimecount" data-max-th="${realTimeAnalysisCount}">0</div>                                                </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                                 </div>
