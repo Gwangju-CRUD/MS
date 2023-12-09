@@ -11,7 +11,7 @@ function getGraphLog() {
       xhr.setRequestHeader(header, token);
     },
     success: function (data) {
-      console.log(data);
+      // console.log(data);
       // 여기에 데이터를 처리하는 코드를 작성하십시오.
     },
     error: function (error) {
@@ -168,7 +168,7 @@ function sendImageToFastAPI(imageData) {
     data: JSON.stringify({ encoded_image_data: imageData }),
     contentType: "application/json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       $.ajax({
         url: "/deep/aysUpload",
         method: "post",
@@ -223,7 +223,7 @@ window.onload = function () {
           index: currentIndex++,
         },
         success: function (data) {
-          var imageUrl = "data:imgae/png;base64," + data;
+          var imageUrl = "data:image/png;base64," + data;
 
           var imageElement = $(
             '<div class="owl-item"><img src="' +
@@ -272,7 +272,7 @@ window.onload = function () {
             $(".owl-carousel")
               .trigger("remove.owl.carousel", [0]) // 슬라이드쇼에서 첫 번째 이미지 요소를 제거합니다.
               .trigger("refresh.owl.carousel");
-            getGraphLog();
+            // getGraphLog();
             sendImageToFastAPI(images[0]);
           }, 0);
         }
@@ -315,7 +315,6 @@ window.onload = function () {
       $("#modalImageSrc").text("이미지 경로: " + imgSrc);
     });
   });
-
   // X축 라벨과 시리즈 데이터를 위한 전역 변수
   var xAxisData = ["0000"];
   var normalData = [0]; // 정상 데이터 초기화
