@@ -57,6 +57,8 @@
 .t-box {
   font-size: 1.7vw; /* 폰트 크기 */
   color: black; /* 텍스트 색상 */
+  width: 100px; /* 원하는 너비로 설정 */
+  white-space: nowrap; /* 텍스트를 한 줄에만 표시 */
   text-align: center;
   margin-left: 4.4vw;
 }
