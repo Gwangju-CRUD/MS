@@ -32,7 +32,6 @@
             <!--본문 내용만 적으면 됨-->
             <!-- 주 페이지 콘텐츠 -->
             <div class="container-fluid ml-4 mt-4 mb-4 mr-4 p-4">
-                <div th:text="${allCountAnalysis}"></div>
                 <div class="content">
                     <div class="animated fadeIn">
                         <div class="row">
@@ -40,7 +39,6 @@
                                 <!-- 알람 each문 시작 -->
                                 <div class="card shadow-sm mt-3">
                                     <div class="card-header text-lg font-weight-bold">알림 및 공지사항</div>
-                                    
                                     <div class="card-body" style="height: 415px;">
                                         <!-- Thymeleaf의 조건문 사용 -->
                                         <div th:if="${#lists.isEmpty(alarmList)}" class="h-100 row">
@@ -166,7 +164,7 @@
                                                 ],
                                                 series: [
                                                     {
-                                                        name: 'Access From',
+                                                        name: '금일 분석',
                                                         type: 'pie',
                                                         radius: [
                                                             '40%', '70%'
