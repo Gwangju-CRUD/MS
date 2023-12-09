@@ -1,9 +1,14 @@
 package com.crud.repository;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.crud.entity.Analysis;
@@ -24,5 +29,15 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 
 	// 전체 정상과 불량에 관한 모든 count 데이터를 DB에서 가져오는 JPA작성
 	Long countByPredictionDateContainingAndPredictionJdm(String predictionDate, String jdm);
+	
+	@Query("SELECT new map(a.predictionDate as predictionDate, a.predictionJdm as predictionJdm, a.predictionClassfication as predictionClassfication) FROM Analysis a WHERE a.member.mbId = :mbId")
+    List<Map<String, Object>> findSelectedColumnsByMbId(@Param("mbId") String mbId);
+
+	@Query("SELECT new map(a.predictionDate as predictionDate, a.predictionJdm as predictionJdm, a.predictionClassfication as predictionClassfication) FROM Analysis a")
+	List<Map<String, Object>> findAllSelectedColumns();
+
+	@Query("SELECT a FROM Analysis a WHERE a.member.mbId = :mbId")
+	List<Map<String, Object>> findAllByMbId(@Param("mbId") String mbId);
+
 
 }

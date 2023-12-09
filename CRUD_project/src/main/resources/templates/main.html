@@ -3,8 +3,31 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{navLayout}">
+<head>
+    <style>
+        /* 숫자 css */
+        .usercount,
+        .singlecount,
+        .realtimecount {
+            width: 150px;
+            height: 50px;
+            display: flex;
+            font-size: 1.5rem;
+            color: gray;
+        }
 
-    <body>
+        @media (max-width: 1500px) {
+            .usercount,
+            .singlecount,
+            .realtimecount {
+                width: 100%;
+                margin-left: 0;
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head> 
+    <body>  
         <div layout:fragment="content" class="mr-5">
             <!--본문 내용만 적으면 됨-->
             <!-- 주 페이지 콘텐츠 -->
@@ -15,10 +38,10 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <!-- 알람 each문 시작 -->
-                                <div class="card shadow-sm">
-                                    <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">알림 및 공지사항</div>
-                                    <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
-                                    <div class="card-body container pt-1" style="height: 415px;">
+                                <div class="card shadow-sm mt-3">
+                                    <div class="card-header text-lg font-weight-bold">알림 및 공지사항</div>
+                                    
+                                    <div class="card-body" style="height: 415px;">
                                         <!-- Thymeleaf의 조건문 사용 -->
                                         <div th:if="${#lists.isEmpty(alarmList)}" class="h-100 row">
                                             <div class="d-flex justify-content-center col align-self-center">현재는 알람이 없습니다.</div>
@@ -57,7 +80,8 @@
                                                 <div class="col mr-2">
                                                     <div class="text-md font-weight-bold text-warning text-uppercase mb-1">
                                                         누적 사용자 수</div>
-                                                    <div class="h3 mb-0 font-weight-bold text-gray-800" th:text="${memberCount}"></div>
+                                                        <!-- th:text="${memberCount}"를 넣어야함 -->
+                                                        <div class="usercount" data-max-th="${memberCount}">0</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -73,7 +97,8 @@
                                                 <div class="col mr-2">
                                                     <div class="text-md font-weight-bold text-info text-uppercase mb-1">
                                                         단건 분석 건수</div>
-                                                    <div class="h3 mb-0 font-weight-bold text-gray-800" th:text="${singleAnalysisCount}"></div>
+                                                        <!-- th:text="${singleAnalysisCount}"를 넣어야함 -->
+                                                        <div class="singlecount" data-max-th="${singleAnalysisCount}">0</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-weight-scale fa-2x text-gray-300"></i>
@@ -89,8 +114,8 @@
                                                 <div class="col mr-2">
                                                     <div class="text-md font-weight-bold text-success text-uppercase mb-1">
                                                         누적 실시간 분석 건수</div>
-                                                    <div class="h3 mb-0 font-weight-bold text-gray-800" th:text="${realTimeAnalysisCount}"></div>
-                                                </div>
+                                                        <!-- th:text="${realTimeAnalysisCount}"를 넣어야함 -->
+                                                        <div class="realtimecount" data-max-th="${realTimeAnalysisCount}">0</div>                                                </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                                 </div>
@@ -98,15 +123,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <script th:inline="javascript">
+                                    /*<![CDATA[*/ 
+                                    var memberCount = /*[[${memberCount}]]*/ 0;
+                                    var singleAnalysisCount = /*[[${singleAnalysisCount}]]*/ 0;
+                                    var realTimeAnalysisCount = /*[[${realTimeAnalysisCount}]]*/ 0;
+                                    /*]]>*/
+                                </script>
                             </div>
                         </div>
                         <!-- .animated -->
                         <div class="row">
                             <!-- 차트 시작 -->
                             <div class="col-lg-6 mt-4">
+                                <h3 class="font-weight-bold">금일 분석 차트</h3>
+                                <p>오늘의 양불판정 결과를 보여준다</p>
                                 <div class="card shadow-sm">
-                                    <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">일별 양불판정 차트</div>
-                                    <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
                                     <div class="card-body" style="height: 415px">
                                         <div id="pieChartCoustom" style="height: 100%"></div>
                                         <script type="text/javascript">
@@ -121,24 +153,24 @@
 
                                              var option;
 
-                                             option = {
-                                                 tooltip: {
-                                                     trigger: 'item'
-                                                 },
-                                                 legend: {
-                                                     top: '0%',
-                                                     left: 'center'
-                                                 },
-                                                 color: [
-                                                     '#5470c6', '#EE6666'
-                                                 ],
-                                                 series: [
-                                                     {
-                                                         name: 'Access From',
-                                                         type: 'pie',
-                                                         radius: [
-                                                             '40%', '70%'
-                                                         ],
+                                            option = {
+                                                tooltip: {
+                                                    trigger: 'item'
+                                                },
+                                                legend: {
+                                                    top: '0%',
+                                                    left: 'center'
+                                                },
+                                                color: [
+                                                    '#5ac79f', '#f27e7e'
+                                                ],
+                                                series: [
+                                                    {
+                                                        name: 'Access From',
+                                                        type: 'pie',
+                                                        radius: [
+                                                            '40%', '70%'
+                                                        ],
 
                                                          avoidLabelOverlap: false,
                                                          label: {
@@ -180,9 +212,9 @@
                             <!-- 차트 끝 -->
 
                             <div class="col-lg-6 mt-0 pr-0 mt-4">
+                                <h3 class="font-weight-bold">주간 분석 차트</h3>
+                                <p>일주일간 양불판정 결과를 보여준다</p>
                                 <div class="card shadow-sm">
-                                    <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">주간 양불판정 차트</div>
-                                    <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
                                     <div class="card-body" style="height: 415px">
                                         <div id="barChart" style="height: 100%"></div>
                                         <script th:inline="javascript" type="text/javascript">
@@ -205,7 +237,7 @@
                                                     }
                                                 },
                                                 color: [
-                                                    '#5470c6', '#EE6666'
+                                                    '#5ac79f', '#f27e7e'
                                                 ],
                                                 legend: {},
                                                 grid: {
@@ -270,9 +302,9 @@
                             </div>
 
                             <div class="col-lg-12 mt-0 pr-0 mt-5">
+                                <h3 class="font-weight-bold">월간 분석 차트</h3>
+                                <p>한 달간 양불판정 결과를 보여준다</p>
                                 <div class="card shadow-sm">
-                                    <div class="card-title text-lg text-dark ml-3 pt-3 mb-0">월간 양불판정 차트</div>
-                                    <hr style=" margin-top: 0.75rem; margin-bottom: 0.75rem;">
                                     <div class="card-body" style="height: 415px">
 
                                         <div id="waveChart" style="height: 100%"></div>
@@ -287,7 +319,7 @@
 
                                             var option;
 
-                                            const colors = ['#5470c6', '#EE6666'];
+                                            const colors = ['#55967e', '#EE6666'];
                                             option = {
                                                 color: colors,
                                                 tooltip: {
@@ -448,6 +480,7 @@
 
                 </div>
             </div>
+            <script src="JS/main.js"></script>
         </div>
         <!-- 이 페이지 wrapper 끝! -->
 
@@ -510,6 +543,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
 
         <!-- Page level custom scripts -->
