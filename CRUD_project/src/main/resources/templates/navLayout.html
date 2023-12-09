@@ -208,7 +208,10 @@
                                 <!-- 검색이 완료되면 text 초기화 : js인데 짧아서 여기에 둠 -->
                                 <script>
                                     function searchinput() {
-                                        document.getElementById('searchinputText').value = '';
+                                        var query = document.getElementById('searchinputText').value;
+                                        if (query.trim() !== '') {
+                                            document.forms[0].action = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+                                        }
                                     }
                                 </script>
 
