@@ -17,19 +17,18 @@
 /* 41 */
 /* 46.5 */
 
-
 /* 215,310.14.50.91 */
 #slide {
-    /* padding: 20px; */
+  /* padding: 20px; */
 }
 
 .owl-carousel .owl-item img {
-    width: 100%;
-    /* 너비를 컨테이너의 100%로 설정 */
-    height: 100%;
-    /* 높이를 컨테이너의 100%로 설정 */
-    object-fit: cover;
-    /* 이미지가 컨테이너를 가득 채우도록 조정하면서 종횡비 유지 */
+  width: 100%;
+  /* 너비를 컨테이너의 100%로 설정 */
+  height: 100%;
+  /* 높이를 컨테이너의 100%로 설정 */
+  object-fit: cover;
+  /* 이미지가 컨테이너를 가득 채우도록 조정하면서 종횡비 유지 */
 }
 
 .gline {
@@ -53,16 +52,17 @@
   z-index: 10;
 }
 
-
 .t-box {
   font-size: 1.7vw; /* 폰트 크기 */
   color: black; /* 텍스트 색상 */
+  width: 100px; /* 원하는 너비로 설정 */
+  white-space: nowrap; /* 텍스트를 한 줄에만 표시 */
   text-align: center;
   margin-left: 4.4vw;
 }
 
 .owl-carousel .owl-stage {
-  margin-top: 3rem;   /* mt-5 */
+  margin-top: 3rem; /* mt-5 */
   margin-bottom: 3rem; /* mb-5 */
   /* margin-right: 3em; 
   margin-left: 1.2rem; */
@@ -72,6 +72,7 @@
   width: 100%; /* 너비를 컨테이너의 100%로 설정 */
   height: 100%; /* 높이를 컨테이너의 100%로 설정 */
   object-fit: cover; /* 이미지가 컨테이너를 가득 채우도록 조정하면서 종횡비 유지 */
+  border-radius: 10px;
 }
 
 .loading-indicator {
@@ -86,8 +87,3 @@
   align-items: center;
   z-index: 100;
 }
-
-  border-radius: 10px; 
-}
-
-

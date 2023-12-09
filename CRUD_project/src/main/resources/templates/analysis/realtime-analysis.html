@@ -33,20 +33,22 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-9" style="font-size: 1.7vw;  text-align: right;">판정 :</div>
-                <div class="col-2 t-box"></div>
-            </div>
             <!-- ------------------------ 주 페이지 콘텐츠 ----------------------- -->
             <div class="container-fluid">
                         <!-- 페이지 말머리 -->
-                        <br><br>
+                        <br>
                         <h1 class="h3 mb-2 text-gray-800">차트</h1>
-                        <p class="mb-4">정상과 불량 분석 그래프화</p>
+                        <div class="mb-4 d-flex justify-content-between align-items-center">
+                          <span>정상과 불량 분석 그래프화</span>
+                          <div style="display: flex; align-items: center;">
+                            <span>판정 :</span>
+                            <div class="col-2 t-box"></div>
+                          </div>
+                        </div>
                 <div class="card shadow mb-4">
                     <!-- Use the card class for shadow effect -->
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">푸른 선이 1이면 정상, 붉은 선이 1이면 불량</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">직전 30분간 양/불 추이</h6>
                         <!-- Card header for title -->
                     </div>
                     <div class="card-body">
@@ -180,7 +182,8 @@
               </div>
 
             <script src="/JS/realtime-analysis.js"></script>
-
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+            
             </div>
 
         </body>

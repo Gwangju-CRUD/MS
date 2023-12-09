@@ -26,4 +26,7 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 
 	@Query("SELECT new map(a.predictionDate as predictionDate, a.predictionJdm as predictionJdm, a.predictionClassfication as predictionClassfication) FROM Analysis a WHERE a.member.mbId = :mbId")
     List<Map<String, Object>> findSelectedColumnsByMbId(@Param("mbId") String mbId);
+
+	@Query("SELECT new map(a.predictionDate as predictionDate, a.predictionJdm as predictionJdm, a.predictionClassfication as predictionClassfication) FROM Analysis a")
+	List<Map<String, Object>> findAllSelectedColumns();
 }
