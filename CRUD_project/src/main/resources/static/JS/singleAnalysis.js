@@ -159,7 +159,7 @@ async function readFilesAndSend(files) {
             if (percentage === 100) {
               setTimeout(() => {
                 location.reload();
-              }, 3000);
+              }, 1500);
             }
             resolve();
           })
