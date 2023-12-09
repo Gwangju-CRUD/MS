@@ -26,18 +26,30 @@ function loadLogData(type, page, size) {
       var html = "";
       data.content.forEach(function (row) {
         html += `
-              <tr>
-                <td>
-                    <img class="img" src="data:image/png;base64,${
-                      row.base64ProductImg
-                    }" alt="Image" width="100" height="100" />
-                </td>
-                <td>${row.predictionDate}</td>
-                <td>${(row.predictionAccuracy * 100)
-                  .toString()
-                  .slice(0, 4)}%</td>
-                <td>${row.predictionJdm}</td>
-              </tr>
+        <div class="card mb-3 card-red">
+        <div class="row no-gutters" >
+
+          <div class="col-sm-1 col-md-1 col-12 fixed-card">
+            <div class="img-container" >
+              <img class="img-thumbnail" data-toggle="modal" data-target="#imageModal" src="data:image/png;base64,${row.base64ProductImg
+              }" alt="Image" />
+            </div>
+          </div>
+
+
+          <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">${row.predictionJdm} / ${row.predictionDate}</p>
+          
+            <div class="card-body text-lefts" >
+              <h5 class="card-title" style="font-size: 1vw;">${row.predictionJdm}</h5>
+              <p class="card-text" style="font-size: 0.8vw;">${(row.predictionAccuracy * 100)
+              .toString()
+              .slice(0, 4)}%</p>
+              <p class="card-text" style="font-size: 0.8vw;">날짜: ${row.predictionDate}</p>
+            </div>
+          
+    
+        </div>
+      </div>
               `;
       });
       if (type === "정상") {
@@ -231,14 +243,14 @@ document.addEventListener("DOMContentLoaded", () => {
             value: 1300,
             name: "정상",
             itemStyle: {
-              color: "#2BAE66",
+              color: '#5ac79f',
             },
           },
           {
             value: 700,
             name: "불량",
             itemStyle: {
-              color: "#fbd14b",
+              color: "#f27e7e",
             },
           },
         ],
@@ -265,32 +277,41 @@ document.addEventListener("DOMContentLoaded", () => {
 // 정상탭과 불량탭 active 설정
 // ---------------------------
 
-$(document).ready(function () {
-  // 초기 설정: 아무 탭도 활성화하지 않음
-  $(".goodmodeltable").hide();
-  $(".badmodeltable").hide();
 
-  // 정상
-  $("#goodmodeltab").click(function () {
+// 초기 설정: 아무 탭도 활성화하지 않음
+$(".goodmodeltable").hide();
+$(".badmodeltable").hide();
+
+// 정상
+$("#goodModelTableBody").click(function () {
     $(".goodmodeltable").show();
     $(".badmodeltable").hide();
 
     $(this).addClass("active");
-    $("#badmodeltab").removeClass("active");
-  });
+    $("#badModelTableBody").removeClass("active");
 
-  // 불량
-  $("#badmodeltab").click(function () {
+    // 추가된 부분
+    $("#goodModelTable").addClass("active");
+    $("#badModelTable").removeClass("active");
+});
+
+// 불량
+$("#badModelTableBody").click(function () {
     $(".goodmodeltable").hide();
     $(".badmodeltable").show();
 
     $(this).addClass("active");
-    $("#goodmodeltab").removeClass("active");
-  });
+    $("#goodModelTableBody").removeClass("active");
 
-  // 초기에 정상 탭을 활성화
-  $("#goodmodeltab").click();
+    // 추가된 부분
+    $("#goodModelTable").removeClass("active");
+    $("#badModelTable").addClass("active");
 });
+
+// 초기에 정상 탭을 활성화
+$("#goodModelTableBody").click();
+
+
 
 // -----------------------
 // 모달에 이미지 경로 설정
