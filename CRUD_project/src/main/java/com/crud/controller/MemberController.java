@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -147,7 +149,6 @@ public class MemberController {
 			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
 			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
 
-
 			// 단건 및 실시간의 정상 및 불량 갯수를 모델에 담아 main에 전달함
 			Map<String, Object> resultMap = analysisService.AnalysisCount();
 			// 실시간 정상 불량 카운트가 완료된 객체
@@ -156,6 +157,7 @@ public class MemberController {
 			SingleAnalysis singleAnalysis = (SingleAnalysis)resultMap.get("single");
 			model.addAttribute("singleAnalysis",singleAnalysis);
 			model.addAttribute("realTimeAnalysis",realTimeAnalysis);
+
 
 			return "main";
 

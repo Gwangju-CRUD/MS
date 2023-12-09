@@ -19,4 +19,7 @@ public class AllCountAnalysis {
   private List<Long> monthNomalCount;
   private List<Long> monthErrorCount;
 
+  // 오늘 날짜를 기준으로 요일을 역순으로 담아오는 리스트
+  private List<String> weekList;
+
 }

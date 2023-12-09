@@ -158,6 +158,29 @@ public class AnalysisService {
 		allCountAnalysis.setMonthNomalCount(monthCountNomalList);
 		allCountAnalysis.setMonthErrorCount(monthCountErrorList);
 
+		// 요일 역순을 한국어로 담는 리스트
+		List<String> koreanWeek = new ArrayList<>();
+		for(int i = 0; i<7; i++) {
+			
+			if(now.getDayOfWeek().minus(i).toString().equals("SATURDAY")) {
+				koreanWeek.add("토요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("FRIDAY")) {
+				koreanWeek.add("금요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("THURSDAY")) {
+				koreanWeek.add("목요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("WEDNESDAY")) {
+				koreanWeek.add("수요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("TUESDAY")) {
+				koreanWeek.add("화요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("MONDAY")) {
+				koreanWeek.add("월요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("SUNDAY")) {
+				koreanWeek.add("일요일");
+			}
+			allCountAnalysis.setWeekList(koreanWeek);
+
+		}
+
 
     return allCountAnalysis;
   }
