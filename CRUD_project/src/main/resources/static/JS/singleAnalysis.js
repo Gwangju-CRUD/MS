@@ -203,6 +203,8 @@ function sendDataToServer(base64Image) {
   });
 }
 
+let normalCount = null; 
+let errorCount = null;
 // --------------------------
 // 원형 차트
 // ---------------------------
@@ -225,8 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(data);
 
       // '정상'과 '불량'의 개수를 세기
-      let normalCount = 0,
-        errorCount = 0;
+
       data.forEach((item) => {
         if (item.predictionJdm === "정상") {
           normalCount++;
