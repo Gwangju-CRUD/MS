@@ -247,6 +247,16 @@ public class AnalysisUploadController {
         List<Map<String, Object>> result = analysisRepository.findSelectedColumnsByMbId(mbId);
         return result;
     }
+
+    
+    @PostMapping("/getPublicGraphLog")
+    @ResponseBody 
+    public List<Map<String, Object>> getPublicGraphLog() {
+
+
+        List<Map<String, Object>> result = analysisRepository.findAllSelectedColumns();
+        return result;
+    }
 	
 
 
