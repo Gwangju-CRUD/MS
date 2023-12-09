@@ -203,7 +203,7 @@ function sendDataToServer(base64Image) {
   });
 }
 
-let normalCount = null; 
+let normalCount = null;
 let errorCount = null;
 // --------------------------
 // 원형 차트
@@ -372,7 +372,7 @@ window.onload = () => {
 
   // Thymeleaf 변수 사용
   setTimeout(() => {
-    counter($goodCounter, memberCount);  
+    counter($goodCounter, memberCount);
     counter($badCounter, singleAnalysisCount);
-}, delayTime);
+  }, delayTime);
 };
