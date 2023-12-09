@@ -277,13 +277,15 @@ document.addEventListener("DOMContentLoaded", () => {
 // 정상탭과 불량탭 active 설정
 // ---------------------------
 
-
+window.onload = function () {
+  $(document).ready(function () {
 // 초기 설정: 아무 탭도 활성화하지 않음
 $(".goodmodeltable").hide();
 $(".badmodeltable").hide();
 
 // 정상
 $("#goodModelTableBody").click(function () {
+  console.log("정상 탭a 클릭됨");
     $(".goodmodeltable").show();
     $(".badmodeltable").hide();
 
@@ -297,6 +299,7 @@ $("#goodModelTableBody").click(function () {
 
 // 불량
 $("#badModelTableBody").click(function () {
+  console.log("불량 탭 클릭됨");
     $(".goodmodeltable").hide();
     $(".badmodeltable").show();
 
@@ -367,3 +370,8 @@ window.onload = () => {
     counter($badCounter, max);
   }, delayTime);
 };
+  });
+};
+
+//////////
+
