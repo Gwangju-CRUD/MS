@@ -208,7 +208,7 @@ function sendDataToServer(base64Image) {
   });
 }
 
-let normalCount = null; 
+let normalCount = null;
 let errorCount = null;
 // --------------------------
 // 원형 차트
