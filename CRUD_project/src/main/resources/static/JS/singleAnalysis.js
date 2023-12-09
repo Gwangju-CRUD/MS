@@ -335,14 +335,12 @@ window.onload = () => {
   const $goodCounter = document.querySelector(".goodcount");
   const $badCounter = document.querySelector(".badcount");
 
-  // 목표 수치
-  const max = 17249;
-
   // 대기 시간 조정
   const delayTime = 2000; // 2초후 시작
 
+  // Thymeleaf 변수 사용
   setTimeout(() => {
-    counter($goodCounter, max);
-    counter($badCounter, max);
-  }, delayTime);
+    counter($goodCounter, memberCount);  
+    counter($badCounter, singleAnalysisCount);
+}, delayTime);
 };
