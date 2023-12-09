@@ -257,6 +257,20 @@ public class AnalysisUploadController {
         List<Map<String, Object>> result = analysisRepository.findAllSelectedColumns();
         return result;
     }
+
+    @PostMapping("/getMemPublicGraphLog")
+    @ResponseBody 
+    public List<Map<String, Object>> getMemPublicGraphLog() {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		// 사용자의 ID를 가져옵니다.
+		String mbId = authentication.getName();
+
+
+        List<Map<String, Object>> result = analysisRepository.findAllByMbId(mbId);
+        return result;
+    }
 	
 
 
