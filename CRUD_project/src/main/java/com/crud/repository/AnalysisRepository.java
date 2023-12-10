@@ -39,5 +39,6 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long>{
 	@Query("SELECT a FROM Analysis a WHERE a.member.mbId = :mbId")
 	List<Map<String, Object>> findAllByMbId(@Param("mbId") String mbId);
 
+	Page<Analysis> findByMember_MbIdOrderByProductIdxDesc(String mbId, Pageable pageable);
 
 }

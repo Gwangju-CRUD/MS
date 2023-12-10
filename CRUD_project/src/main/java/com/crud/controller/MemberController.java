@@ -34,6 +34,7 @@ import com.crud.repository.MemberRepository;
 import com.crud.repository.RequestMemberRepository;
 import com.crud.service.MemberService;
 import com.crud.entity.AlarmLog;
+import com.crud.entity.Analysis;
 import com.crud.service.AlarmService;
 import com.crud.service.AnalysisService;
 import jakarta.validation.Valid;
@@ -207,7 +208,7 @@ public class MemberController {
 
 	// 로그인 회원 조회 > 프로필
 	@GetMapping("/myPage")
-	public String showMyPage(Model model, Authentication authentication) {
+	public String showMyPage(Model model, Authentication authentication, @RequestParam(value = "page", defaultValue = "0") int page) {
 		// 현재 로그인한 사용자의 회원 정보를 가져옵니다.
 		String mbId = authentication.getName();
 		Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
@@ -217,6 +218,10 @@ public class MemberController {
 		} else {
 			// ID에 해당하는 회원이 없을 때의 처리도 필요합니다.
 		}
+
+		// 나의 분석 기록 model 객체에 담아서 myPage로 이동하기
+		Page<Analysis> myAnalysisList = memberService.myAnalysisLog(mbId, page);
+		model.addAttribute("myAnalysisList", myAnalysisList);
 
 		return "myPage";
 	}
@@ -253,6 +258,7 @@ public class MemberController {
 				member.setProfileImg(imagePath);
 				memberRepository.save(member);
 			}
+
 
 			return "redirect:/myPage";
 		}
