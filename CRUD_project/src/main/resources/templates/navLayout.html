@@ -293,7 +293,7 @@
                                     aria-haspopup="true"
                                     aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><p th:text="${member.mbName}" ></p></span>
-                                    <img class="img-profile rounded-circle" th:src="${member.profileImg}">
+                                    <img class="img-profile rounded-circle" th:src="@{${member.profileImg != null ? member.profileImg : 'imgFolder/profile.png'}}">
                                 </a>
 
                                 <!-- 프로필 누르면 정보 출력 -->

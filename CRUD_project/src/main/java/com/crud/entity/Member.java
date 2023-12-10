@@ -29,8 +29,8 @@ public class Member {
 
 	private LocalDateTime joineDate; // 회원가입한 날짜
 
-	@Column(length = 1000, columnDefinition = "varchar2(1000) default 'local'")
-	private String profileImg; // 프로필 이미지
+	@Column(nullable = false, length = 1000)
+	private String profileImg = "imgFolder/profile.png"; // 프로필 이미지
 
 	
 
