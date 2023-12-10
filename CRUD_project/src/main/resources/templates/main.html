@@ -6,7 +6,7 @@
 <head>
     <style>
         /* 숫자 css */
-        .usercount,
+        /* .usercount,
         .singlecount,
         .realtimecount {
             width: 150px;
@@ -14,9 +14,9 @@
             display: flex;
             font-size: 1.5rem;
             color: gray;
-        }
+        } */
 
-        @media (max-width: 1500px) {
+        /* @media (max-width: 1500px) {
             .usercount,
             .singlecount,
             .realtimecount {
@@ -24,7 +24,7 @@
                 margin-left: 0;
                 font-size: 1.8rem;
             }
-        }
+        } */
     </style>
 </head> 
     <body>  
@@ -79,7 +79,7 @@
                                                     <div class="text-md font-weight-bold text-warning text-uppercase mb-1">
                                                         누적 사용자 수</div>
                                                         <!-- th:text="${memberCount}"를 넣어야함 -->
-                                                        <div class="usercount" data-max-th="${memberCount}">0</div>
+                                                        <div class="usercount h3 mb-0 font-weight-bold text-secondary mt-3" data-max-th="${memberCount}">0</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -96,7 +96,7 @@
                                                     <div class="text-md font-weight-bold text-info text-uppercase mb-1">
                                                         단건 분석 건수</div>
                                                         <!-- th:text="${singleAnalysisCount}"를 넣어야함 -->
-                                                        <div class="singlecount" data-max-th="${singleAnalysisCount}">0</div>
+                                                        <div class="singlecount h3 mb-0 font-weight-bold text-secondary mt-3" data-max-th="${singleAnalysisCount}">0</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-weight-scale fa-2x text-gray-300"></i>
@@ -113,7 +113,7 @@
                                                     <div class="text-md font-weight-bold text-success text-uppercase mb-1">
                                                         누적 실시간 분석 건수</div>
                                                         <!-- th:text="${realTimeAnalysisCount}"를 넣어야함 -->
-                                                        <div class="realtimecount" data-max-th="${realTimeAnalysisCount}">0</div>                                                </div>
+                                                        <div class="realtimecount h3 mb-0 font-weight-bold text-secondary mt-3" data-max-th="${realTimeAnalysisCount}">0</div>                                                </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                                 </div>

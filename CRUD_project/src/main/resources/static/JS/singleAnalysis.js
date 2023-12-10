@@ -137,6 +137,10 @@ $(document).ready(function () {
   });
 });
 
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // 선택 이미지들 분석 후 로그 저장하기
 async function readFilesAndSend(files) {
   var completedCount = 0;
@@ -158,7 +162,7 @@ async function readFilesAndSend(files) {
             );
             if (percentage === 100) {
               setTimeout(() => {
-                location.reload();
+                //location.reload();
               }, 1500);
             }
             resolve();
@@ -376,7 +380,7 @@ window.onload = () => {
   const delayTime = 2000; // 2초후 시작
 
   setTimeout(() => {
-    counter($goodCounter, normalCount);  
+    counter($goodCounter, normalCount);
     counter($badCounter, errorCount);
-}, delayTime);
+  }, delayTime);
 };
