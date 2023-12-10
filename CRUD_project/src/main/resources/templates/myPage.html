@@ -22,7 +22,7 @@
                                 <!-- 프로필 이미지 -->
                                 <div class="profile-img" data-toggle="tooltip" data-placement="top" title="프로필 사진 변경">
                                     <!-- 이미지 누르면 프로필 변경 할 수 있게 해야함.. -->
-                                    <img id="profileImg" th:src="${member.profileImg}" alt="프로필사진" data-toggle="modal" data-target="#profileModalPath"> 
+                                    <img id="profileImg" th:src="@{${member.profileImg != null ? member.profileImg : '/imgFolder/profile.png'}}" alt="프로필사진" data-toggle="modal" data-target="#profileModalPath">
                                 </div>
 
                                <!-- 프로필 정보 입력 -->
@@ -161,12 +161,13 @@
 
                     <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                            <button type="submit" class="btn btn-primary">프로필 변경</button>
+                            <button type="submit" class="btn btn-primary" onclick="ScreenReLoad">변경</button>
                         </form>
                     </div>
                 </div>
             </div>
             <script src="JS/myPage.js"></script>
+         
         </div>
         <!-- --------------------프로필사진 변경 모달 끝 --------------------- -->
 

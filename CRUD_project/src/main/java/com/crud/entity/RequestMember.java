@@ -28,5 +28,6 @@ public class RequestMember {
 	@Column(nullable = false)
 	private LocalDateTime joineDate; // 회원가입한 날짜
 	
-
+	@Column(nullable = false, length = 1000)
+	private String profileImg = "imgFolder/profile.png"; // 프로필 이미지
 }

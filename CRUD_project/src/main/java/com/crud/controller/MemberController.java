@@ -3,15 +3,18 @@ package com.crud.controller;
 import com.crud.dto.AllCountAnalysis;
 import com.crud.dto.RealTimeAnalysis;
 import com.crud.dto.SingleAnalysis;
-import groovy.lang.GString;
+
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
+
+
 import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +36,7 @@ import com.crud.form.MemberForm;
 import com.crud.repository.MemberRepository;
 import com.crud.repository.RequestMemberRepository;
 import com.crud.service.MemberService;
+
 import com.crud.entity.AlarmLog;
 import com.crud.entity.Analysis;
 import com.crud.service.AlarmService;
@@ -215,6 +219,7 @@ public class MemberController {
 		if (optionalMember.isPresent()) {
 			// 모델에 회원 정보를 담아 myPage.html로 전달합니다.
 			model.addAttribute("member", optionalMember.get());
+			
 		} else {
 			// ID에 해당하는 회원이 없을 때의 처리도 필요합니다.
 		}
@@ -239,36 +244,40 @@ public class MemberController {
 	 * @return String - 성공 시 'redirect:/myPage'를 반환하여 마이페이지로 리다이렉트, 실패 시 에러 메시지를 반환합니다.
 	 */
 	
+	
+
 	@PostMapping("/myPage")
 	public String upload(@RequestParam("file") MultipartFile file, Authentication authentication, RedirectAttributes redirectAttributes) {
-		String fileName = file.getOriginalFilename();
-		String uploadDir = System.getProperty("user.dir") + "/CRUD_project/src/main/resources/static/imgFolder/";
-		File dest = new File(uploadDir + fileName);
-		try {
-			
-			file.transferTo(dest);
-			String imagePath = "/imgFolder/" + fileName;
+    String fileName = file.getOriginalFilename();
+    String uploadDir = Paths.get("CRUD_project/src/main/resources/static/imgFolder").toAbsolutePath().toString();
+    File dir = new File(uploadDir);
+    if (!dir.exists()) {
+        dir.mkdirs();  
+    }
+    
+    File dest = new File(uploadDir, fileName);
+    try {
+        file.transferTo(dest);
+        String imagePath = "/imgFolder/" + fileName;
 
-			// 현재 로그인한 사용자의 회원 정보를 가져옵니다.
-			String mbId = authentication.getName();
-			Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
+        // 현재 로그인한 사용자의 회원 정보를 가져옵니다.
+        String mbId = authentication.getName();
+        Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
 
-			if (optionalMember.isPresent()) {
-				Member member = optionalMember.get();
-				member.setProfileImg(imagePath);
-				memberRepository.save(member);
-			}
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            member.setProfileImg(imagePath);
+            memberRepository.save(member);
+        }
 
+        return "redirect:/myPage";
+    }
 
-			return "redirect:/myPage";
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
-			return "파일 업로드에 실패했습니다.";
-		}
-		
-	}
+    catch (Exception e) {
+        e.printStackTrace();
+        return "파일 업로드에 실패했습니다.";
+    }   
+}
 
 	// 회원 추가 및 요청회원 삭제
 	@PostMapping("/members/approve/{mbId}")
@@ -284,7 +293,7 @@ public class MemberController {
 			member.setMbCompany(requestMember.get().getMbCompany());
 			member.setMbName(requestMember.get().getMbName());
 			member.setJoineDate(requestMember.get().getJoineDate());
-
+			
 			// Member 저장
 			memberRepository.save(member);
 
