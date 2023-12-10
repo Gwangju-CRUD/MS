@@ -212,6 +212,8 @@ function sendImageToFastAPI(imageData) {
     contentType: "application/json",
     success: function (response) {
       console.log(response);
+      globalResult = response.result;
+      tboxFlash(globalResult);
       $.ajax({
         url: "/deep/aysUpload",
         method: "post",
@@ -232,6 +234,39 @@ function sendImageToFastAPI(imageData) {
       console.log(errorMessage); // Optional
     },
   });
+}
+
+function tboxFlash(globalResult) {
+  var tBox = document.querySelector(".t-box"); // '.t-box' 클래스를 가진 첫 번째 요소를 찾습니다.
+  tBox.textContent = globalResult; // t-box의 텍스트 내용을 globalResult 값으로 설정합니다.
+  // 결과 값에 따라 글씨 색상 변경
+  if (globalResult === "정상") {
+    tBox.style.color = "green"; // '정상'일 경우 글씨 색상을 초록색으로 설정
+  } else if (globalResult === "불량") {
+    tBox.style.color = "red"; // '불량'일 경우 글씨 색상을 빨간색으로 설정
+  } else {
+    tBox.style.color = "black"; // 그 외의 경우 글씨 색상을 기본값(검정색)으로 설정
+  }
+  // 1초 후에 텍스트와 색상을 초기 상태로 되돌림
+  setTimeout(function () {
+    tBox.textContent = ""; // 텍스트 내용 지우기
+    tBox.style.color = "black"; // 글씨 색상을 기본값으로 되돌리기
+  }, 1180);
+
+  if (globalResult === "정상") {
+    $(".owl-carousel .owl-item:first img").css(
+      "box-shadow",
+      "0px 0px 60px -3px green"
+    );
+  } else if (globalResult === "불량") {
+    $(".owl-carousel .owl-item:first img").css(
+      "box-shadow",
+      "0px 0px 60px -3px red"
+    );
+  }
+  setTimeout(function () {
+    $(".owl-carousel .owl-item:first img").css("box-shadow", ""); // 테두리 제거
+  }, 1180);
 }
 
 //슬라이드
@@ -358,86 +393,6 @@ window.onload = function () {
       $("#modalImageSrc").text("이미지 경로: " + imgSrc);
     });
   });
-
-  // X축 라벨과 시리즈 데이터를 위한 전역 변수
-  var xAxisData = ["0000"];
-  var normalData = [0]; // 정상 데이터 초기화
-  var faultData = [0]; // 불량 데이터 초기화
-  // 이부분을 제거하면 초기화가 사라짐 요기부터 X축 추가 구문 시작하는곳임
-  function updateChartData(globalResult) {
-    // X축 라벨 업데이트
-    var nextLabel = String(
-      parseInt(xAxisData[xAxisData.length - 1]) + 1
-    ).padStart(4, "0");
-    xAxisData.push(nextLabel);
-
-    // 정상 또는 불량 데이터 업데이트
-    if (globalResult === "정상") {
-      normalData.push(1);
-      faultData.push(-1);
-    } else if (globalResult === "불량") {
-      normalData.push(-1);
-      faultData.push(1);
-    }
-    // displayResultInTBox(globalResult) {
-    var tBox = document.querySelector(".t-box"); // '.t-box' 클래스를 가진 첫 번째 요소를 찾습니다.
-    tBox.textContent = globalResult; // t-box의 텍스트 내용을 globalResult 값으로 설정합니다.
-    // 결과 값에 따라 글씨 색상 변경
-    if (globalResult === "정상") {
-      tBox.style.color = "green"; // '정상'일 경우 글씨 색상을 초록색으로 설정
-    } else if (globalResult === "불량") {
-      tBox.style.color = "red"; // '불량'일 경우 글씨 색상을 빨간색으로 설정
-    } else {
-      tBox.style.color = "black"; // 그 외의 경우 글씨 색상을 기본값(검정색)으로 설정
-    }
-    // 1초 후에 텍스트와 색상을 초기 상태로 되돌림
-    setTimeout(function () {
-      tBox.textContent = ""; // 텍스트 내용 지우기
-      tBox.style.color = "black"; // 글씨 색상을 기본값으로 되돌리기
-    }, 1180);
-    // }
-    // function handleResultDisplay() {
-    console.log("handleResultDisplay called", globalResult);
-    var shadowEffectBox = $(".shadow-effect");
-    var owlStageBox = $(".owl-carousel .owl-stage-outer");
-
-    // 판정에 따른 스타일 적용
-    if (globalResult === "정상") {
-      shadowEffectBox.css("box-shadow", "0px 0px 60px -3px green"); // .shadow-effect에 초록색 쉐도우 적용
-      owlStageBox.css("box-shadow", "40px 0px 40px -43px green"); // .owl-stage에 수정된 초록색 쉐도우 적용
-      console.log("%c정상", "color: green;");
-    } else if (globalResult === "불량") {
-      shadowEffectBox.css("box-shadow", "0px 0px 60px -3px red"); // .shadow-effect에 빨간색 쉐도우 적용
-      owlStageBox.css("box-shadow", "40px 0px 40px -43px red"); // .owl-stage에 수정된 빨간색 쉐도우 적용
-      console.log("%c불량", "color: red;");
-    }
-
-    // 1초 후에 스타일 초기화
-    setTimeout(function () {
-      shadowEffectBox.css("box-shadow", ""); // .shadow-effect의 쉐도우 제거
-      owlStageBox.css("box-shadow", ""); // .owl-stage의 쉐도우 제거
-    }, 1180);
-    // }
-
-    /// if (xAxisData.length > 8) {   xAxisData.shift();  가장 오래된 X축 라벨 제거
-    // normalData.shift();  해당하는 정상 데이터 제거   faultData.shift();  해당하는 불량 데이터 제거 }
-    // ECharts 인스턴스에 새 데이터 적용
-    myChart.setOption({
-      xAxis: {
-        data: xAxisData,
-      },
-      series: [
-        {
-          name: "정상",
-          data: normalData,
-        },
-        {
-          name: "불량",
-          data: faultData,
-        },
-      ],
-    });
-  }
 };
 
 // 꺾은선 그래프 코드

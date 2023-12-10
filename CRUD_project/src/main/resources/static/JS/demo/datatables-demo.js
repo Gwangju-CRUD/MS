@@ -15,7 +15,7 @@ $(document).ready(function () {
     startAnalysisButton.prop("disabled", true).text("모델을 선택해주세요");
 
     // <select> 태그 동적 생성
-    modelSelect = $("<select>").attr("id", "modelSelect"); // 전역 변수에 할당
+    modelSelect = $("<select>").attr("id", "modelSelect").addClass("form-select");; // 전역 변수에 할당
     $(".modal-body").append(modelSelect);
 
     $.ajax({
@@ -33,7 +33,8 @@ $(document).ready(function () {
         for (var i = 0; i < model_info.length; i++) {
           var option = $("<option>")
             .val(model_info[i].model)
-            .text(model_info[i].modelName);
+            .text(model_info[i].modelName)
+            .addClass("optionItem");
           modelSelect.append(option);
         }
         modelSelect.val(model_info[0].model); // 첫 번째 <option>을 선택합니다.

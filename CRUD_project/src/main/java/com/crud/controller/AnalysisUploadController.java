@@ -1,6 +1,8 @@
 package com.crud.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -65,7 +67,7 @@ public class AnalysisUploadController {
 
         // FastAPI에서 받아온 데이터를 그대로 사용
         String result = (String)data.get("result");
-        double score = (Double)data.get("score");
+        BigDecimal score = BigDecimal.valueOf((Double)data.get("score"));
         String image = (String)data.get("image");
         String classData = (String)data.get("class");
 
@@ -87,16 +89,20 @@ public class AnalysisUploadController {
 
         Analysis analysis = new Analysis();
 
+
+        BigDecimal roundedScore = score.setScale(10, RoundingMode.HALF_UP);
+        double doubleScore = roundedScore.doubleValue();
+
         analysis.setProductImg(imageBytes);
         analysis.setPredictionDate(formatDate);
-        analysis.setPredictionAccuracy((Double)score);
+        analysis.setPredictionAccuracy(doubleScore);
         analysis.setPredictionJdm(result);
         analysis.setMember(member);
         analysis.setPredictionClassfication(classData);
 
-        System
-            .out
-            .println(analysis.toString());
+        // System
+        //     .out
+        //     .println(analysis.toString());
 
         analysisService.imgSave(analysis);
 
@@ -245,6 +251,30 @@ public class AnalysisUploadController {
 		String mbId = authentication.getName();
 
         List<Map<String, Object>> result = analysisRepository.findSelectedColumnsByMbId(mbId);
+        return result;
+    }
+
+    
+    @PostMapping("/getPublicGraphLog")
+    @ResponseBody 
+    public List<Map<String, Object>> getPublicGraphLog() {
+
+
+        List<Map<String, Object>> result = analysisRepository.findAllSelectedColumns();
+        return result;
+    }
+
+    @PostMapping("/getMemPublicGraphLog")
+    @ResponseBody 
+    public List<Map<String, Object>> getMemPublicGraphLog() {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		// 사용자의 ID를 가져옵니다.
+		String mbId = authentication.getName();
+
+
+        List<Map<String, Object>> result = analysisRepository.findAllByMbId(mbId);
         return result;
     }
 	

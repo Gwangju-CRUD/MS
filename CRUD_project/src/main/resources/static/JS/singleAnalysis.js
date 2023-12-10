@@ -137,6 +137,10 @@ $(document).ready(function () {
   });
 });
 
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // 선택 이미지들 분석 후 로그 저장하기
 async function readFilesAndSend(files) {
   var completedCount = 0;
@@ -156,6 +160,11 @@ async function readFilesAndSend(files) {
             $(".h5.mb-0.mr-3.font-weight-bold.text-gray-800").text(
               percentage.toFixed(2) + "%"
             );
+            if (percentage === 100) {
+              setTimeout(() => {
+                //location.reload();
+              }, 1500);
+            }
             resolve();
           })
           .catch((error) => {
@@ -203,62 +212,94 @@ function sendDataToServer(base64Image) {
   });
 }
 
+let normalCount = null;
+let errorCount = null;
 // --------------------------
 // 원형 차트
 // ---------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
   const pieChart = echarts.init(document.querySelector("#pieChart"));
-  pieChart.setOption({
-    title: {
-      text: "금일 양불판정 차트",
-      left: "center",
-    },
-    tooltip: {
-      trigger: "item",
-    },
-    legend: {
-      orient: "vertical",
-      left: "left",
-    },
-    series: [
-      {
-        name: "개수",
-        type: "pie",
-        radius: "70%",
-        data: [
-          {
-            value: 1300,
-            name: "정상",
-            itemStyle: {
-              color: "#2BAE66",
-            },
-          },
-          {
-            value: 700,
-            name: "불량",
-            itemStyle: {
-              color: "#fbd14b",
-            },
-          },
-        ],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: "rgba(0, 0, 0, 0.5)",
-          },
-        },
-      },
-    ],
-  });
 
   // 차트 크기 조절
   window.addEventListener("resize", () => {
     pieChart.resize();
   });
-});
 
+  $.ajax({
+    url: "/deep/getPublicGraphLog",
+    type: "POST",
+    dataType: "json",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (data) {
+      console.log(data);
+
+      // '정상'과 '불량'의 개수를 세기
+
+      data.forEach((item) => {
+        if (item.predictionJdm === "정상") {
+          normalCount++;
+        } else if (item.predictionJdm === "불량") {
+          errorCount++;
+        }
+      });
+
+      const seriesData = [
+        {
+          value: normalCount,
+          name: "정상",
+          itemStyle: {
+            color: "#2BAE66",
+          },
+        },
+        {
+          value: errorCount,
+          name: "불량",
+          itemStyle: {
+            color: "#fbd14b",
+          },
+        },
+      ];
+
+      // 차트 옵션 설정
+      pieChart.setOption({
+        title: {
+          text: "금일 양불판정 차트",
+          left: "center",
+        },
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          orient: "vertical",
+          left: "left",
+        },
+        series: [
+          {
+            name: "개수",
+            type: "pie",
+            radius: "70%",
+            data: seriesData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+          },
+        ],
+      });
+    },
+    error: function (request, status, error) {
+      console.error("ajax 통신 실패");
+      console.error("request : " + request);
+      console.error("status : " + status);
+      console.error("error : " + error);
+    },
+  });
+});
 // --------------------------
 // 분석로그
 // div 보이기 / 숨기기 설정
@@ -335,14 +376,11 @@ window.onload = () => {
   const $goodCounter = document.querySelector(".goodcount");
   const $badCounter = document.querySelector(".badcount");
 
-  // 목표 수치
-  const max = 17249;
-
   // 대기 시간 조정
   const delayTime = 2000; // 2초후 시작
 
   setTimeout(() => {
-    counter($goodCounter, max);
-    counter($badCounter, max);
+    counter($goodCounter, normalCount);
+    counter($badCounter, errorCount);
   }, delayTime);
 };

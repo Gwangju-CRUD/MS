@@ -2,7 +2,12 @@ package com.crud.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.crud.DefectTracker;
+import com.crud.dto.AllCountAnalysis;
+import com.crud.dto.RealTimeAnalysis;
+import com.crud.dto.SingleAnalysis;
 import com.crud.entity.AlarmLog;
 import com.crud.entity.Analysis;
 import com.crud.repository.AlarmLogRepository;
@@ -17,6 +25,7 @@ import com.crud.repository.AnalysisRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnalysisService {
@@ -77,5 +86,104 @@ public class AnalysisService {
 		Long realTimeAnalysisCount = analysisRepository.countByPredictionClassfication("실시간");
 		return realTimeAnalysisCount;
 	}
+
+	// 실시간 분석 로그의 정상과 불량 카운트를 객체에 담아 컨트롤러에 전달
+	public Map<String, Object> AnalysisCount(){
+		String normal = "정상";
+		String error = "불량";
+		String realTime = "실시간";
+		String single = "단건";
+
+		RealTimeAnalysis realTimeAnalysis = new RealTimeAnalysis();
+		SingleAnalysis singleAnalysis = new SingleAnalysis();
+
+		// 실시간 정상 
+		realTimeAnalysis.setNormalRealTimeAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(realTime, normal));
+
+		// 실시간 불량
+		realTimeAnalysis.setErrorRealTimeAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(realTime, error));
+
+		// 단건 정상
+		singleAnalysis.setNormalSingleAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(single, normal));
+		
+		// 단건 불량
+		singleAnalysis.setErrorSingleAnalysis(analysisRepository.countByPredictionClassficationAndPredictionJdm(single, error));
+
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("real",realTimeAnalysis);
+		resultMap.put("single",singleAnalysis);
+
+		return resultMap;
+	}
+
+	// 일, 주간, 월에 대한 count 로직
+  public AllCountAnalysis allCountAnalysis() {
+
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
+
+		// 객체 생성
+		AllCountAnalysis allCountAnalysis = new AllCountAnalysis();
+
+		// 해당 일당 정상 불량 set 코드
+		Long dailyNomalCount;
+		Long dailyErrorCount;
+
+		dailyNomalCount = analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.format(format), "정상");
+		dailyErrorCount = analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.format(format), "불량");
+
+		allCountAnalysis.setDailyNomalCount(dailyNomalCount);
+		allCountAnalysis.setDailyErrorCount(dailyErrorCount);
+
+		// 주간당 정상 불량 set 코드
+		List<Long> weekCountNormalList = new ArrayList<>();
+		List<Long> weekCountErrorList = new ArrayList<>();
+
+		for(int i=0; i<7; i++){
+
+			weekCountNormalList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.minusDays(i).format(format), "정상"));
+			weekCountErrorList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(now.minusDays(i).format(format), "불량"));
+		}
+		allCountAnalysis.setWeekNomalCount(weekCountNormalList);
+		allCountAnalysis.setWeekErrorCount(weekCountErrorList);
+
+		// 해당 월당 정상 불량 set 코드
+		List<Long> monthCountNomalList = new ArrayList<>();
+		List<Long> monthCountErrorList = new ArrayList<>();
+
+		for(int i=1; i<13; i++){
+			monthCountNomalList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(String.format("2023년 %d월", i), "정상"));
+			monthCountErrorList.add(analysisRepository.countByPredictionDateContainingAndPredictionJdm(String.format("2023년 %d월", i), "불량"));
+		}
+		allCountAnalysis.setMonthNomalCount(monthCountNomalList);
+		allCountAnalysis.setMonthErrorCount(monthCountErrorList);
+
+		// 요일 역순을 한국어로 담는 리스트
+		List<String> koreanWeek = new ArrayList<>();
+		for(int i = 0; i<7; i++) {
+			
+			if(now.getDayOfWeek().minus(i).toString().equals("SATURDAY")) {
+				koreanWeek.add("토요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("FRIDAY")) {
+				koreanWeek.add("금요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("THURSDAY")) {
+				koreanWeek.add("목요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("WEDNESDAY")) {
+				koreanWeek.add("수요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("TUESDAY")) {
+				koreanWeek.add("화요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("MONDAY")) {
+				koreanWeek.add("월요일");
+			}else if(now.getDayOfWeek().minus(i).toString().equals("SUNDAY")) {
+				koreanWeek.add("일요일");
+			}
+			allCountAnalysis.setWeekList(koreanWeek);
+
+		}
+
+
+    return allCountAnalysis;
+  }
+
 
 }

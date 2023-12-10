@@ -208,7 +208,10 @@
                                 <!-- 검색이 완료되면 text 초기화 : js인데 짧아서 여기에 둠 -->
                                 <script>
                                     function searchinput() {
-                                        document.getElementById('searchinputText').value = '';
+                                        var query = document.getElementById('searchinputText').value;
+                                        if (query.trim() !== '') {
+                                            document.forms[0].action = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+                                        }
                                     }
                                 </script>
 
@@ -378,10 +381,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="analysisModalLabel">실시간 분석</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <h5 class="modal-title" id="analysisModalLabel">실시간 분석</h5>               
                         </div>
                         <div class="modal-body">
                             <p>실시간 분석을 시작하시겠습니까?</p>
