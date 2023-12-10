@@ -35,13 +35,11 @@
                 <div class="content">
                     <div class="animated fadeIn">
                         <div class="row">
-
                             <div class="col-lg-6">
                                 <!-- 알람 each문 시작 -->
                                 <div class="card shadow-sm mt-3">
                                     <div class="card-header text-lg font-weight-bold">알림 및 공지사항</div>
-                                    
-                                    <div class="card-body" style="height: 415px;">
+                                    <div class="card-body" style="height: 430px;">
                                         <!-- Thymeleaf의 조건문 사용 -->
                                         <div th:if="${#lists.isEmpty(alarmList)}" class="h-100 row">
                                             <div class="d-flex justify-content-center col align-self-center">현재는 알람이 없습니다.</div>
@@ -142,14 +140,16 @@
                                     <div class="card-body" style="height: 415px">
                                         <div id="pieChartCoustom" style="height: 100%"></div>
                                         <script type="text/javascript">
-                                            var dom = document.getElementById('pieChartCoustom');
-                                            var myChart = echarts.init(dom, null, {
-                                                renderer: 'canvas',
-                                                useDirtyRect: false
-                                            });
-                                            var app = {};
+                                             var dom = document.getElementById('pieChartCoustom');
+                                             var normalAnalysis = [[${allCountAnalysis.dailyNomalCount}]];
+                                             var errorAnalysis = [[${allCountAnalysis.dailyErrorCount}]];
+                                             var myChart = echarts.init(dom, null, {
+                                                 renderer: 'canvas',
+                                                 useDirtyRect: false
+                                             });
+                                             var app = {};
 
-                                            var option;
+                                             var option;
 
                                             option = {
                                                 tooltip: {
@@ -164,46 +164,45 @@
                                                 ],
                                                 series: [
                                                     {
-                                                        name: 'Access From',
+                                                        name: '금일 분석',
                                                         type: 'pie',
                                                         radius: [
                                                             '40%', '70%'
                                                         ],
 
-                                                        avoidLabelOverlap: false,
-                                                        label: {
-                                                            show: false,
-                                                            position: 'center'
-                                                        },
-                                                        emphasis: {
-                                                            label: {
-                                                                show: false,
-                                                                fontSize: 40,
-                                                                fontWeight: 'bold'
-                                                            }
-                                                        },
-                                                        labelLine: {
-                                                            show: false
-                                                        },
-                                                        data: [
-                                                            {
-                                                                value: 1048,
-                                                                name: '정상'
+                                                         avoidLabelOverlap: false,
+                                                         label: {
+                                                             show: false,
+                                                             position: 'center'
+                                                         },
+                                                         emphasis: {
+                                                             label: {
+                                                                 show: false,
+                                                                 fontSize: 40,
+                                                                 fontWeight: 'bold'
+                                                             }
+                                                         },
+                                                         labelLine: {
+                                                             show: false
+                                                         },
+                                                         data: [
+                                                             {
+                                                                 value: normalAnalysis,
+                                                                 name: '정상'
+                                                             }, {
+                                                                 value: errorAnalysis,
+                                                                 name: '불량'
+                                                             }
+                                                         ]
+                                                     }
+                                                 ]
+                                             };
 
-                                                            }, {
-                                                                value: 735,
-                                                                name: '불량'
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            };
+                                             if (option && typeof option === 'object') {
+                                                 myChart.setOption(option);
+                                             }
 
-                                            if (option && typeof option === 'object') {
-                                                myChart.setOption(option);
-                                            }
-
-                                            window.addEventListener('resize', myChart.resize);
+                                             window.addEventListener('resize', myChart.resize);
                                         </script>
                                     </div>
                                 </div>
@@ -216,8 +215,9 @@
                                 <div class="card shadow-sm">
                                     <div class="card-body" style="height: 415px">
                                         <div id="barChart" style="height: 100%"></div>
-                                        <script type="text/javascript">
+                                        <script th:inline="javascript" type="text/javascript">
                                             var dom = document.getElementById('barChart');
+                                            var weekList = [[${allCountAnalysis.weekList}]];
                                             var myChart = echarts.init(dom, null, {
                                                 renderer: 'canvas',
                                                 useDirtyRect: false
@@ -251,13 +251,13 @@
                                                 yAxis: {
                                                     type: 'category',
                                                     data: [
-                                                        '일요일',
-                                                        '토요일',
-                                                        '금요일',
-                                                        '목요일',
-                                                        '수요일',
-                                                        '화요일',
-                                                        '월요일'
+                                                    weekList[6],
+                                                    weekList[5],
+                                                    weekList[4],
+                                                    weekList[3],
+                                                    weekList[2],
+                                                    weekList[1],
+                                                    weekList[0]
                                                     ]
                                                 },
                                                 series: [
@@ -265,25 +265,25 @@
                                                         name: '정상',
                                                         type: 'bar',
                                                         data: [
-                                                            12,
-                                                            15,
-                                                            23,
-                                                            11,
-                                                            8,
-                                                            54,
-                                                            12
+                                                        [[${allCountAnalysis.weekNomalCount[6]}]],
+                                                        [[${allCountAnalysis.weekNomalCount[5]}]],
+                                                        [[${allCountAnalysis.weekNomalCount[4]}]],
+                                                        [[${allCountAnalysis.weekNomalCount[3]}]],
+                                                        [[${allCountAnalysis.weekNomalCount[2]}]],
+                                                        [[${allCountAnalysis.weekNomalCount[1]}]],
+                                                        [[${allCountAnalysis.weekNomalCount[0]}]]
                                                         ]
                                                     }, {
                                                         name: '불량',
                                                         type: 'bar',
                                                         data: [
-                                                            12,
-                                                            15,
-                                                            23,
-                                                            11,
-                                                            8,
-                                                            54,
-                                                            13
+                                                        [[${allCountAnalysis.weekErrorCount[6]}]],
+                                                        [[${allCountAnalysis.weekErrorCount[5]}]],
+                                                        [[${allCountAnalysis.weekErrorCount[4]}]],
+                                                        [[${allCountAnalysis.weekErrorCount[3]}]],
+                                                        [[${allCountAnalysis.weekErrorCount[2]}]],
+                                                        [[${allCountAnalysis.weekErrorCount[1]}]],
+                                                        [[${allCountAnalysis.weekErrorCount[0]}]]
                                                         ]
                                                     }
                                                 ]
@@ -423,18 +423,18 @@
                                                             focus: 'series'
                                                         },
                                                         data: [
-                                                            2.6,
-                                                            5.9,
-                                                            9.0,
-                                                            26.4,
-                                                            28.7,
-                                                            70.7,
-                                                            175.6,
-                                                            182.2,
-                                                            48.7,
-                                                            18.8,
-                                                            6.0,
-                                                            2.3
+                                                        [[${allCountAnalysis.monthNomalCount[0]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[1]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[2]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[3]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[4]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[5]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[6]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[7]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[8]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[9]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[10]}]],
+                                                        [[${allCountAnalysis.monthNomalCount[11]}]]
                                                         ]
                                                     }, {
                                                         name: '불량',
@@ -444,18 +444,18 @@
                                                             focus: 'series'
                                                         },
                                                         data: [
-                                                            3.9,
-                                                            5.9,
-                                                            11.1,
-                                                            18.7,
-                                                            48.3,
-                                                            69.2,
-                                                            231.6,
-                                                            46.6,
-                                                            55.4,
-                                                            18.4,
-                                                            10.3,
-                                                            0.7
+                                                        [[${allCountAnalysis.monthErrorCount[0]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[1]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[2]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[3]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[4]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[5]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[6]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[7]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[8]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[9]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[10]}]],
+                                                        [[${allCountAnalysis.monthErrorCount[11]}]]
                                                         ]
                                                     }
                                                 ]

@@ -1,12 +1,17 @@
 package com.crud.controller;
 
+import com.crud.dto.AllCountAnalysis;
+import com.crud.dto.RealTimeAnalysis;
+import com.crud.dto.SingleAnalysis;
 import groovy.lang.GString;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,9 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,13 +33,9 @@ import com.crud.form.MemberForm;
 import com.crud.repository.MemberRepository;
 import com.crud.repository.RequestMemberRepository;
 import com.crud.service.MemberService;
-import groovyjarjarpicocli.CommandLine.DuplicateNameException;
-import jakarta.transaction.Transactional;
 import com.crud.entity.AlarmLog;
-import com.crud.form.MemberForm;
 import com.crud.service.AlarmService;
 import com.crud.service.AnalysisService;
-import com.crud.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -154,12 +153,25 @@ public class MemberController {
 			Long memberCount = memberService.memberCount();
 			Long singleAnalysisCount = analysisService.singleAnalysisCount();
 			Long realTimeAnalysisCount = analysisService.realTimeAnalysisCount();
+			
+			AllCountAnalysis allCountAnalysis = analysisService.allCountAnalysis();
 
+			model.addAttribute("allCountAnalysis", allCountAnalysis);
 			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
 			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
 			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
-			
+
+
+			// 단건 및 실시간의 정상 및 불량 갯수를 모델에 담아 main에 전달함
+			Map<String, Object> resultMap = analysisService.AnalysisCount();
+			// 실시간 정상 불량 카운트가 완료된 객체
+			RealTimeAnalysis realTimeAnalysis = (RealTimeAnalysis)resultMap.get("real");
+			// 단건 정상 불량 카운트가 완료된 객체
+			SingleAnalysis singleAnalysis = (SingleAnalysis)resultMap.get("single");
+			model.addAttribute("singleAnalysis",singleAnalysis);
+			model.addAttribute("realTimeAnalysis",realTimeAnalysis);
+
 			return "main";
 
 		} else {
