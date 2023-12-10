@@ -21,11 +21,12 @@
               <!-- 1) 이미지 업로드 -->
               <div class="col-md-12 mb-4">
                 <div class="card border-left-danger shadow h-100 py-2">
+                  
                   <div class="card-body">
                     <div class="row no-gutters">
                       <div class="col mr-2">
                         <div
-                          class="text-s font-weight-bold text-danger text-uppercase mb-1"
+                          class="text-s font-weight-bold text-danger text-uppercase mb-3"
                         >
                           파일 업로드
                         </div>
@@ -107,7 +108,7 @@
                             >
                               정상
                             </div>
-                            <div class="goodcount">0</div>
+                            <div class="goodcount font-weight-bold text-secondary">0</div>
                           </div>
                         </div>
                       </div>
@@ -125,7 +126,7 @@
                             >
                               불량
                             </div>
-                            <div class="badcount">0</div>
+                            <div class="badcount font-weight-bold text-secondary">0</div>
                           </div>
                         </div>
                       </div>
@@ -137,7 +138,7 @@
           </div>
 
           <div class="chartcard">
-            <div class="card-body" style="overflow: hidden">
+            <div class="card-body shadow" style="overflow: hidden; padding-bottom: 15px;">
               <h5 class="card-title"></h5>
               <!-- 원형차트 -->
               <div
@@ -178,8 +179,11 @@
                 <div id="goodModelTable" class="goodmodeltable">
                 <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
                 <div id="goodModelTableBody" class="card-body"></div>
+                
+    
+
                 <!-- 하단 pagination -->
-                <nav id="goodPagination" aria-label="Page navigation example">
+                <nav id="goodPagination" aria-label="Page navigation example" class="d-flex justify-content-center">
                     <ul class="pagination">
                     <li class="page-item">
                         <a id="goodPreviousPage" class="page-link good-previous-page" aria-label="Previous">
@@ -196,6 +200,7 @@
                     </li>
                     </ul>
                 </nav>
+
                 </div>
 
                 <!-- 불량 -->
@@ -203,7 +208,7 @@
                 <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
                 <div id="badModelTableBody" class="card-body"></div>
                 <!-- 하단 pagination -->
-                <nav id="badPagination" aria-label="Page navigation example">
+                <nav id="badPagination" aria-label="Page navigation example" class="d-flex justify-content-center">
                     <ul class="pagination">
                     <li class="page-item">
                         <a id="badPreviousPage" class="page-link bad-previous-page" aria-label="Previous">
