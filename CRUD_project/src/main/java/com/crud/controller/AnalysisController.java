@@ -127,8 +127,6 @@ private final MemberRepository memberRepository;
 
 	}
 	
-
-	
 	
 	@GetMapping("/main")
 	public String goMain() {

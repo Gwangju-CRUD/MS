@@ -26,18 +26,26 @@ function loadLogData(type, page, size) {
       var html = "";
       data.content.forEach(function (row) {
         html += `
-              <tr>
-                <td>
-                    <img class="img" src="data:image/png;base64,${
-                      row.base64ProductImg
-                    }" alt="Image" width="100" height="100" />
-                </td>
-                <td>${row.predictionDate}</td>
-                <td>${(row.predictionAccuracy * 100)
-                  .toString()
-                  .slice(0, 4)}%</td>
-                <td>${row.predictionJdm}</td>
-              </tr>
+              <div class="card mb-3" style="height : 185px;">
+                <div class="row g-0" style="width : 1970px">
+                  <div class="ml-4 mt-1 mr-0 p-0">
+                      <img class="rounded mt-2" data-toggle="modal" data-target="#imageModal" src="data:image/png;base64,${
+                        row.base64ProductImg
+                      }" alt="Image" style="width : 160px; height=160px;"/>
+                  </div>
+                  <div class="col-9">
+                    <div class="card-body">
+                      <div><h5>판정결과 : <span class="font-weight-bolder">${row.predictionJdm}</span></h5></div>
+                      <br>
+                      <div><h5>정확도 : ${(row.predictionAccuracy * 100)
+                            .toString()
+                            .slice(0, 4)}%<h5></div>
+                      <br>
+                      <div class="mt-3 mr-5 d-flex justify-content-end">일시 : ${row.predictionDate}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               `;
       });
       if (type === "정상") {
@@ -137,6 +145,10 @@ $(document).ready(function () {
   });
 });
 
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // 선택 이미지들 분석 후 로그 저장하기
 async function readFilesAndSend(files) {
   var completedCount = 0;
@@ -158,7 +170,7 @@ async function readFilesAndSend(files) {
             );
             if (percentage === 100) {
               setTimeout(() => {
-                location.reload();
+                //location.reload();
               }, 1500);
             }
             resolve();
@@ -246,14 +258,14 @@ document.addEventListener("DOMContentLoaded", () => {
           value: normalCount,
           name: "정상",
           itemStyle: {
-            color: "#2BAE66",
+            color: "#5ac79f",
           },
         },
         {
           value: errorCount,
           name: "불량",
           itemStyle: {
-            color: "#fbd14b",
+            color: "#f27e7e",
           },
         },
       ];
@@ -333,16 +345,9 @@ $(document).ready(function () {
 // 모달에 이미지 경로 설정
 // ----------------------
 
-$(document).ready(function () {
-  // 이미지 클릭 -> 모달이미지
-  $(".img-thumbnail").on("click", function () {
-    var imgSrc = $(this).attr("src");
-    console.log(imgSrc);
-    $("#modalImage").attr("src", imgSrc);
-
-    // 모달 바디 이미지 src 출력
-    $("#modalImageSrc").text("이미지 경로: " + imgSrc);
-  });
+$('.rounded').click(function() {
+  var imageUrl = $(this).attr('src');
+  $('#modalImage').attr('src', imageUrl);
 });
 
 // -----------------------
@@ -376,7 +381,7 @@ window.onload = () => {
   const delayTime = 2000; // 2초후 시작
 
   setTimeout(() => {
-    counter($goodCounter, normalCount);  
+    counter($goodCounter, normalCount);
     counter($badCounter, errorCount);
-}, delayTime);
+  }, delayTime);
 };

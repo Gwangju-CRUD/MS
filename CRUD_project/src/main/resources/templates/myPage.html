@@ -9,9 +9,10 @@
 </head>
 
 <body id="page-top">
+    
     <div layout:fragment="content">
         <!-- ------------------- 주 페이지 콘텐츠 시작 ----------------------- -->
-        <div class="container-fluid" style="height: 86vh;">
+        <div class="container-fluid">
             <div class="card">
                 <h5 class="card-header">나의 프로필</h5>
                 <div class="card-body">
@@ -22,7 +23,7 @@
                                 <!-- 프로필 이미지 -->
                                 <div class="profile-img" data-toggle="tooltip" data-placement="top" title="프로필 사진 변경">
                                     <!-- 이미지 누르면 프로필 변경 할 수 있게 해야함.. -->
-                                    <img id="profileImg" th:src="${member.profileImg}" alt="프로필사진" data-toggle="modal" data-target="#profileModalPath"> 
+                                    <img id="profileImg" th:src="@{${member.profileImg != null ? member.profileImg : '/imgFolder/profile.png'}}" alt="프로필사진" data-toggle="modal" data-target="#profileModalPath">
                                 </div>
 
                                <!-- 프로필 정보 입력 -->
@@ -65,65 +66,61 @@
                                 <th scope="col">판정일</th>
                                 <th scope="col">회사명</th>
                                 <th scope="col">회원ID</th>
-                                <th scope="col">제품분석정확도</th>
+                                <th scope="col">분석분류</th>
                             </tr>
                         </thead>
 
                         <tbody id="allresultBody">
                             <!-- 여기서부터 회원별 분석 기록 넣어주기
                             분석결과에서 회원id가 동일한 컬럼만 가져오면 됨-->
-                            <tr onclick="window.location.href='Result-Detail.html';">
-                                <th scope="col">1</th>
-                                <th scope="col">2023년11월29일11시30분</th>
-                                <th scope="col">A회사</th>
-                                <th scope="col">DOZZI</th>
-                                <th scope="col">96%</th>
-                            </tr>
-
-                            <tr onclick="window.location.href='Result-Detail.html';">
-                                <th scope="col">2</th>
-                                <th scope="col">2023년11월29일11시30분</th>
-                                <th scope="col">B회사</th>
-                                <th scope="col">DOZZI</th>
-                                <th scope="col">95%</th>
-                            </tr>
-
-                            <tr onclick="window.location.href='Result-Detail.html';">
-                                <th scope="col">3</th>
-                                <th scope="col">2023년11월29일11시30분</th>
-                                <th scope="col">C회사</th>
-                                <th scope="col">DOZZI</th>
-                                <th scope="col">93%</th>
-                            </tr>
-
-                            <tr onclick="window.location.href='Result-Detail.html';">
-                                <th scope="col">4</th>
-                                <th scope="col">2023년11월29일11시30분</th>
-                                <th scope="col">D회사</th>
-                                <th scope="col">DOZZI</th>
-                                <th scope="col">98%</th>
+                            <tr scope="row" th:each="list, stat : ${myAnalysisList}">
+                                <th th:text="|${stat.count}|"></th>
+                                <td th:text="${list.predictionDate}"></td>
+                                <td th:text="${list.member.mbCompany}"></td>
+                                <td th:text="${list.member.mbId}"></td>
+                                <td th:text="${list.predictionClassfication}"></td>
                             </tr>
                         </tbody>
                     </table>
+                    <div th:if="${myAnalysisList != null and not myAnalysisList.empty}">
+                        <!--paging.isEmpty:페이지존재여부(게시물있으면 false,없으면 true)-->
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:classappend="${!myAnalysisList.hasPrevious} ? 'disabled'">
+                                <!-- !paging.hasPrevious - disabled : 이전페이지가 없으면 비활성화-->
+    
+                                <a class="page-link" th:href="@{|/myPage?page=${myAnalysisList.number-1}|}">
+                                    <!--이전페이지 링크-->
+                                    <span>이전</span>
+                                </a>
+                            </li>
+    
+    
+                            <!--th:each :페이지 리스트 루프--> <!--#numbers.sequence(시작, 끝)-->
+                            <li th:each="page: ${#numbers.sequence(1, myAnalysisList.totalPages)}"
+                                th:if="${page >= myAnalysisList.number-5 and page <= myAnalysisList.number+5}"
+                                th:classappend="${page - 1 == myAnalysisList.number} ? 'active'" class="page-item">
+                                <!-- 1페이지 칸 순서에 맞게 적용 -->
+    
+                                <!--page == paging.number : 현재페이지와 같으면 active 적용-->
+                                <a th:text="${page}" class="page-link"
+                                    th:href="@{|/myPage?page=${page-1}|}"></a>
+                            </li>
+    
+    
+                            <li class="page-item" th:classappend="${!myAnalysisList.hasNext} ? 'disabled'">
+                                <!-- !paging.hasNext - disabled : 다음페이지 없으면 비활성화-->
+    
+                                <a class="page-link" th:href="@{|/myPage?page=${myAnalysisList.number+1}|}">
+                                    <!--다음페이지 링크-->
+                                    <span>다음</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 페이징처리 끝 -->
                 </div>
 
-                <!-- 하단 pagination -->
-                <nav id="allMembersPagination" aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
 
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
         <!-- ------------------- 주 페이지 콘텐츠 끝 ----------------------- -->
@@ -145,14 +142,14 @@
 
                         <div id="root">
                             <div class="contents">
-                              <div class="upload-box">
+                              <div class="upload-box ml-3 mr-3">
                                 <div id="drop-file" class="drag-file">
                                   <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image" >
                                   <p class="message">파일을 드래그하여 업로드하세요</p>
                                   <img src="" alt="미리보기 이미지" class="preview">
                                 </div>
                                 <form th:action="@{/myPage}" method="post" enctype="multipart/form-data">
-                                    <label class="file-label" for="chooseFile" style="width: 170px;">파일선택</label>
+                                    <label class="file-label mb-4" for="chooseFile" style="width: 170px;">파일선택</label>
                                     <input class="file" id="chooseFile" type="file" name="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/PNG , image/JPG">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                     
@@ -171,6 +168,7 @@
                 </div>
             </div>
             <script src="JS/myPage.js"></script>
+         
         </div>
         <!-- --------------------프로필사진 변경 모달 끝 --------------------- -->
 

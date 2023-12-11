@@ -93,18 +93,26 @@ function loadLogData(type, page, size) {
       var html = "";
       data.content.forEach(function (row) {
         html += `
-              <tr>
-                <td>
-                    <img class="img" src="data:image/png;base64,${
-                      row.base64ProductImg
-                    }" alt="Image" width="100" height="100" />
-                </td>
-                <td>${row.predictionDate}</td>
-                <td>${(row.predictionAccuracy * 100)
-                  .toString()
-                  .slice(0, 4)}%</td>
-                <td>${row.predictionJdm}</td>
-              </tr>
+        <div class="card mb-3" style="height : 185px;">
+        <div class="row g-0" style="width : 1970px">
+          <div class="ml-4 mt-1 mr-0 p-0">
+              <img class="rounded mt-2" data-toggle="modal" data-target="#imageModal" src="data:image/png;base64,${
+                row.base64ProductImg
+              }" alt="Image" style="width : 160px; height=160px;"/>
+          </div>
+          <div class="col-9">
+            <div class="card-body">
+              <div><h5>판정결과 : <span class="font-weight-bolder">${row.predictionJdm}</span></h5></div>
+              <br>
+              <div><h5>정확도 : ${(row.predictionAccuracy * 100)
+                    .toString()
+                    .slice(0, 4)}%<h5></div>
+              <br>
+              <div class="mt-3 mr-5 d-flex justify-content-end">일시 : ${row.predictionDate}</div>
+            </div>
+          </div>
+        </div>
+      </div>
               `;
       });
       if (type === "정상") {
@@ -272,6 +280,7 @@ function tboxFlash(globalResult) {
 //슬라이드
 window.onload = function () {
   $(document).ready(function () {
+    getGraphLog();
     // Tab 초기 설정
     $(".goodmodeltable").hide();
     $(".badmodeltable").hide();
