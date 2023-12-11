@@ -402,3 +402,9 @@ window.onload = () => {
     counter($badCounter, errorCount);
 }, delayTime);
 };
+
+function FileName() {
+  var input = document.getElementById('file-upload');
+  var fileName = input.files[0].name; 
+  document.getElementById('file-name').textContent = fileName;
+}
