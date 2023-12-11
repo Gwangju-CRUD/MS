@@ -96,6 +96,11 @@ $("#create_model").click(function () {
   createModelFromServer(modelName);
 });
 
+$("#cam_model_create").click(function () {
+  var modelName = $("#cam_model_name").val(); // 입력받은 모델 이름
+  createModelFromServer(modelName);
+});
+
 function createModelFromServer(modelName) {
   // 모델 이름이 비어있는지 확인
   if (!modelName) {
@@ -114,7 +119,8 @@ function createModelFromServer(modelName) {
     success: function (data) {
       var parsedData = JSON.parse(data);
       alert(parsedData.message);
-      //location.href = "/main"; // 페이지 이동
+
+      location.href = "/main"; // 페이지 이동
     },
     error: function (error) {
       console.error("Error:", error);
