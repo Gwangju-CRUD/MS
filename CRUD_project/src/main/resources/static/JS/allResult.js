@@ -51,20 +51,36 @@ $(document).ready(function () {
     var modelName = $(this).closest("tr").find("th").eq(2).text(); // 모델 이름을 찾습니다.
 
     if (confirm("정말로 " + modelName + " 모델을 삭제하시겠습니까?")) {
-      // '/deleteModel' 엔드포인트로 삭제 요청을 보냅니다.
       $.ajax({
-        url: "/deep/deleteModel",
+        url: "http://218.157.38.54:8002/deleteModel/",
         type: "POST",
-        data: { modelIdx: modelIdx },
+        data: JSON.stringify({ modelIdx: modelIdx }),
+        contentType: "application/json",
         beforeSend: function (xhr) {
           xhr.setRequestHeader(header, token);
         },
         success: function (response) {
-          // 삭제가 성공적으로 이루어졌다면 행을 삭제합니다.
-          if (response) {
-            $(this).closest("tr").remove();
-            $("#modelDelete").click();
-          }
+          console.log("testtest");
+
+          // '/deleteModel' 엔드포인트로 삭제 요청을 보냅니다.
+          $.ajax({
+            url: "/deep/deleteModel",
+            type: "POST",
+            data: { modelIdx: modelIdx },
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (response) {
+              // 삭제가 성공적으로 이루어졌다면 행을 삭제합니다.
+              if (response) {
+                $(this).closest("tr").remove();
+                $("#modelDelete").click();
+              }
+            },
+            error: function (request, status, error) {
+              console.log("Ajax error: " + error);
+            },
+          });
         },
         error: function (request, status, error) {
           console.log("Ajax error: " + error);
