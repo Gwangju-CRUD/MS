@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head th:fragment="mainHeader">
     <meta charset="utf-8">
@@ -136,7 +136,7 @@
             </li>
 
             <!-- 회원관리 메뉴 -->
-            <li class="nav-item active">
+            <li class="nav-item active" th:if="${#authentication.name == 'admin'}">
                 <a class="nav-link collapsed" href="memberManagement">
                     <i class="fas fa-fw fa-table"></i>
                     <span>전체회원관리</span></a>
