@@ -93,3 +93,9 @@
   align-items: center;
   z-index: 100;
 }
+
+/* 컨베이어 이미지 삽입. */
+.card-body#slide {
+  background: url("/imgFolder/Belt2.png") no-repeat center center;
+  background-size: 100% 100%; /* 배경 이미지를 요소에 맞게 조절 */
+}
