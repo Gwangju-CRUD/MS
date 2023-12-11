@@ -1,6 +1,4 @@
-#video {
-  width: 500px;
-}
+
 
 #video,
 #capture_normal,
@@ -42,7 +40,7 @@ h3 {
 /* 버튼 css */
 #capture_normal,
 #capture_error{
-  width: 80%;
+  width: 92%;
 }
 
 /* 모델생성버튼 */
@@ -66,3 +64,102 @@ h3 {
   padding-left: 10px;
   background-color: #f8f9fc;
 }
+
+#cam_model_name:hover,
+#cam_model_name:active,
+#cam_model_name:focus {
+    border: 2px solid #b6d5f6;
+    outline: none;
+}
+
+
+
+
+
+
+/* 이미지 나란히 정렬 */
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container {
+  width: 30%;
+  margin: 40px;
+}
+
+#imgselect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: baseline;
+}
+
+.input-group h5 {
+  margin-right: 10px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.img-container input,
+.img-container button {
+  display: block;
+  margin-bottom: 8px;
+}
+
+
+
+/* 파일 업로드 */
+input[type=file]::file-selector-button {
+  width: 150px;
+  height: 40px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+
+/*  */
+#imgae_model_name {
+  width: 92%;
+  height: 50px;
+  font-size: 1.2rem;
+  border: 0;
+  border-radius: 5px;
+  outline: none;
+  padding-left: 10px;
+  background-color: #f8f9fc;
+}
+
+.file-input1:hover::file-selector-button {
+  background-color:#28A745;
+  color: #fff;
+  border: none;
+}
+
+.file-input2:hover::file-selector-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+}
+
+#imgae_model_name:hover,
+#imgae_model_name:active,
+#imgae_model_name:focus {
+    border: 2px solid #b6d5f6;
+    outline: none;
+}
+
+#folder_image_create{
+  width: 92%;
+  text-align: center;
+  height: 45px;
+}
+
