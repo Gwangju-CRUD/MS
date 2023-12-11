@@ -46,6 +46,7 @@ function loadLogData(type, page, size) {
                       <div class="mt-3 d-flex justify-content-end">일시 : ${
                         row.predictionDate
                       }</div>
+                      <br>
                     </div>
                   </div>
                 </div>

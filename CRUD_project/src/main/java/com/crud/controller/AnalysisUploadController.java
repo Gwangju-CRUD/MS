@@ -278,6 +278,16 @@ public class AnalysisUploadController {
         return result;
     }
 	
+    
+    @PostMapping("/deleteModel")
+    @ResponseBody 
+    public String deleteModel(@RequestParam Long modelIdx) {
+        
+        
+        deepModelRepository.deleteById(modelIdx);
 
+        return "result";
+    }
+	
 
 }
