@@ -1,4 +1,6 @@
 @charset "utf-8";
+@import 'path/to/rfs.css';
+
 
 /* ------------------------
     파일링크 css
@@ -30,7 +32,7 @@ input[type="file"]:hover::file-selector-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: rfs(16px);
   font-weight: bold;
   border-radius: 1rem;
   color: #000;
@@ -41,7 +43,7 @@ input[type="file"]:hover::file-selector-button {
   .badcount {
     width: 100%;
     margin-left: 0;
-    font-size: 2rem;
+    font-size: rfs(16px);
   }
 }
 
@@ -57,11 +59,12 @@ input[type="file"]:hover::file-selector-button {
 
 .chartcard {
   width: 48%;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   margin-right: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: white;
+  margin-top: 25px;
 }
 
 /* 결과상세 불량사진 호버 */

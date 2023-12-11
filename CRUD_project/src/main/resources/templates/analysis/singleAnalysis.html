@@ -16,7 +16,7 @@
         <!-- 분석 양불판정 그래프 -->
         <div class="card-container-chart">
           <!-- 1) 이미지 업로드 2) 분석중 퍼센트 표시 3) 정상/불량수 수치 -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-4" >
             <div class="row mb-3 mt-4">
               <!-- 1) 이미지 업로드 -->
               <div class="col-md-12 mb-4">
@@ -40,7 +40,8 @@
                               multiple
                             />
                             <input
-                              class="btn btn-danger btn-lg"
+                              class="btn btn-danger"
+                              style="width: 90px; height: 40px; font-size: 13px;"
                               type="button"
                               value="분석하기"
                               onclick="readFilesAndSend(document.getElementById('fileInput').files)"
@@ -107,7 +108,7 @@
                             >
                               정상
                             </div>
-                            <div class="goodcount">0</div>
+                            <div class="goodcount h3 mb-0 font-weight-bold text-secondary">0</div>
                           </div>
                         </div>
                       </div>
@@ -125,7 +126,7 @@
                             >
                               불량
                             </div>
-                            <div class="badcount">0</div>
+                            <div class="badcount h3 mb-0 font-weight-bold text-secondary">0</div>
                           </div>
                         </div>
                       </div>
@@ -136,13 +137,13 @@
             </div>
           </div>
 
-          <div class="chartcard">
+          <div class="chartcard shadow">
             <div class="card-body" style="overflow: hidden">
               <h5 class="card-title"></h5>
               <!-- 원형차트 -->
               <div
                 id="pieChart"
-                style="min-height: 400px; max-width: 100%; max-height: 100%"
+                style="min-height: 380px; max-width: 100%; max-height: 100%"
                 class="echart"
               ></div>
             </div>
@@ -177,10 +178,41 @@
                 <!-- 정상 -->
                 <div id="goodModelTable" class="goodmodeltable">
                 <!-- 분석로그 div 이 div로 불량 로그 출력함 -->
-                <div id="goodModelTableBody" class="card-body"></div>
+                <div id="goodModelTableBody" class="card-body">
+
+                  <!-- <div class="card mb-3 card-red" style="width: 83vw;">
+                    <div class="row no-gutters">
+          
+                      <div class="col-sm-1 col-md-1 col-12 fixed-card">
+                        <div class="img-container" >
+                          <img class="img-thumbnail" data-toggle="modal" data-target="#imageModal" src="data:image/png;base64,${row.base64ProductImg
+                          }" alt="Image" />
+                        </div>
+                      </div>
+          
+          
+                      <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">${row.predictionJdm} / ${row.predictionDate}</p>
+                      <div class="col-md-6 col-12 text-card" >
+                        <div class="card-body text-lefts row" style="width: 75vw;">
+                          <div class="col-6">
+                          <h5 class="card-title" style="font-size: 1.5vw;">판정결과 : ${row.predictionJdm}</h5>
+                          <p class="card-text" style="font-size: 1.2vw;">분석정확도 : ${(row.predictionAccuracy * 100)
+                          .toString()
+                          .slice(0, 4)}%</p>
+                        </div>
+                        <div class="col-5">
+                          <p class="card-text" style="font-size: 1.1vw; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end;">날짜: ${row.predictionDate}</p>
+                        </div>
+                        </div>
+                      </div>
+                
+                    </div>
+                  </div> -->
+
+                </div>
                 <!-- 하단 pagination -->
-                <nav id="goodPagination" aria-label="Page navigation example">
-                    <ul class="pagination">
+                <nav id="goodPagination" aria-label="Page navigation example" >
+                    <ul class="pagination justify-content-center" >
                     <li class="page-item">
                         <a id="goodPreviousPage" class="page-link good-previous-page" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
@@ -204,7 +236,7 @@
                 <div id="badModelTableBody" class="card-body"></div>
                 <!-- 하단 pagination -->
                 <nav id="badPagination" aria-label="Page navigation example">
-                    <ul class="pagination">
+                    <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <a id="badPreviousPage" class="page-link bad-previous-page" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>

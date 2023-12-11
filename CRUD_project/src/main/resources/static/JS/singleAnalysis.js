@@ -26,18 +26,40 @@ function loadLogData(type, page, size) {
       var html = "";
       data.content.forEach(function (row) {
         html += `
-              <tr>
-                <td>
-                    <img class="img" src="data:image/png;base64,${
-                      row.base64ProductImg
-                    }" alt="Image" width="100" height="100" />
-                </td>
-                <td>${row.predictionDate}</td>
-                <td>${(row.predictionAccuracy * 100)
-                  .toString()
-                  .slice(0, 4)}%</td>
-                <td>${row.predictionJdm}</td>
-              </tr>
+                <div class="card mb-3 card-red col-md-12" style="width: 83vw;">
+                    <div class="row no-gutters col-md-11">
+
+                        <div class="col-sm-1 col-md-1 col-12 fixed-card">
+                            <div class="img-container">
+                                <img
+                                    class="img-thumbnail"
+                                    data-toggle="modal"
+                                    data-target="#imageModal"
+                                    src="data:image/png;base64,${row.base64ProductImg
+                              }"
+                                    alt="Image"/>
+                            </div>
+                        </div>
+
+                        <p class="card-text-sub" style="margin-top: 30px; margin-left: 20px;">${row.predictionJdm} / ${row.predictionDate}</p>
+                        <div class="col-sm-3 col-md-6 col-12 text-card">
+                            <div class=" card-body text-lefts row " style="display: flex; justify-content: space-between; width: 74vw">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+                                    <h5 class="card-title" style="font-size: 1.7vw;">판정결과 : ${row.predictionJdm}</h5>
+                                    </div>
+
+                                    <div>
+                                    <p class="card-text" style="font-size: 1.4vw; margin-right: auto;">분석정확도 : ${(row.predictionAccuracy * 100) .toString() .slice(0, 4)}%</p>
+                                    <p
+                                        class="card-text"
+                                        style="font-size: 1.1vw; margin-left: auto;">날짜: ${row.predictionDate}</p>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
               `;
       });
       if (type === "정상") {
@@ -246,14 +268,14 @@ document.addEventListener("DOMContentLoaded", () => {
           value: normalCount,
           name: "정상",
           itemStyle: {
-            color: "#2BAE66",
+            color: "#5ac79f",
           },
         },
         {
           value: errorCount,
           name: "불량",
           itemStyle: {
-            color: "#fbd14b",
+            color: "#f27e7e",
           },
         },
       ];
