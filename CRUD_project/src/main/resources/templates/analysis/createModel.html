@@ -9,55 +9,81 @@
         <link href="/CSS/createModel.css" rel="stylesheet"></link>
     </head>
     <body id="page-top">
-        <div layout:fragment="content" style="height: 86vh;">
+        <div layout:fragment="content">
+          <div class="container-fluid" style="height: 86vh;">
+            
 
-            <h1>모델 생성</h1>
-            <div class="card" style="margin-top: 20px;">
-                <div class="card-body">
-                  <div>
-                    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+
+
+            <h2>모델 생성</h2>
+            <p>웹캠 이미지로 모델을 생성한다</p>
+            <div class="card">
+              <div class="card-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- 비디오 div -->
+                      <div style="margin-bottom: 10px;">
                         <video id="video" autoplay="autoplay"></video>
                       </div>
-                    <div class="row">
-                        <div class="col-sm-5">
-                          <p id="normal_count_place">정상 이미지 :
-                            <span id="normal_count"></span>/ 1000</p>
-                        </div>
-                        <div class="col-sm-6">
-                          <div>
-                            <button id="capture_normal">웹캠으로 정상 제품 이미지 생성</button>
-                          </div>
-                        </div>
-                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- 오른쪽에 배치될 div들 -->
                       
-                      <div class="row">
-                        <div class="col-sm-5">
-                          <p id="error_count_place">불량 이미지 :
-                            <span id="error_count"></span>/ 1000</p>
-                        </div>
-                        <div class="col-sm-6">
-                          <div>
-                            <button id="capture_error">웹캠으로 불량 제품 이미지 생성</button>
-                          </div>
-                        </div>
-                      </div>
+                      <!-- 정상 이미지 -->
 
-                      <div class="row">
+                        <div id="goodandbad">
+                          <p id="normal_count_place">정상 이미지 : <span id="normal_count"></span>/ 1000</p>
+                        </div>
+                        
                         <div>
+                          <button id="capture_normal" type="button" class="btn btn-success">웹캠으로 정상 제품 이미지 생성</button>
+                        </div>
+                        
+                      
+                
+                      <!-- 불량 이미지 -->
+                        <div id="goodandbad">
+                          <p id="error_count_place">불량 이미지 : <span id="error_count"></span>/ 1000</p>
+                        </div>
+                        
+                        <div>
+                          <button id="capture_error" type="button" class="btn btn-danger">웹캠으로 불량 제품 이미지 생성</button>
+                        </div>
+                        
+                      
+                        
+                      
+                        <!-- 모델이름 입력하고 모델생성 버튼 -->
+                          <div id="modelcreate">
                             <input id="cam_model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
-                            <button id="cam_model_create">웹캠 이미지로 모델 생성</button>
+                            <button type="button" class="btn btn-primary" id="cam_model_create">웹캠 이미지로 <br>모델 생성</button>
                           </div>
-                      </div>
-                    <canvas id="canvas" style="display: none"></canvas>
+                        
+                      
+
+
+                    </div>
+                    <p>
+                      <button id="delete_images">전송한 이미지 삭제</button>
+                    </p>
+                  </div>
+                
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <!-- 공통으로 사용할 canvas -->
+                      <canvas id="canvas" style="display: none"></canvas>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
               
+
+
               <div class="card" style="margin-top: 20px;">
                 <div class="card-body">
-                  <p>
-                    <button id="delete_images">전송한 이미지 삭제</button>
-                  </p>
+                  
                 </div>
               </div>
               
@@ -78,7 +104,7 @@
                 </div>
               </div>
         <script src="/JS/createModel.js"></script>
-
+        </div>
     </div>
 </body>
 </html>
