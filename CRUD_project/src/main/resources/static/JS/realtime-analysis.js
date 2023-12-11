@@ -272,6 +272,7 @@ function tboxFlash(globalResult) {
 //슬라이드
 window.onload = function () {
   $(document).ready(function () {
+    getGraphLog();
     // Tab 초기 설정
     $(".goodmodeltable").hide();
     $(".badmodeltable").hide();
