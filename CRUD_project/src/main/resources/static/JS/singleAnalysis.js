@@ -35,8 +35,7 @@ function loadLogData(type, page, size) {
                                     class="img-thumbnail"
                                     data-toggle="modal"
                                     data-target="#imageModal"
-                                    src="data:image/png;base64,${row.base64ProductImg
-                              }"
+                                    src="data:image/png;base64,${row.base64ProductImg}"
                                     alt="Image"/>
                             </div>
                         </div>

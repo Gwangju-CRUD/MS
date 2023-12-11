@@ -176,22 +176,3 @@ input[type="file"]:hover::file-selector-button {
   z-index: 100;
 }
 
-.file-uploaded {
-  background-color: white;
-  color: rgb(255, 0, 0);
-  padding: 10px 20px;
-  border: 2px solid red; 
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  height: 45px;
-}
-
-.file-uploaded:hover {
-  background-color: rgb(226, 1, 1); 
-  color: white; 
-}
-.file-uploaded, #file-name {
-  display: inline-block;
-  margin-right: 56px;
-}
