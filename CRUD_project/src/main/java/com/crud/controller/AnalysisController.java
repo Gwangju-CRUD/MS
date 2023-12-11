@@ -168,8 +168,12 @@ private final MemberRepository memberRepository;
 		return "analysis/single-analysis";
 	}
 	
+	@GetMapping("/allResult")
+	public String allResult(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+	Page<Analysis> analysisList = this.analysisService.getAllAnalysis(page);
+	model.addAttribute("analysisList ", analysisList );
 
-
+	return "allResult";
 	
-	
+}
 }

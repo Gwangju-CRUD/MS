@@ -54,7 +54,6 @@ public class MemberController {
 	private final RequestMemberRepository requestMemberRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AnalysisService analysisService;
-
 	private final AlarmService alarmService;
 
 	// 관리자만 보이도록 추후 설정할 것
@@ -341,4 +340,5 @@ public class MemberController {
 		return "analysis/singleAnalysis";
 	}
 
+	
 }

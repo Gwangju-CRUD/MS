@@ -35,37 +35,15 @@
                     </tr>
                     </thead>
                     <tbody id="allresultBody">
-                    <tr onclick="window.location.href='Result-Detail.html';">
-                        <th scope="col">1</th>
-                        <th scope="col">2023년11월29일11시30분</th>
-                        <th scope="col">A회사</th>
-                        <th scope="col">DOZZI</th>
-                        <th scope="col">96%</th>
+                    <tr th:each="analysis, stat : ${analysisList}" onclick="window.location.href='Result-Detail.html';">
+                        <th th:text="|${stat.count}|" scope="col"></th>
+                        <td th:text="${analysis.predictionDate}" scope="col"></td>
+                        <td th:text="${analysis.member.mbCompany}" scope="col"></td>
+                        <td th:text="${analysis.member.mbId}" scope="col"></td>
+                        <td th:text="${analysis.predictionClassfication}"scope="col"></td>
                     </tr>
 
-                    <tr onclick="window.location.href='Result-Detail.html';">
-                        <th scope="col">2</th>
-                        <th scope="col">2023년11월29일11시30분</th>
-                        <th scope="col">B회사</th>
-                        <th scope="col">DOZZI</th>
-                        <th scope="col">95%</th>
-                    </tr>
-
-                    <tr onclick="window.location.href='Result-Detail.html';">
-                        <th scope="col">3</th>
-                        <th scope="col">2023년11월29일11시30분</th>
-                        <th scope="col">C회사</th>
-                        <th scope="col">DOZZI</th>
-                        <th scope="col">93%</th>
-                    </tr>
-
-                    <tr onclick="window.location.href='Result-Detail.html';">
-                        <th scope="col">4</th>
-                        <th scope="col">2023년11월29일11시30분</th>
-                        <th scope="col">D회사</th>
-                        <th scope="col">DOZZI</th>
-                        <th scope="col">98%</th>
-                    </tr>
+                  
                     </tbody>
                 </table>
             </div>
