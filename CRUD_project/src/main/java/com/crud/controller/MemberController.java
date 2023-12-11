@@ -1,12 +1,20 @@
 package com.crud.controller;
 
-import groovy.lang.GString;
+import com.crud.dto.AllCountAnalysis;
+import com.crud.dto.RealTimeAnalysis;
+import com.crud.dto.SingleAnalysis;
+
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
+
+
 import org.springframework.data.domain.Page;
+
+
 import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,9 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,13 +36,11 @@ import com.crud.form.MemberForm;
 import com.crud.repository.MemberRepository;
 import com.crud.repository.RequestMemberRepository;
 import com.crud.service.MemberService;
-import groovyjarjarpicocli.CommandLine.DuplicateNameException;
-import jakarta.transaction.Transactional;
+
 import com.crud.entity.AlarmLog;
-import com.crud.form.MemberForm;
+import com.crud.entity.Analysis;
 import com.crud.service.AlarmService;
 import com.crud.service.AnalysisService;
-import com.crud.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -154,12 +158,25 @@ public class MemberController {
 			Long memberCount = memberService.memberCount();
 			Long singleAnalysisCount = analysisService.singleAnalysisCount();
 			Long realTimeAnalysisCount = analysisService.realTimeAnalysisCount();
+			
+			AllCountAnalysis allCountAnalysis = analysisService.allCountAnalysis();
 
+			model.addAttribute("allCountAnalysis", allCountAnalysis);
 			model.addAttribute("memberCount", memberCount);
 			model.addAttribute("alarmList", alarmList);
 			model.addAttribute("singleAnalysisCount", singleAnalysisCount);
 			model.addAttribute("realTimeAnalysisCount", realTimeAnalysisCount);
-			
+
+
+			// 단건 및 실시간의 정상 및 불량 갯수를 모델에 담아 main에 전달함
+			Map<String, Object> resultMap = analysisService.AnalysisCount();
+			// 실시간 정상 불량 카운트가 완료된 객체
+			RealTimeAnalysis realTimeAnalysis = (RealTimeAnalysis)resultMap.get("real");
+			// 단건 정상 불량 카운트가 완료된 객체
+			SingleAnalysis singleAnalysis = (SingleAnalysis)resultMap.get("single");
+			model.addAttribute("singleAnalysis",singleAnalysis);
+			model.addAttribute("realTimeAnalysis",realTimeAnalysis);
+
 			return "main";
 
 		} else {
@@ -195,16 +212,21 @@ public class MemberController {
 
 	// 로그인 회원 조회 > 프로필
 	@GetMapping("/myPage")
-	public String showMyPage(Model model, Authentication authentication) {
+	public String showMyPage(Model model, Authentication authentication, @RequestParam(value = "page", defaultValue = "0") int page) {
 		// 현재 로그인한 사용자의 회원 정보를 가져옵니다.
 		String mbId = authentication.getName();
 		Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
 		if (optionalMember.isPresent()) {
 			// 모델에 회원 정보를 담아 myPage.html로 전달합니다.
 			model.addAttribute("member", optionalMember.get());
+			
 		} else {
 			// ID에 해당하는 회원이 없을 때의 처리도 필요합니다.
 		}
+
+		// 나의 분석 기록 model 객체에 담아서 myPage로 이동하기
+		Page<Analysis> myAnalysisList = memberService.myAnalysisLog(mbId, page);
+		model.addAttribute("myAnalysisList", myAnalysisList);
 
 		return "myPage";
 	}
@@ -222,35 +244,40 @@ public class MemberController {
 	 * @return String - 성공 시 'redirect:/myPage'를 반환하여 마이페이지로 리다이렉트, 실패 시 에러 메시지를 반환합니다.
 	 */
 	
+	
+
 	@PostMapping("/myPage")
 	public String upload(@RequestParam("file") MultipartFile file, Authentication authentication, RedirectAttributes redirectAttributes) {
-		String fileName = file.getOriginalFilename();
-		String uploadDir = System.getProperty("user.dir") + "/CRUD_project/src/main/resources/static/imgFolder/";
-		File dest = new File(uploadDir + fileName);
-		try {
-			
-			file.transferTo(dest);
-			String imagePath = "/imgFolder/" + fileName;
+    String fileName = file.getOriginalFilename();
+    String uploadDir = Paths.get("CRUD_project/src/main/resources/static/imgFolder").toAbsolutePath().toString();
+    File dir = new File(uploadDir);
+    if (!dir.exists()) {
+        dir.mkdirs();  
+    }
+    
+    File dest = new File(uploadDir, fileName);
+    try {
+        file.transferTo(dest);
+        String imagePath = "/imgFolder/" + fileName;
 
-			// 현재 로그인한 사용자의 회원 정보를 가져옵니다.
-			String mbId = authentication.getName();
-			Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
+        // 현재 로그인한 사용자의 회원 정보를 가져옵니다.
+        String mbId = authentication.getName();
+        Optional<Member> optionalMember = memberRepository.findBymbId(mbId);
 
-			if (optionalMember.isPresent()) {
-				Member member = optionalMember.get();
-				member.setProfileImg(imagePath);
-				memberRepository.save(member);
-			}
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            member.setProfileImg(imagePath);
+            memberRepository.save(member);
+        }
 
-			return "redirect:/myPage";
-		}
+        return "redirect:/myPage";
+    }
 
-		catch (Exception e) {
-			e.printStackTrace();
-			return "파일 업로드에 실패했습니다.";
-		}
-		
-	}
+    catch (Exception e) {
+        e.printStackTrace();
+        return "파일 업로드에 실패했습니다.";
+    }   
+}
 
 	// 회원 추가 및 요청회원 삭제
 	@PostMapping("/members/approve/{mbId}")
@@ -266,7 +293,7 @@ public class MemberController {
 			member.setMbCompany(requestMember.get().getMbCompany());
 			member.setMbName(requestMember.get().getMbName());
 			member.setJoineDate(requestMember.get().getJoineDate());
-
+			
 			// Member 저장
 			memberRepository.save(member);
 

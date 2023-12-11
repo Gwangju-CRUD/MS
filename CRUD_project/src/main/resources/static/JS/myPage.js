@@ -79,7 +79,7 @@ function DropFile(dropAreaId, fileListId) {
       handleFiles
     };
 
-  }
+}
 
   // DropFile 클래스 인스턴스 생성,
   // id가 "drop-file"이며 파일 목록의 ID가 "files"인 요소들을 사용하여 초기화

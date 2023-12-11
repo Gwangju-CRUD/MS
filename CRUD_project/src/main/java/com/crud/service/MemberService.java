@@ -11,12 +11,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crud.DuplicateIdException;
+import com.crud.entity.Analysis;
 import com.crud.entity.Member;
 import com.crud.entity.RequestMember;
+import com.crud.repository.AnalysisRepository;
 import com.crud.repository.MemberRepository;
 import com.crud.repository.RequestMemberRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final AnalysisRepository analysisRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final RequestMemberRepository requestMemberRepository;
 	// 2. 회원가입 요청 메소드 만들기
@@ -135,13 +137,18 @@ public class MemberService {
 		return guestPageList;
 	}
 
-	
-	
-
 	//요청 회원 삭제
 	public void deleteMember(String mbId) {
 		requestMemberRepository.deleteById(mbId);
 	}
+
+	// 나의 분석 기록 service
+    public Page<Analysis> myAnalysisLog(String mbId, int page) {
+		Pageable pageable = PageRequest.of(page, 10);
+		Page<Analysis> myAnalysisList = analysisRepository.findByMember_MbIdOrderByProductIdxDesc(mbId, pageable);
+
+		return myAnalysisList;
+    }
 		
 		
 		

@@ -61,14 +61,15 @@
                         <th scope="col">회원삭제여부</th> -->
 							</tr>
 						</thead>
+						
 						<tbody id="allMembersBody">
-							<tr th:each="member, stat : ${memberList}">
+							<tr th:each="member, stat : ${memberList}" >
 								<td th:text="|${stat.count}|"></td>
-								<td><img th:src="${member.profileImg}" alt="Profile Image"></td>
-								<td th:text="${member.mbCompany}"></td>
-								<td th:text="${member.mbName}"></td>
-								<td th:text="${member.mbId}"></td>
-								<td th:text="${#temporals.format(member.joineDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td class="w-25"><img th:src="@{${member.profileImg != null ? member.profileImg : '/imgFolder/profile.png'}}" alt="Profile Image" class="img-fluid img-thumbnail w-25 h-25"></td>
+								<td th:text="${member.mbCompany}" ></td>
+								<td th:text="${member.mbName}" ></td>
+								<td th:text="${member.mbId}" ></td>
+								<td th:text="${#temporals.format(member.joineDate, 'yyyy-MM-dd HH:mm:ss')}" ></td>
 							</tr>
 						</tbody>
 					</table>

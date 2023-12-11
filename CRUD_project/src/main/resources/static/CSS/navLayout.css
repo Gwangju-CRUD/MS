@@ -1,4 +1,50 @@
 
+.form-select {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.optionList {
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.optionItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.optionItem:hover {
+  background-color: lightgray;
+  color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 ----------------------
 사이드바 고정 css
