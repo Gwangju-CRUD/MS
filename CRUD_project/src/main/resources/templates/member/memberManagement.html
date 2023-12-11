@@ -4,22 +4,6 @@
 
 <body id="page-top">
 	<div layout:fragment="content">
-		<!-- 주 페이지 콘텐츠 -->
-		<script th:inline="javascript">
-			/*<![CDATA[*/
-			document.addEventListener('DOMContentLoaded', function () {
-				var msg = /*[[${msg}]]*/ null;
-
-				console.log("Value in model (JavaScript):", msg);
-
-				if (msg !== null) {
-					console.log("Opening modal...");
-					var modal = new bootstrap.Modal(document.getElementById('joinModal'));
-					modal.show();
-				}
-			});
-        /*]]>*/
-		</script>
 
 		<!-- 주 페이지 콘텐츠 -->
 		<div class="container-fluid" style="height: 86vh;">

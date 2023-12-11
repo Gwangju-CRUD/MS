@@ -33,7 +33,7 @@ function loadLogData(type, page, size) {
                         row.base64ProductImg
                       }" alt="Image" style="width : 160px; height=160px;"/>
                   </div>
-                  <div class="col-10">
+                  <div class="col-9">
                     <div class="card-body">
                       <div><h5>판정결과 : <span class="font-weight-bolder">${row.predictionJdm}</span></h5></div>
                       <br>
@@ -41,7 +41,7 @@ function loadLogData(type, page, size) {
                             .toString()
                             .slice(0, 4)}%<h5></div>
                       <br>
-                      <div class="mt-3 d-flex justify-content-end">일시 : ${row.predictionDate}</div>
+                      <div class="mt-3 mr-5 d-flex justify-content-end">일시 : ${row.predictionDate}</div>
                     </div>
                   </div>
                 </div>
