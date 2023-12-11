@@ -227,13 +227,13 @@
                                                 yAxis: {
                                                     type: 'category',
                                                     data: [
+                                                    weekList[0],
                                                     weekList[6],
                                                     weekList[5],
                                                     weekList[4],
                                                     weekList[3],
                                                     weekList[2],
                                                     weekList[1],
-                                                    weekList[0]
                                                     ]
                                                 },
                                                 series: [
@@ -241,25 +241,25 @@
                                                         name: '정상',
                                                         type: 'bar',
                                                         data: [
+                                                        [[${allCountAnalysis.weekNomalCount[0]}]],
                                                         [[${allCountAnalysis.weekNomalCount[6]}]],
                                                         [[${allCountAnalysis.weekNomalCount[5]}]],
                                                         [[${allCountAnalysis.weekNomalCount[4]}]],
                                                         [[${allCountAnalysis.weekNomalCount[3]}]],
                                                         [[${allCountAnalysis.weekNomalCount[2]}]],
                                                         [[${allCountAnalysis.weekNomalCount[1]}]],
-                                                        [[${allCountAnalysis.weekNomalCount[0]}]]
                                                         ]
                                                     }, {
                                                         name: '불량',
                                                         type: 'bar',
                                                         data: [
+                                                        [[${allCountAnalysis.weekErrorCount[0]}]],
                                                         [[${allCountAnalysis.weekErrorCount[6]}]],
                                                         [[${allCountAnalysis.weekErrorCount[5]}]],
                                                         [[${allCountAnalysis.weekErrorCount[4]}]],
                                                         [[${allCountAnalysis.weekErrorCount[3]}]],
                                                         [[${allCountAnalysis.weekErrorCount[2]}]],
                                                         [[${allCountAnalysis.weekErrorCount[1]}]],
-                                                        [[${allCountAnalysis.weekErrorCount[0]}]]
                                                         ]
                                                     }
                                                 ]

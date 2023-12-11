@@ -6,57 +6,127 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{navLayout}">
     <head>
+        <meta charset="UTF-8">
         <link href="/CSS/createModel.css" rel="stylesheet"></link>
     </head>
-    <body id="page-top">
-        <div layout:fragment="content" style="height: 86vh;">
+    <body id="page-top" style="height: 86vh;">
+        <div layout:fragment="content">
+          <div class="container-fluid">
+            
 
-            <h1>모델 생성</h1><br>
-            <div>
-                <video id="video" autoplay="autoplay"></video>
-                <p id="normal_count_place">정상 이미지 :
-                    <span id="normal_count"></span>/ 1000</p>
-                <p id="error_count_place">불량 이미지 :
-                    <span id="error_count"></span>/ 1000</p>
+
+
+            <h2>모델 생성</h2>
+            <p>웹캠 이미지로 모델을 생성한다</p>
+            <div class="card" style="margin-bottom: 50px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+              <div class="card-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- 비디오 div -->
+                      
+                        <video id="video" autoplay="autoplay" style="background-color: black; width: 100%; height: 100%;"></video>
+                      
+                    </div>
+                    <div class="col-md-6">
+                      <!-- 오른쪽에 배치될 div들 -->
+                      
+                      <!-- 정상 이미지 -->
+
+                        <div id="goodandbad">
+                          <p id="normal_count_place">정상 이미지 : <span id="normal_count"></span>/ 1000</p>
+                        </div>
+                        
+                        <div>
+                          <button id="capture_normal" type="button" class="btn btn-success">웹캠으로 정상 제품 이미지 생성</button>
+                        </div>
+                        
+                      
+                
+                      <!-- 불량 이미지 -->
+                        <div id="goodandbad">
+                          <p id="error_count_place">불량 이미지 : <span id="error_count"></span>/ 1000</p>
+                        </div>
+                        
+                        <div>
+                          <button id="capture_error" type="button" class="btn btn-danger">웹캠으로 불량 제품 이미지 생성</button>
+                        </div>
+                        
+                      
+                        
+                      
+                        <!-- 모델이름 입력하고 모델생성 버튼 -->
+                          <div id="modelcreate">
+                            <input id="cam_model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
+                            <button type="button" class="btn btn-secondary" id="cam_model_create">웹캠 이미지로 <br>모델 생성</button>
+                          </div>
+                        
+                      
+
+
+                    </div>
+
+                    
+                  </div>
+                  
+                  <!-- 전송한 이미지 삭젠 -->
+                  <div style="margin: 28px;">
+                    <button id="sendimg" class="btn btn-dark" style="text-align: right;" >전송한 이미지 삭제</button>
+                  </div>
+                  
+                </div>
+              </div>
             </div>
-            <canvas id="canvas" style="display: none"></canvas>
-            <p>
-                <button id="capture_normal">웹캠으로 정상 제품 이미지 생성</button>
-            </p>
-            <p>
-                <button id="capture_error">웹캠으로 불량 제품 이미지 생성</button>
-            </p>
-            <button id="delete_images">전송한 이미지 삭제</button>
-        </p>
-        <p>
-            <input id="model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
-            <!-- 모델 이름 입력 -->
-            <button id="create_model">모델 생성 후 DB저장</button>
-        </p>
-        <br><br>
-        <h3>폴더 이미지로 모델 생성</h3>
-        <p>
-            <input
-                id="folder_path_normal"
-                type="file"
-                multiple="multiple"
-                placeholder="정상 이미지 선택">정상 이미지 선택</input>
-            <input
-                id="folder_path_error"
-                type="file"
-                multiple="multiple"
-                placeholder="불량 이미지 선택">불량 이미지 선택</input>
-        </p>
-        <p>
-            <input id="imgae_model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
-            <button id="folder_image_create">폴더 이미지로 모델 생성</button>
-        </p>
-        <br><br>
-        <p>
-          <button id="upload_images">DB에 데이터셋 업로드</button>
-        </p>
-        <script src="/JS/createModel.js"></script>
+            <!-- 모델 생성 card 끝 -->
+              
 
+            <br><br>
+
+            <!-- 폴더 이미지로 모델 생성 card -->
+
+            <h2>폴더 이미지로 모델 생성</h2>
+            <p>폴더 이미지로 모델을 생성한다</p>
+            <div class="card" style="height: 400px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 50px;">
+              <div class="card-body">
+                
+                <div class="flex-container">
+                  <div class="img-container" id="imgselect">
+                    <div class="input-group">
+                      <h5 id="h5tag">정상 이미지 선택</h5>
+                      <input class="file-input1" id="folder_path_normal" name="file" type="file" multiple="multiple" placeholder="정상 이미지 선택"></input>
+                    </div>
+                    <div class="input-group" style="margin-top: 50px;">
+                      <h5 id="h5tag">불량 이미지 선택</h5>
+                      <input class="file-input2" id="folder_path_error" name="file" type="file" multiple="multiple" placeholder="불량 이미지 선택"></input>
+                    </div>
+                  </div>
+                
+                  <div class="img-container" id="imgname">
+                    <input id="imgae_model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
+                    <div>
+                    <button id="folder_image_create" class="btn btn-primary" style="margin-top: 40px;">폴더 이미지로 모델 생성</button>
+                    </div>
+                  </div>
+
+                  <!-- <div style="margin-top: 123px; margin-right: 50px;">
+                    <button id="upload_images" class="btn btn-dark btn-lg">DB에<br>데이터셋<br>업로드</button>
+                  </div> -->
+                </div>
+                
+
+
+
+
+              </div>
+            </div>
+            <!-- 폴더 이미지 모델 생성 card 끝 -->
+
+
+
+
+
+        <script src="/JS/createModel.js"></script>
+        </div>
     </div>
 </body>
 </html>
