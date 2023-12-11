@@ -169,7 +169,6 @@ private final MemberRepository memberRepository;
 	}
 	
 
-
 	
 	
 }
