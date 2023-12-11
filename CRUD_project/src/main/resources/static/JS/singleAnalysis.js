@@ -35,13 +35,17 @@ function loadLogData(type, page, size) {
                   </div>
                   <div class="col-9">
                     <div class="card-body">
-                      <div><h5>판정결과 : <span class="font-weight-bolder">${row.predictionJdm}</span></h5></div>
+                      <div><h5>판정결과 : <span class="font-weight-bolder">${
+                        row.predictionJdm
+                      }</span></h5></div>
                       <br>
                       <div><h5>정확도 : ${(row.predictionAccuracy * 100)
-                            .toString()
-                            .slice(0, 4)}%<h5></div>
+                        .toString()
+                        .slice(0, 4)}%<h5></div>
                       <br>
-                      <div class="mt-3 mr-5 d-flex justify-content-end">일시 : ${row.predictionDate}</div>
+                      <div class="mt-3 d-flex justify-content-end">일시 : ${
+                        row.predictionDate
+                      }</div>
                     </div>
                   </div>
                 </div>
@@ -170,8 +174,8 @@ async function readFilesAndSend(files) {
             );
             if (percentage === 100) {
               setTimeout(() => {
-                //location.reload();
-              }, 1500);
+                location.reload();
+              }, 1000);
             }
             resolve();
           })
@@ -220,13 +224,16 @@ function sendDataToServer(base64Image) {
   });
 }
 
-let normalCount = null;
-let errorCount = null;
 // --------------------------
 // 원형 차트
 // ---------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const pieChart = echarts.init(document.querySelector("#pieChart"));
+  // 카운트를 적용시킬 요소
+  let normalCount = null;
+  let errorCount = null;
+  const $goodCounter = document.querySelector("#NMnum");
+  const $badCounter = document.querySelector("#ERnum");
 
   // 차트 크기 조절
   window.addEventListener("resize", () => {
@@ -234,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   $.ajax({
-    url: "/deep/getPublicGraphLog",
+    url: "/deep/getGraphLog",
     type: "POST",
     dataType: "json",
     beforeSend: function (xhr) {
@@ -299,6 +306,14 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         ],
       });
+
+      // 대기 시간 조정
+      const delayTime = 500; // 2초후 시작
+
+      setTimeout(() => {
+        counter($goodCounter, normalCount);
+        counter($badCounter, errorCount);
+      }, delayTime);
     },
     error: function (request, status, error) {
       console.error("ajax 통신 실패");
@@ -345,9 +360,9 @@ $(document).ready(function () {
 // 모달에 이미지 경로 설정
 // ----------------------
 
-$('.rounded').click(function() {
-  var imageUrl = $(this).attr('src');
-  $('#modalImage').attr('src', imageUrl);
+$(".rounded").click(function () {
+  var imageUrl = $(this).attr("src");
+  $("#modalImage").attr("src", imageUrl);
 });
 
 // -----------------------
@@ -372,16 +387,4 @@ const counter = ($counter, max) => {
   }, 50);
 };
 
-window.onload = () => {
-  // 카운트를 적용시킬 요소
-  const $goodCounter = document.querySelector(".goodcount");
-  const $badCounter = document.querySelector(".badcount");
-
-  // 대기 시간 조정
-  const delayTime = 2000; // 2초후 시작
-
-  setTimeout(() => {
-    counter($goodCounter, normalCount);
-    counter($badCounter, errorCount);
-  }, delayTime);
-};
+window.onload = () => {};
