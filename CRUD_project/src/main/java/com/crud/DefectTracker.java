@@ -28,7 +28,6 @@ public class DefectTracker {
          }
          return false;
       } else {
-         defectCount = 0; // 양호한 제품이 확인되면 카운터를 초기화합니다.
          return false;
       }
    }
