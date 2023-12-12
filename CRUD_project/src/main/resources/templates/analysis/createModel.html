@@ -87,37 +87,47 @@
 
             <h2>폴더 이미지로 모델 생성</h2>
             <p>폴더 이미지로 모델을 생성한다</p>
-            <div class="card" style="height: 400px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 50px;">
+            <div class="card" style=" box-shadow: 0px 4px 8px rgba( 0, 0, 0, 0.1); margin-bottom: 50px;">
               <div class="card-body">
                 
-                <div class="flex-container">
-                  <div class="img-container" id="imgselect">
-                    <div class="input-group">
-                      <h5 id="h5tag">정상 이미지 선택</h5>
-                      <input class="file-input1" id="folder_path_normal" name="file" type="file" multiple="multiple" placeholder="정상 이미지 선택"></input>
-                    </div>
-                    <div class="input-group" style="margin-top: 50px;">
-                      <h5 id="h5tag">불량 이미지 선택</h5>
-                      <input class="file-input2" id="folder_path_error" name="file" type="file" multiple="multiple" placeholder="불량 이미지 선택"></input>
-                    </div>
+                
+                <div style="display: flex; justify-content: center; align-items: center; margin-top: 50px;">
+                  <div style="width: 500px; text-align: center;">
+                    <h5 id="h5tag" style="text-align: center; color: black; font-size: 1.6rem;">정상 이미지 선택</h5>
+                    <input class="file-input1" id="folder_path_normal" name="file" type="file" multiple="multiple" placeholder="정상 이미지 선택" style="margin: 30px auto;">
                   </div>
                 
-                  <div class="img-container" id="imgname">
-                    <input id="imgae_model_name" type="text" placeholder="모델 이름을 입력해 주세요"></input>
-                    <div>
-                    <button id="folder_image_create" class="btn btn-primary" style="margin-top: 40px;">폴더 이미지로 모델 생성</button>
+                    <div style="width: 500px; text-align: center;">
+                      <h5 id="h5tag" style="text-align: center; color: black; font-size: 1.6rem;">불량 이미지 선택</h5>
+                      <input class="file-input2" id="folder_path_error" name="file" type="file" multiple="multiple" placeholder="불량 이미지 선택" style="margin: 30px auto;"></input>
                     </div>
-                  </div>
+                </div>
 
-                  <!-- <div style="margin-top: 123px; margin-right: 50px;">
+                <div style="display: flex; justify-content: center; align-items: center;  margin-top: 50px;">
+                    
+                    <div style="margin: 10px; text-align: center;">
+                      <h5 id="h5tag" style="color: #28A745; margin-top: 50px;">정상 이미지 미리보기</h5>
+                      <div class="imgs_wrap" style="text-align: left; border: 3px dashed #28A745"></div>
+                    </div>
+
+                    <div style="margin: 10px; text-align: center;">
+                      <h5 id="h5tag" style="color: #dc3545; margin-top: 50px;">불량 이미지 미리보기</h5>
+                        <div class="imgs_wrap_error" style="text-align: left; border: 3px dashed #dc3545;">
+                        </div>
+                    </div>
+                </div> 
+                
+                <div style="display: flex; justify-content: center; align-items: center;  margin-top: 50px;">
+                  <input id="imgae_model_name" type="text" placeholder="모델 이름을 입력해 주세요" style="text-align: center;"></input>
+              </div>
+              
+              <div style="text-align: center;">
+                  <button id="folder_image_create" class="btn btn-primary">폴더 이미지로 모델 생성</button>
+              </div>
+
+                 <!-- <div style="margin-top: 123px; margin-right: 50px;">
                     <button id="upload_images" class="btn btn-dark btn-lg">DB에<br>데이터셋<br>업로드</button>
                   </div> -->
-                </div>
-                
-
-
-
-
               </div>
             </div>
             <!-- 폴더 이미지 모델 생성 card 끝 -->
