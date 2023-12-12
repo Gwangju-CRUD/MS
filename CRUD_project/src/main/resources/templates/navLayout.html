@@ -1,15 +1,18 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
-<head th:fragment="mainHeader">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta th:name="_csrf" th:content="${_csrf.token}" />
-    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
-    <title>회원관리</title>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:fragment="mainHeader">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta th:name="_csrf" th:content="${_csrf.token}"/>
+        <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <title>PURE SELECT</title>
 
 
 
@@ -136,7 +139,7 @@
             </li>
 
             <!-- 회원관리 메뉴 -->
-            <li class="nav-item active" th:if="${#authentication.name == 'admin'}">
+            <li class="nav-item" th:if="${#authentication.name == 'admin'}">
                 <a class="nav-link collapsed" href="memberManagement">
                     <i class="fas fa-fw fa-table"></i>
                     <span>전체회원관리</span></a>
