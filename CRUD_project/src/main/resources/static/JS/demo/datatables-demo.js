@@ -15,7 +15,9 @@ $(document).ready(function () {
     startAnalysisButton.prop("disabled", true).text("모델을 선택해주세요");
 
     // <select> 태그 동적 생성
-    modelSelect = $("<select>").attr("id", "modelSelect").addClass("form-select");; // 전역 변수에 할당
+    modelSelect = $("<select>")
+      .attr("id", "modelSelect")
+      .addClass("form-select"); // 전역 변수에 할당
     $(".modal-body").append(modelSelect);
 
     $.ajax({
@@ -87,6 +89,7 @@ $(document).ready(function () {
   });
 
   function videoAysFromServer(modelPath) {
+    $("#loadingIndicator").removeClass("d-none");
     $.ajax({
       url: "http://218.157.38.54:8002/apply_weights/",
       method: "post",
@@ -94,6 +97,7 @@ $(document).ready(function () {
       data: JSON.stringify(modelPath),
       success: function (data) {
         console.log(data.message);
+        $("#loadingIndicator").addClass("d-none");
         setTimeout(function () {
           window.location.href = "/deep/realtimeAnalysis";
         }, 200);
@@ -106,6 +110,7 @@ $(document).ready(function () {
   }
 
   function imageAysFromServer(modelPath) {
+    $("#loadingIndicator").removeClass("d-none");
     $.ajax({
       url: "http://218.157.38.54:8002/apply_weights/",
       method: "post",
@@ -113,6 +118,7 @@ $(document).ready(function () {
       data: JSON.stringify(modelPath),
       success: function (data) {
         console.log(data.message);
+        $("#loadingIndicator").addClass("d-none");
         setTimeout(function () {
           window.location.href = "/singleAnalysis";
         }, 200);
