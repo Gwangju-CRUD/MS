@@ -216,3 +216,54 @@ $("#folder_image_create").click(async function () {
   // 모든 이미지 파일을 서버로 전송한 후에 모델 생성 요청을 보냄
   createModelFromServer(modelName);
 });
+
+
+
+
+// 이미지 미리보기 js
+
+// 정상
+var sel_files = [];
+
+$(document).ready(function() {
+    $("#folder_path_normal").on("change", handleImagesFilesSelect);
+});
+
+function handleImagesFilesSelect(e) {
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+
+    filesArr.forEach(function(f) {
+        sel_files.push(f);
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img_html = "<img src=\"" + e.target.result + "\" />";
+            $(".imgs_wrap").append(img_html);
+        };
+        reader.readAsDataURL(f);
+    });
+}
+
+// 불량 
+var sel_files_error = [];
+
+$(document).ready(function() {
+    $("#folder_path_error").on("change", handleImagesFilesSelectError);
+});
+
+function handleImagesFilesSelectError(e) {
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+
+    filesArr.forEach(function(f) {
+        sel_files_error.push(f);
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img_html = "<img src=\"" + e.target.result + "\" />";
+            $(".imgs_wrap_error").append(img_html);
+        };
+        reader.readAsDataURL(f);
+    });
+}
