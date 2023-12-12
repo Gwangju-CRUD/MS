@@ -114,6 +114,13 @@ function createModelFromServer(modelName) {
     alert("모델 이름을 입력해주세요");
     return;
   }
+  // 요청 시작 전에 버튼을 비활성화하고 텍스트를 변경합니다.
+  $("#cam_model_create")
+    .prop("disabled", true)
+    .text("모델을 제작중입니다... 2~5분 소요");
+  $("#folder_image_create")
+    .prop("disabled", true)
+    .text("모델을 제작중입니다... 2~5분 소요");
 
   $.ajax({
     url: "/deep/create_model",
@@ -126,6 +133,9 @@ function createModelFromServer(modelName) {
     success: function (data) {
       var parsedData = JSON.parse(data);
       alert(parsedData.message);
+
+      $("#cam_model_create").prop("disabled", false).text("모델 생성");
+      $("#folder_image_create").prop("disabled", false).text("모델 생성");
 
       location.href = "/main"; // 페이지 이동
     },
