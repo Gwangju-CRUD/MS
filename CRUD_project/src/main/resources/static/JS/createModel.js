@@ -80,7 +80,7 @@ function deleteImagesFromServer() {
     method: "delete", // DELETE 메서드 사용
     success: function (data) {
       // 서버로부터 받은 메시지를 화면에 표시
-      alert(data.message);
+      console.log(data.message);
       // 이미지 개수 표시를 0으로 초기화
       $("#normal_count").text(0);
       $("#error_count").text(0);
@@ -98,6 +98,13 @@ $("#create_model").click(function () {
 
 $("#cam_model_create").click(function () {
   var modelName = $("#cam_model_name").val(); // 입력받은 모델 이름
+
+  // 모델 이름이 입력되지 않았다면 사용자에게 알림을 표시하고 함수를 종료
+  if (!modelName || modelName.trim() === "") {
+    alert("모델 이름을 입력해주세요");
+    return;
+  }
+
   createModelFromServer(modelName);
 });
 
@@ -172,10 +179,19 @@ function readFilesAndSend(files, label) {
   return Promise.all(promises); // 모든 이미지의 전송이 완료될 때까지 대기하는 Promise 객체를 반환
 }
 
+// 버튼 클릭시 폴더 이미지에서 모델 생성.
+
 $("#folder_image_create").click(async function () {
+  var modelName = $("#imgae_model_name").val();
+
+  // 모델 이름이 입력되지 않았다면 사용자에게 알림을 표시하고 함수를 종료
+  if (!modelName || modelName.trim() === "") {
+    alert("모델 이름을 입력해주세요");
+    return;
+  }
+
   var normalFiles = document.getElementById("folder_path_normal").files;
   var errorFiles = document.getElementById("folder_path_error").files;
-  var modelName = $("#imgae_model_name").val();
 
   // 모든 이미지 파일을 서버로 전송하고, 그 작업이 완료되면 모델 생성 요청을 보냄
   await readFilesAndSend(normalFiles, "normal"); // await 키워드 추가
