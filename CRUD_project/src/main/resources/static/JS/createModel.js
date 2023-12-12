@@ -44,6 +44,9 @@ setInterval(function () {
 }, 1000 / 30); // 1초에 30번 요청
 
 function sendDataToServer(base64Image, label) {
+  $("#folder_image_create")
+    .prop("disabled", true)
+    .text("모델을 제작중입니다... 2~5분 소요");
   // $.ajax 호출의 Promise를 반환하도록 수정
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -80,7 +83,7 @@ function deleteImagesFromServer() {
     method: "delete", // DELETE 메서드 사용
     success: function (data) {
       // 서버로부터 받은 메시지를 화면에 표시
-      alert(data.message);
+      console.log(data.message);
       // 이미지 개수 표시를 0으로 초기화
       $("#normal_count").text(0);
       $("#error_count").text(0);
@@ -98,6 +101,13 @@ $("#create_model").click(function () {
 
 $("#cam_model_create").click(function () {
   var modelName = $("#cam_model_name").val(); // 입력받은 모델 이름
+
+  // 모델 이름이 입력되지 않았다면 사용자에게 알림을 표시하고 함수를 종료
+  if (!modelName || modelName.trim() === "") {
+    alert("모델 이름을 입력해주세요");
+    return;
+  }
+
   createModelFromServer(modelName);
 });
 
@@ -107,6 +117,13 @@ function createModelFromServer(modelName) {
     alert("모델 이름을 입력해주세요");
     return;
   }
+  // 요청 시작 전에 버튼을 비활성화하고 텍스트를 변경합니다.
+  $("#cam_model_create")
+    .prop("disabled", true)
+    .text("모델을 제작중입니다... 2~5분 소요");
+  $("#folder_image_create")
+    .prop("disabled", true)
+    .text("모델을 제작중입니다... 2~5분 소요");
 
   $.ajax({
     url: "/deep/create_model",
@@ -119,6 +136,9 @@ function createModelFromServer(modelName) {
     success: function (data) {
       var parsedData = JSON.parse(data);
       alert(parsedData.message);
+
+      $("#cam_model_create").prop("disabled", false).text("모델 생성");
+      $("#folder_image_create").prop("disabled", false).text("모델 생성");
 
       location.href = "/main"; // 페이지 이동
     },
@@ -172,10 +192,22 @@ function readFilesAndSend(files, label) {
   return Promise.all(promises); // 모든 이미지의 전송이 완료될 때까지 대기하는 Promise 객체를 반환
 }
 
+// 버튼 클릭시 폴더 이미지에서 모델 생성.
+
 $("#folder_image_create").click(async function () {
+  $("#cam_model_create")
+    .prop("disabled", true)
+    .text("모델을 제작중입니다... 2~5분 소요");
+  var modelName = $("#imgae_model_name").val();
+
+  // 모델 이름이 입력되지 않았다면 사용자에게 알림을 표시하고 함수를 종료
+  if (!modelName || modelName.trim() === "") {
+    alert("모델 이름을 입력해주세요");
+    return;
+  }
+
   var normalFiles = document.getElementById("folder_path_normal").files;
   var errorFiles = document.getElementById("folder_path_error").files;
-  var modelName = $("#imgae_model_name").val();
 
   // 모든 이미지 파일을 서버로 전송하고, 그 작업이 완료되면 모델 생성 요청을 보냄
   await readFilesAndSend(normalFiles, "normal"); // await 키워드 추가
