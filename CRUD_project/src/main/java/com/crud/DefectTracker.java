@@ -45,13 +45,13 @@ public class DefectTracker {
       headers.set("Content-Type", "application/json");
 
       // Slack에 보낼 메시지를 설정합니다.
-      String payload = "{'text':'창헌한 오케이.'}";
+      String payload = "{'text':'불량품 누적 5건 발생 확인 요망.'}";
 
       HttpEntity<String> request = new HttpEntity<>(payload, headers);
 
       // Slack 웹훅 URL에 POST 요청을 보냅니다.
       ResponseEntity<String> response = restTemplate.exchange(
-    		  "", // 본인의 Slack 웹훅
+    		  "https://hooks.slack.com/services/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", // 본인의 Slack 웹훅
                                                                               // URL로 변경해주세요.
             HttpMethod.POST, request, String.class);
 

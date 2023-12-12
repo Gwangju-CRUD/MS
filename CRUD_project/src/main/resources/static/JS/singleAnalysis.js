@@ -43,7 +43,7 @@ function loadLogData(type, page, size) {
                         .toString()
                         .slice(0, 4)}%<h5></div>
                       <br>
-                      <div class="mt-3 d-flex justify-content-end">일시 : ${
+                      <div class="mt-3 mr-5 d-flex justify-content-end">일시 : ${
                         row.predictionDate
                       }</div>
                     </div>
